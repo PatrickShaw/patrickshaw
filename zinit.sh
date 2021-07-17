@@ -1,4 +1,3 @@
-### End of Zinit's installer chunk
 zinit ice depth=1
 zinit light romkatv/powerlevel10k
 

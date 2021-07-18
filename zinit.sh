@@ -20,8 +20,8 @@ export NVM_COMPLETION=true
 
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
 
-zplugin ice as"program" pick"bin/git-dsf"
-zplugin light zdharma/zsh-diff-so-fancy
+zinit ice as"command" from"gh-r" mv"delta* -> delta" pick"delta/delta"
+zinit light dandavison/delta
 
 zinit wait lucid light-mode for \
   lukechilds/zsh-nvm \

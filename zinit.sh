@@ -24,10 +24,10 @@ zinit ice as"command" from"gh-r" mv"delta* -> delta" pick"delta/delta"
 zinit light dandavison/delta
 
 zinit wait lucid light-mode for \
-  lukechilds/zsh-nvm \
   atload"_zsh_autosuggest_start; bindkey '\t' autosuggest-accept; bindkey '^[[A' history-beginning-search-backward; bindkey '^[[B' history-beginning-search-forward" \
     zsh-users/zsh-autosuggestions \
   atinit"zicompinit; zicdreplay" \
     zdharma/fast-syntax-highlighting \
   blockf atpull'zinit creinstall -q .' \
-    zsh-users/zsh-completions
+    zsh-users/zsh-completions \
+  lukechilds/zsh-nvm

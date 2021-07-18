@@ -30,6 +30,6 @@ zinit wait lucid light-mode for \
     zdharma/fast-syntax-highlighting \
   blockf atpull'zinit creinstall -q .' \
     zsh-users/zsh-completions \
-    paulirish/git-open \
-    lukechilds/zsh-nvm \
+  paulirish/git-open \
+  lukechilds/zsh-nvm
 

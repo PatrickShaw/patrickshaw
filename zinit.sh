@@ -20,6 +20,9 @@ export NVM_COMPLETION=true
 
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
 
+zplugin ice as"program" pick"bin/git-dsf"
+zplugin light zdharma/zsh-diff-so-fancy
+
 zinit wait lucid light-mode for \
   lukechilds/zsh-nvm \
   atload"_zsh_autosuggest_start; bindkey '\t' autosuggest-accept; bindkey '^[[A' history-beginning-search-backward; bindkey '^[[B' history-beginning-search-forward" \

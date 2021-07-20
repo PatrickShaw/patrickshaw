@@ -23,6 +23,7 @@ export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
 zinit ice as"command" from"gh-r" mv"delta* -> delta" pick"delta/delta"
 zinit light dandavison/delta
 
+
 zinit ice as"command" from"gh-r" mv"bat* -> bat" pick"bat/bat"
 zinit light sharkdp/bat
 
@@ -41,3 +42,12 @@ zinit ice wait"2" as"command" from"gh-r" lucid \
   atclone"./zoxide init zsh > init.zsh" \
   atpull"%atclone" src"init.zsh" nocompile'!'
 zinit light ajeetdsouza/zoxide
+
+omz_plugins=(
+  git
+  thefuck
+  yarn
+)
+for plugin in ${omz_plugins[@]}; do
+    zinit snippet OMZ::plugins/$plugin/$plugin.plugin.zsh
+done

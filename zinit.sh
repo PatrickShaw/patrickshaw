@@ -23,6 +23,9 @@ export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
 zinit ice as"command" from"gh-r" mv"delta* -> delta" pick"delta/delta"
 zinit light dandavison/delta
 
+zinit ice as"command" from"gh-r" mv"bat* -> bat" pick"bat/bat"
+zinit light sharkdp/bat
+
 zinit wait lucid light-mode for \
   atload"_zsh_autosuggest_start; bindkey '\t' autosuggest-accept; bindkey '^[[A' history-beginning-search-backward; bindkey '^[[B' history-beginning-search-forward" \
     zsh-users/zsh-autosuggestions \
@@ -33,3 +36,8 @@ zinit wait lucid light-mode for \
   paulirish/git-open \
   lukechilds/zsh-nvm
 
+zinit ice wait"2" as"command" from"gh-r" lucid \
+  mv"zoxide*/zoxide -> zoxide" \
+  atclone"./zoxide init zsh > init.zsh" \
+  atpull"%atclone" src"init.zsh" nocompile'!'
+zinit light ajeetdsouza/zoxide

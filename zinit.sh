@@ -46,13 +46,7 @@ zinit wait lucid light-mode for \
   as"command" from"gh-r" pick"fd*/fd" \
     @sharkdp/fd \
   as"command" from"gh-r" atclone"./zoxide init zsh > init.zsh" atpull"%atclone" src"init.zsh" nocompile'!' \
-    @ajeetdsouza/zoxide
-
-omz_plugins=(
-  git
-  thefuck
-  yarn
-)
-for plugin in ${omz_plugins[@]}; do
-    zinit snippet OMZ::plugins/$plugin/$plugin.plugin.zsh
-done
+    @ajeetdsouza/zoxide \
+  @OMZ::plugins/git \
+  @OMZ::plugins/thefuck \
+  @OMZ::plugins/yarn

@@ -39,12 +39,10 @@ zinit wait lucid light-mode for \
   blockf atpull'zinit creinstall -q .' \
     @zsh-users/zsh-completions \
   @paulirish/git-open \
-  @lukechilds/zsh-nvm
-
-zinit as"command" wait lucid from"gh-r" light-mode for \
-  pick"bat*/bat" @sharkdp/bat \
-  pick"bin/exa" @ogham/exa \
-  pick"fd*/fd" @sharkdp/fd
+  @lukechilds/zsh-nvm \
+  as"command" from"gh-r" pick"bat*/bat" @sharkdp/bat \
+  as"command" from"gh-r" pick"bin/exa" @ogham/exa \
+  as"command" from"gh-r" pick"fd*/fd" @sharkdp/fd
 
 zinit ice wait"2" as"command" from"gh-r" lucid \
   mv"zoxide*/zoxide -> zoxide" \

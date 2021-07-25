@@ -43,7 +43,7 @@ zinit wait lucid light-mode for \
     @dandavison/delta \
   as="command" from="gh-r" pick="bat*/bat" \
     @sharkdp/bat \
-  as="command" from="gh-r" pick="bin/exa" \
+  as="command" from="gh-r" pick="bin/exa" atload='alias ls="exa"' \
     @ogham/exa \
   as="command" from="gh-r" pick="fd*/fd" \
     @sharkdp/fd \

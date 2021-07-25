@@ -11,6 +11,14 @@ source "$HOME/.zinit/bin/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
+# Load a few important annexes, without Turbo (this is currently required for annexes)
+zinit light-mode compile"handler" for \
+    zinit-zsh/z-a-patch-dl \
+    zinit-zsh/z-a-as-monitor \
+    zinit-zsh/z-a-bin-gem-node \
+    zinit-zsh/z-a-submods \
+    zdharma/declare-zsh
+
 # Custom zinit settings
 zinit ice depth=1
 zinit light romkatv/powerlevel10k
@@ -23,10 +31,6 @@ export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
 zinit ice as"command" from"gh-r" mv"delta* -> delta" pick"delta/delta"
 zinit light dandavison/delta
 
-
-zinit ice as"command" from"gh-r" mv"bat* -> bat" pick"bat/bat"
-zinit light sharkdp/bat
-
 zinit wait lucid light-mode for \
   atload"_zsh_autosuggest_start; bindkey '\t' autosuggest-accept; bindkey '^[[A' history-beginning-search-backward; bindkey '^[[B' history-beginning-search-forward" \
     zsh-users/zsh-autosuggestions \
@@ -36,6 +40,9 @@ zinit wait lucid light-mode for \
     zsh-users/zsh-completions \
   paulirish/git-open \
   lukechilds/zsh-nvm
+
+zinit as"command" wait lucid from"gh-r" for \
+  pick"bat/bat" @sharkdp/bat
 
 zinit ice wait"2" as"command" from"gh-r" lucid \
   mv"zoxide*/zoxide -> zoxide" \

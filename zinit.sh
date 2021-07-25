@@ -28,9 +28,6 @@ export NVM_COMPLETION=true
 
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
 
-zinit ice as"command" from"gh-r" mv"delta* -> delta" pick"delta/delta"
-zinit light dandavison/delta
-
 zinit wait lucid light-mode for \
   atload"_zsh_autosuggest_start; bindkey '\t' autosuggest-accept; bindkey '^[[A' history-beginning-search-backward; bindkey '^[[B' history-beginning-search-forward" \
     @zsh-users/zsh-autosuggestions \
@@ -40,9 +37,14 @@ zinit wait lucid light-mode for \
     @zsh-users/zsh-completions \
   @paulirish/git-open \
   @lukechilds/zsh-nvm \
-  as"command" from"gh-r" pick"bat*/bat" @sharkdp/bat \
-  as"command" from"gh-r" pick"bin/exa" @ogham/exa \
-  as"command" from"gh-r" pick"fd*/fd" @sharkdp/fd
+  as"command" from"gh-r" mv"delta* -> delta" pick"delta/delta" \
+    @dandavison/delta \
+  as"command" from"gh-r" pick"bat*/bat" \
+    @sharkdp/bat \
+  as"command" from"gh-r" pick"bin/exa" \
+    @ogham/exa \
+  as"command" from"gh-r" pick"fd*/fd" \
+    @sharkdp/fd
 
 zinit ice wait"2" as"command" from"gh-r" lucid \
   mv"zoxide*/zoxide -> zoxide" \

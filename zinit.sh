@@ -37,7 +37,7 @@ zinit wait lucid light-mode for \
     @zsh-users/zsh-completions \
   @paulirish/git-open \
   @lukechilds/zsh-nvm \
-  as"command" from"gh-r" mv"delta* -> delta" pick"delta/delta" \
+  as"command" from"gh-r" pick"delta/delta" \
     @dandavison/delta \
   as"command" from"gh-r" pick"bat*/bat" \
     @sharkdp/bat \

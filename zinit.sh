@@ -33,17 +33,17 @@ zinit light dandavison/delta
 
 zinit wait lucid light-mode for \
   atload"_zsh_autosuggest_start; bindkey '\t' autosuggest-accept; bindkey '^[[A' history-beginning-search-backward; bindkey '^[[B' history-beginning-search-forward" \
-    zsh-users/zsh-autosuggestions \
+    @zsh-users/zsh-autosuggestions \
   atinit"zicompinit; zicdreplay" \
-    zdharma/fast-syntax-highlighting \
+    @zdharma/fast-syntax-highlighting \
   blockf atpull'zinit creinstall -q .' \
-    zsh-users/zsh-completions \
-  paulirish/git-open \
-  lukechilds/zsh-nvm
+    @zsh-users/zsh-completions \
+  @paulirish/git-open \
+  @lukechilds/zsh-nvm
 
 zinit as"command" wait lucid from"gh-r" light-mode for \
   pick"bat/bat" @sharkdp/bat \
-  pick"bin/exa" ogham/exa
+  pick"bin/exa" @ogham/exa 
 
 zinit ice wait"2" as"command" from"gh-r" lucid \
   mv"zoxide*/zoxide -> zoxide" \

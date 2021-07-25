@@ -35,6 +35,8 @@ zinit wait lucid light-mode for \
     @zdharma/fast-syntax-highlighting \
   blockf atpull='zinit creinstall -q .' \
     @zsh-users/zsh-completions \
+  from"gh-r" as"program" \
+    @junegunn/fzf \
   @paulirish/git-open \
   @lukechilds/zsh-nvm \
   as="command" from="gh-r" pick="delta/delta" \

@@ -42,8 +42,9 @@ zinit wait lucid light-mode for \
   @lukechilds/zsh-nvm
 
 zinit as"command" wait lucid from"gh-r" light-mode for \
-  pick"bat/bat" @sharkdp/bat \
-  pick"bin/exa" @ogham/exa 
+  pick"bat*/bat" @sharkdp/bat \
+  pick"bin/exa" @ogham/exa \
+  pick"fd*/fd" @sharkdp/fd
 
 zinit ice wait"2" as"command" from"gh-r" lucid \
   mv"zoxide*/zoxide -> zoxide" \

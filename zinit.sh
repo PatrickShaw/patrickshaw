@@ -41,7 +41,7 @@ zinit wait lucid light-mode for \
   paulirish/git-open \
   lukechilds/zsh-nvm
 
-zinit as"command" wait lucid from"gh-r" for \
+zinit as"command" wait lucid from"gh-r" light-mode for \
   pick"bat/bat" @sharkdp/bat
 
 zinit ice wait"2" as"command" from"gh-r" lucid \

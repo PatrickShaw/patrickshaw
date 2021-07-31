@@ -35,20 +35,8 @@ zinit wait lucid light-mode for \
     @zdharma/fast-syntax-highlighting \
   blockf atpull='zinit creinstall -q .' \
     @zsh-users/zsh-completions \
-  from"gh-r" as"program" \
-    @junegunn/fzf \
   @paulirish/git-open \
   @lukechilds/zsh-nvm \
-  as="command" from="gh-r" pick="delta/delta" \
-    @dandavison/delta \
-  as="command" from="gh-r" pick="bat*/bat" \
-    @sharkdp/bat \
-  as="command" from="gh-r" pick="bin/exa" atload='alias ls="exa"' \
-    @ogham/exa \
-  as="command" from="gh-r" pick="fd*/fd" \
-    @sharkdp/fd \
-  as="command" from="gh-r" atclone="./zoxide init zsh > init.zsh" atpull="%atclone" src="init.zsh" nocompile='!' \
-    @ajeetdsouza/zoxide \
   @OMZ::plugins/git \
   @OMZ::plugins/thefuck \
   @OMZ::plugins/yarn

@@ -1,1 +1,1 @@
-source $(dirname $0)/../shared/config.fish)
+source (status dirname)/../shared/config.fish

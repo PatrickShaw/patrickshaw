@@ -1,4 +1,6 @@
-source $(dirname $0)/docker-aliases.sh
-source $(dirname $0)/git-aliases.sh
+set fish_greeting
 
-source $(dirname $0)/program-aliases.sh
+bass source (status dirname)/aliases/docker-aliases.sh
+bass source (status dirname)/aliases/git-aliases.sh
+
+bass source (status dirname)/aliases/program-aliases.sh

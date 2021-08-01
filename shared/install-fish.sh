@@ -1,7 +1,9 @@
+#!/usr/bin/env fish
 sudo sh -c 'echo /usr/local/bin/fish >> /etc/shells'
 chsh -s /usr/local/bin/fish
 
-$($0/../install-fisher.sh)
+(status dirname)/../install-fisher.sh
 
 fisher install ilancosman/tide
 fisher install jorgebucaran/nvm.fish
+fisher install edc/bass

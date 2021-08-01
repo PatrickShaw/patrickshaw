@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-xbps-install -Su zoxide exa delta bat fzf
+sudo xbps-install -Su -y zoxide exa delta bat fzf

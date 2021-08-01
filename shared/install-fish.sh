@@ -6,4 +6,3 @@ chsh -s /usr/local/bin/fish
 
 fisher install ilancosman/tide
 fisher install jorgebucaran/nvm.fish
-fisher install edc/bass

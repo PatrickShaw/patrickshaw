@@ -1,6 +1,8 @@
 set fish_greeting
 
-bass source (status dirname)/aliases/docker-aliases.sh
-bass source (status dirname)/aliases/git-aliases.sh
+zoxide init zsh | eval
 
-bass source (status dirname)/aliases/program-aliases.sh
+source (status dirname)/aliases/docker-aliases.fish
+source (status dirname)/aliases/git-aliases.fish
+
+source (status dirname)/aliases/program-aliases.fish

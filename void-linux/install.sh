@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-sudo xbps-install -Su -y zoxide exa delta bat fzf fish 
+sudo xbps-install -Su -y zoxide exa delta bat fzf fish-shell 
 
-source ../shared/install-fish.sh
+$(dirname $0)/../shared/install-fish.fish

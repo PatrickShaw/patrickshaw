@@ -4,5 +4,4 @@ chsh -s /usr/local/bin/fish
 
 fish $(dirname $0)/../install-fisher.sh
 
-fisher install ilancosman/tide
-fisher install jorgebucaran/nvm.fish
+fisher install ilancosman/tide FabioAntunes/fish-nvm edc/bass

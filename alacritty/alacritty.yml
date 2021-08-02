@@ -3,7 +3,7 @@ font:
     family: MesloLGS NF
   size: 14
 shell:
-  program: /usr/local/bin/env
+  program: /usr/bin/env
   args:
     - fish
     - --login

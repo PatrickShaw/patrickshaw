@@ -4,8 +4,3 @@ font:
   size: 14
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>-"
-shell:
-  program: /usr/bin/env
-  args:
-    - fish
-    - --login

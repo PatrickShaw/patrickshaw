@@ -2,6 +2,8 @@ font:
   normal:
     family: MesloLGS NF
   size: 14
+selection:
+  semantic_escape_chars: ",│`|:\"' ()[]{}<>-"
 shell:
   program: /usr/bin/env
   args:

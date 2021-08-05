@@ -2,3 +2,4 @@
 sudo xbps-install -Su -y zoxide exa delta bat fzf fish-shell 
 
 $(dirname $0)/../shared/install-fish.fish
+ln -s /bin/code-oss /bin/code

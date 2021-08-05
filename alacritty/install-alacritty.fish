@@ -1,2 +1,3 @@
 #!/usr/bin/env fish
-ln -s (status dirname)/ $HOME/.config/alacritty
+rm -r $HOME/.config/alacritty
+ln -s -v (realpath (status dirname)) $HOME/.config/alacritty

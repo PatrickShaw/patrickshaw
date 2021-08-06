@@ -8,4 +8,6 @@ for font_dir in $fonts_dir/*
     sudo ln -s $font_dir  /usr/share/fonts/
 end
 
+sudo ln -s (realpath (status dirname)/default-font.conf) /etc/fonts/conf.d/
+
 sudo xbps-reconfigure -f fontconfig

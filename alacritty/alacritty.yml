@@ -1,6 +1,6 @@
 font:
   normal:
-    family: MesloLGS Nerd Font Mono
+    family: Meslo LG S
   size: 14
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>-"

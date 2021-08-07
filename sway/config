@@ -203,7 +203,7 @@ bindsym $mod+r mode "resize"
 bar {
     swaybar_command waybar
 
-    position left
+    position top
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
@@ -217,5 +217,6 @@ bar {
 }
 
 focus_follows_mouse no
+font pango:Inter Regular 10
 
 include /etc/sway/config.d/*

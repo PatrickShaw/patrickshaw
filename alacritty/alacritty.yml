@@ -1,6 +1,6 @@
 font:
   normal:
-    family: Meslo LG S
+    family: Fira Code
   size: 14
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>-"

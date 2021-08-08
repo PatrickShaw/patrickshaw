@@ -1,5 +1,7 @@
 #!/usr/bin/env fish
 
+sudo xbps-install -Suy twemoji	
+
 set fonts_dir (realpath (status dirname)/../fonts)
 
 for font_dir in $fonts_dir/*

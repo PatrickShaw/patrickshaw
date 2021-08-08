@@ -217,6 +217,16 @@ bar {
 }
 
 focus_follows_mouse no
-font pango:Inter Regular 10
+
+set $my_font Inter
+set $my_cursor_theme elementary
+
+font pango:$my_font Regular 10
+
+seat seat0 xcursor_theme $my_cursor_theme 24
+exec_always {
+    gsettings set org.gnome.desktop.interface cursor-theme $my_cursor_theme
+    gsettings set org.gnome.desktop.interface font-name $my_font
+}
 
 include /etc/sway/config.d/*

@@ -40,7 +40,7 @@ window#waybar.chromium {
 #workspaces button {
     padding: 0 5px;
     background-color: transparent;
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.87);
     /* Use box-shadow instead of border so the text isn't offset */
     box-shadow: inset 0 -3px transparent;
 }
@@ -52,7 +52,7 @@ window#waybar.chromium {
 }
 
 #workspaces button.focused {
-    background-color: #64727D;
+    background-color: rgba(0, 0, 0, 0.15);
     box-shadow: inset 0 -3px #ffffff;
 }
 
@@ -81,7 +81,7 @@ window#waybar.chromium {
 #mpd {
     padding: 0 10px;
     margin: 0 4px;
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.87);
 }
 
 #window,
@@ -101,11 +101,6 @@ window#waybar.chromium {
 
 #clock {
     background-color: #64727D;
-}
-
-#battery {
-    background-color: #ffffff;
-    color: #000000;
 }
 
 #battery.charging, #battery.plugged {
@@ -151,16 +146,8 @@ label:focus {
     background-color: #90b1b1;
 }
 
-#network {
-    color: rgba(255, 255, 255, 0.87);
-}
-
 #network.disconnected {
     background-color: rgba(255, 255, 255, 0.6);
-}
-
-#pulseaudio {
-    color: rgba(255, 255, 255, 0.87);
 }
 
 #pulseaudio.muted {

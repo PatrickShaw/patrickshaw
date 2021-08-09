@@ -152,10 +152,10 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
     bindsym $mod+f fullscreen
 
     # Toggle the current focus between tiling and floating mode
-    bindsym $mod+Shift+space floating toggle
+    bindsym $mod+Shift+z floating toggle
 
     # Swap focus between the tiling area and the floating area
-    bindsym $mod+space focus mode_toggle
+    bindsym $mod+z focus mode_toggle
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
@@ -223,9 +223,8 @@ set $my_cursor_theme elementary
 
 font pango:$my_font Regular 10
 
-bindsym Mod1+space exec ulauncher
+bindsym $mod+space exec ulauncher
 
-default_border none
 for_window [app_id="ulauncher"] border none
 
 seat seat0 xcursor_theme $my_cursor_theme 24

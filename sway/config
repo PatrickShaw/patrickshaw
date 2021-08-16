@@ -23,7 +23,7 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+output * bg /usr/share/backgrounds/sway/wallhaven-e77g8k.jpg fill
 #
 # Example configuration:
 #
@@ -237,5 +237,9 @@ exec_always {
     gsettings set org.gnome.desktop.interface cursor-theme $my_cursor_theme
     gsettings set org.gnome.desktop.interface font-name $my_font
 }
+
+client.focused #222222AA #222222AA #FFFFFFA8
+client.focused_inactive #111111CC #111111CC #FFFFFF9A
+client.unfocused #111111CC #111111CC #FFFFFF9A
 
 include /etc/sway/config.d/*

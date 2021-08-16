@@ -227,6 +227,8 @@ bindsym $mod+space exec ulauncher
 
 for_window [app_id="ulauncher"] border none
 
+for_window [app_id="pavucontrol"] floating toggle
+
 output * adaptive_sync on
 
 seat seat0 xcursor_theme $my_cursor_theme 24

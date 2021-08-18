@@ -73,15 +73,15 @@
         "spacing": 10
     },
     "clock": {
-        // "timezone": "America/New_York",
+        "timezone": "Australia/Melbourne",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format": "{:%H:%M %p | %a %d}",
+        "format": "{:%I:%M %p | %a %d}",
         "format-alt": "{:%Y-%m-%d}"
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
         "format-wifi": "{essid} ({signalStrength}%) \uf1eb",
-        "format-ethernet": "{ipaddr} \uf796",
+        "format-ethernet": "{ipaddr}",
         "format-linked": "{ifname} (No IP) \uf796",
         "format-disconnected": "Disconnected \u26a0",
         "format-alt": "{ipaddr}"

@@ -239,7 +239,7 @@ exec_always {
 }
 
 client.focused #2A2A2ADD #2A2A2ADD #FFFFFFDD
-client.focused_inactive #111111CC #111111CC #FFFFFF9A
-client.unfocused #111111CC #111111CC #FFFFFF9A
+client.focused_inactive #222222EE #222222EE #FFFFFF9A
+client.unfocused #222222EE #222222EE #FFFFFF9A
 
 include /etc/sway/config.d/*

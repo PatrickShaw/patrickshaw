@@ -218,7 +218,7 @@ bar {
 
 focus_follows_mouse no
 
-set $my_font Inter
+set $my_font system-ui
 set $my_cursor_theme elementary
 
 font pango:$my_font Regular 10

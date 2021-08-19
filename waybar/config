@@ -117,7 +117,6 @@
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
     },
     "sway/workspaces": {
-        "all-outputs": true,
         "persistent_workspaces": {
 			"2": [],
 			"3": []

@@ -23,7 +23,7 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /usr/share/backgrounds/sway/wallhaven-e77g8k.jpg fill
+output * bg /usr/share/backgrounds/sway/wallhaven-k9p8l6.jpg fill
 #
 # Example configuration:
 #
@@ -111,8 +111,8 @@ output * bg /usr/share/backgrounds/sway/wallhaven-e77g8k.jpg fill
 # Workspaces:
 #
     # Switch to workspace
-    bindsym $mod+1 workspace number 1
-    bindsym $mod+2 workspace number 2
+    bindsym $mod+1 workspace number 1; output * bg /usr/share/backgrounds/sway/wallhaven-zm1m2j.jpg fill
+    bindsym $mod+2 workspace number 2; output * bg /usr/share/backgrounds/sway/wallhaven-yjoxpx.png fill
     bindsym $mod+3 workspace number 3
     bindsym $mod+4 workspace number 4
     bindsym $mod+5 workspace number 5
@@ -238,7 +238,7 @@ exec_always {
     gsettings set org.gnome.desktop.interface font-name $my_font
 }
 
-client.focused #222222AA #222222AA #FFFFFFA8
+client.focused #2A2A2ADD #2A2A2ADD #FFFFFFDD
 client.focused_inactive #111111CC #111111CC #FFFFFF9A
 client.unfocused #111111CC #111111CC #FFFFFF9A
 

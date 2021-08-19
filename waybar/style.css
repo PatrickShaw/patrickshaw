@@ -99,10 +99,6 @@ window#waybar.chromium {
     margin-right: 0;
 }
 
-#clock {
-    background-color: #64727D;
-}
-
 #battery.charging, #battery.plugged {
     color: #ffffff;
     background-color: #26A65B;
@@ -176,10 +172,6 @@ label:focus {
     background-color: #eb4d4b;
 }
 
-#tray {
-    background-color: #2980b9;
-}
-
 #tray > .passive {
     -gtk-icon-effect: dim;
 }
@@ -189,12 +181,7 @@ label:focus {
     background-color: #eb4d4b;
 }
 
-#idle_inhibitor {
-    background-color: #2d3436;
-}
-
 #idle_inhibitor.activated {
-    background-color: #ecf0f1;
     color: #2d3436;
 }
 

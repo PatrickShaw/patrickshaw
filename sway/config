@@ -225,6 +225,12 @@ font pango:$my_font Regular 10
 
 bindsym $mod+space exec ulauncher
 
+bindsym Print exec "~/.config/sway/screen-to-clipboard.fish"
+
+bindsym --release $mod+Print exec "~/.config/sway/current-window-to-clipboard.fish"
+bindsym --release Shift+Mod1+4 exec "~/.config/sway/mouse-selection-to-clipboard.fish"
+
+
 for_window [app_id="ulauncher"] border none
 
 for_window [app_id="pavucontrol"] floating toggle

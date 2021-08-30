@@ -1,2 +1,2 @@
 #!/usr/bin/env fish
-alias ls="exa"
+grim - | wl-copy

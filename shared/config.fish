@@ -9,4 +9,6 @@ source (status dirname)/aliases/git-aliases.fish
 
 source (status dirname)/aliases/program-aliases.fish
 
+bind \cW backward-kill-word
+
 thefuck --alias | source

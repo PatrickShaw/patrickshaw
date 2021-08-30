@@ -23,7 +23,7 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+output * bg /usr/share/backgrounds/sway/wallhaven-k9p8l6.jpg fill
 #
 # Example configuration:
 #
@@ -111,16 +111,16 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 # Workspaces:
 #
     # Switch to workspace
-    bindsym $mod+1 workspace number 1
-    bindsym $mod+2 workspace number 2
-    bindsym $mod+3 workspace number 3
-    bindsym $mod+4 workspace number 4
-    bindsym $mod+5 workspace number 5
-    bindsym $mod+6 workspace number 6
-    bindsym $mod+7 workspace number 7
-    bindsym $mod+8 workspace number 8
-    bindsym $mod+9 workspace number 9
-    bindsym $mod+0 workspace number 10
+    bindsym $mod+1 workspace number 1; output * bg /usr/share/backgrounds/sway/wallhaven-k9p8l6.jpg fill
+    bindsym $mod+2 workspace number 2; output * bg /usr/share/backgrounds/sway/wallhaven-96kq3x.png fill
+    bindsym $mod+3 workspace number 3; output * bg /usr/share/backgrounds/sway/wallhaven-e77g8k.jpg fill
+    bindsym $mod+4 workspace number 4; output * bg /usr/share/backgrounds/sway/wallhaven-eyw8yr.jpg fill
+    bindsym $mod+5 workspace number 5; output * bg /usr/share/backgrounds/sway/wallhaven-39ode6.png fill
+    bindsym $mod+6 workspace number 6; output * bg /usr/share/backgrounds/sway/wallhaven-4dz9ln.jpg fill
+    bindsym $mod+7 workspace number 7; output * bg /usr/share/backgrounds/sway/wallhaven-4yrzml.jpg fill
+    bindsym $mod+8 workspace number 8; output * bg /usr/share/backgrounds/sway/wallhaven-39ode6.png fill
+    bindsym $mod+9 workspace number 9; output * bg /usr/share/backgrounds/sway/wallhaven-rd3xvm.jpg fill
+    bindsym $mod+0 workspace number 10; output * bg /usr/share/backgrounds/sway/wallhaven-wyqdvp.jpg fill
     # Move focused container to workspace
     bindsym $mod+Shift+1 move container to workspace number 1
     bindsym $mod+Shift+2 move container to workspace number 2
@@ -218,22 +218,34 @@ bar {
 
 focus_follows_mouse no
 
-set $my_font Inter
+set $my_font system-ui
 set $my_cursor_theme elementary
 
 font pango:$my_font Regular 10
 
 bindsym $mod+space exec ulauncher
 
+bindsym Print exec "~/.config/sway/screen-to-clipboard.fish"
+
+bindsym --release $mod+Print exec "~/.config/sway/current-window-to-clipboard.fish"
+bindsym --release Shift+Mod1+4 exec "~/.config/sway/mouse-selection-to-clipboard.fish"
+
+
 for_window [app_id="ulauncher"] border none
+
+for_window [app_id="pavucontrol"] floating toggle
 
 output * adaptive_sync on
 
 seat seat0 xcursor_theme $my_cursor_theme 24
 exec_always {
-    gsettings set org.gnome.desktop.interface gtk-theme 'Arc-Dark'
+    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
     gsettings set org.gnome.desktop.interface cursor-theme $my_cursor_theme
     gsettings set org.gnome.desktop.interface font-name $my_font
 }
+
+client.focused #2A2A2ADD #2A2A2ADD #FFFFFFDD
+client.focused_inactive #222222EE #222222EE #FFFFFF9A
+client.unfocused #222222EE #222222EE #FFFFFF9A
 
 include /etc/sway/config.d/*

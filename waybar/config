@@ -4,9 +4,19 @@
     "height": 30, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode", "custom/media"],
-    "modules-center": ["sway/window"],
-    "modules-right": ["pulseaudio", "network", "clock", "tray"],
+    "modules-left": [
+        "sway/workspaces",
+        "sway/mode",
+        "custom/media"
+    ],
+    "modules-center": [
+        "sway/window"
+    ],
+    "modules-right": [
+        "pulseaudio",
+        "network",
+        "clock"
+    ],
     // Modules configuration
     // "sway/workspaces": {
     //     "disable-scroll": true,
@@ -73,14 +83,15 @@
         "spacing": 10
     },
     "clock": {
-        // "timezone": "America/New_York",
+        "timezone": "Australia/Melbourne",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format": "{:%I:%M %p | %a %d}",
         "format-alt": "{:%Y-%m-%d}"
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
         "format-wifi": "{essid} ({signalStrength}%) \uf1eb",
-        "format-ethernet": "{ipaddr} \uf796",
+        "format-ethernet": "{ipaddr}",
         "format-linked": "{ifname} (No IP) \uf796",
         "format-disconnected": "Disconnected \u26a0",
         "format-alt": "{ipaddr}"
@@ -100,7 +111,11 @@
             "phone": "\uf095",
             "portable": "\uf095",
             "car": "\uf1b9",
-            "default": ["\uf026", "\uf027", "\uf028"]
+            "default": [
+                "\uf026",
+                "\uf027",
+                "\uf028"
+            ]
         },
         "on-click": "pavucontrol"
     },
@@ -115,13 +130,5 @@
         "escape": true,
         "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
-    },
-    "sway/workspaces": {
-        "all-outputs": true,
-        "persistent_workspaces": {
-			"2": [],
-			"3": []
-		}
     }
 }
-

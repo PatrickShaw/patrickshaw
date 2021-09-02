@@ -4,3 +4,8 @@ font:
   size: 14
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>-"
+scrolling:
+  history: 40000
+  multiplier: 1
+  faux_multiplier: 1
+  auto_scroll: true

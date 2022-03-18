@@ -1,7 +1,7 @@
 font:
   normal:
     family: JetBrains Mono
-  size: 14
+  size: 11
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>-"
 scrolling:

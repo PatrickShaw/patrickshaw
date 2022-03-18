@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 set fish_path (which fish)
 sudo sh -c "echo $fish_path >> /etc/shells"
-chsh -s $fish_path
+# chsh -s $fish_path
 source (status dirname)/../install-fisher.fish
 # fisher install jorgebucaran/fisher
 

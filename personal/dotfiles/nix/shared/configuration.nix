@@ -3,6 +3,8 @@ let
   sharedAliases = {
     ls = "exa";
     cd = "z";
+    vim = "nvim";
+    vi = "nvim";
   };
 in
 {

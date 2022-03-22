@@ -1,3 +1,4 @@
 [submodule "public"]
+	branch = pshaw
 	path = community
 	url = git@github.com:the-monorepo/monorepo.git

@@ -200,13 +200,16 @@ bindsym $mod+r mode "resize"
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
+bar {
+    swaybar_command waybar
+}
 
 focus_follows_mouse no
 
 set $my_font system-ui
-set $my_cursor_theme elementary
+#set $my_cursor_theme elementary
 
-font pango:$my_font Regular 10
+#font pango:$my_font Regular 10
 
 bindsym $mod+space exec ulauncher
 
@@ -222,12 +225,12 @@ for_window [app_id="pavucontrol"] floating toggle
 
 output * adaptive_sync on
 
-seat seat0 xcursor_theme $my_cursor_theme 24
-exec_always {
-    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
-    gsettings set org.gnome.desktop.interface cursor-theme $my_cursor_theme
-    gsettings set org.gnome.desktop.interface font-name $my_font
-}
+#seat seat0 xcursor_theme $my_cursor_theme 24
+#exec_always {
+#    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+#    gsettings set org.gnome.desktop.interface cursor-theme $my_cursor_theme
+#    gsettings set org.gnome.desktop.interface font-name $my_font
+#}
 
 client.focused #2A2A2ADD #2A2A2ADD #FFFFFFDD
 client.focused_inactive #222222EE #222222EE #FFFFFF9A

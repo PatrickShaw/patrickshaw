@@ -73,4 +73,26 @@
   services.gvfs.enable = true;
 
   services.openssh.enable = true;
+
+    # Fonts
+    fonts = {
+        enableDefaultFonts = true;
+        fonts = [
+            pkgs.inter
+            pkgs."jetbrains-mono"
+            pkgs."noto-fonts"
+            pkgs."font-awesome"
+            pkgs."twemoji-color-font"
+        ];
+        fontconfig = {
+        defaultFonts = {
+            #systemUI = [ "Inter" "Noto Sans" ];
+            #sans = ["Inter" "Noto Sans"]; 
+            sansSerif = ["Inter" "Noto Sans"]; 
+            serif = [ "Noto Serif"];
+            monospace = ["JetBrains Mono" "Noto Sans Mono"];
+            emoji = [ "Twitter Color Emoji" ];
+        };
+        };
+    };
 }

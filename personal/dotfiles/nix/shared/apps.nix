@@ -1,28 +1,28 @@
 { pkgs, ... }:
 
-[
-  pkgs.discord
+with pkgs; [
+  discord
 
-  pkgs.docker
+  docker
 
-  pkgs.vscode  
-  pkgs.alacritty
+  vscode  
+  alacritty
 
-  pkgs.yarn
-  pkgs.rustup
-  pkgs.python3
-  pkgs.python
-  pkgs.adoptopenjdk-bin
-  pkgs.poetry
-  pkgs.deno
+  yarn
+  rustup
+  python3
+  python
+  adoptopenjdk-bin
+  poetry
+  deno
 
-  pkgs.exa
-  pkgs.thefuck
-  pkgs.zoxide
-  pkgs.delta
-  pkgs.vscode
-  pkgs.git
-  pkgs.neovim
+  exa
+  thefuck
+  zoxide
+  delta
+  vscode
+  git
+  neovim
 
-  pkgs.coreutils
+  coreutils
 ]

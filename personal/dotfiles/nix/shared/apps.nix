@@ -23,4 +23,6 @@
   pkgs.vscode
   pkgs.git
   pkgs.neovim
+
+  pkgs.coreutils
 ]

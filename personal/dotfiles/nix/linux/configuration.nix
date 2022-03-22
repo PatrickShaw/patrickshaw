@@ -7,11 +7,6 @@
 
   environment.systemPackages = import ./apps.nix { inherit pkgs; };
 
-  environment.variables = {
-    EDITOR = "nvim";
-    VISUAL = "nvim";
-  };
-
   nixpkgs.config.packageOverrides = {
       edk2 = stable.edk2;
   };

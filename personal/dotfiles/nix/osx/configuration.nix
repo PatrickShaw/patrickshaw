@@ -9,4 +9,9 @@
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnfreePredicate = (pkg: true);
+  
+  fonts = {
+    enableFontDir = true;
+    fonts = import ../shared/font-pkgs.nix { inherit pkgs; };
+ };
 }

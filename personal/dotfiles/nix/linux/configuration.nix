@@ -72,13 +72,7 @@
     # Fonts
     fonts = {
         enableDefaultFonts = true;
-        fonts = [
-            pkgs.inter
-            pkgs."jetbrains-mono"
-            pkgs."noto-fonts"
-            pkgs."font-awesome"
-            pkgs."twemoji-color-font"
-        ];
+        fonts = import ../shared/font-pkgs.nix { inherit pkgs; };
         fontconfig = {
         defaultFonts = {
             #systemUI = [ "Inter" "Noto Sans" ];

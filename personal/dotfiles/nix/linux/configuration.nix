@@ -36,7 +36,7 @@ in
     rm /var/lib/libvirt/qemu/networks/autostart/default.xml
   '';
   boot.kernelPackages = pkgs.linuxPackages_zen;
-  boot.kernelParams = ["transparent_hugepages=always" "iommu=pt" "intel_iommu=on" "rd.driver.pre=vfio_pci" "vfio-pci.ids=10de:1c03,10de:10f1" "pcie_acs_override=downstream,multifunction"];
+  boot.kernelParams = ["iommu=pt" "intel_iommu=on" "rd.driver.pre=vfio_pci" "vfio-pci.ids=10de:1c03,10de:10f1" "pcie_acs_override=downstream,multifunction"];
   boot.kernelModules = ["kvm_intel" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
   boot.blacklistedKernelModules = [ "nvidia" "nouveau" ];
 

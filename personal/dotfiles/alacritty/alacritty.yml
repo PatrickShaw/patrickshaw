@@ -2,6 +2,8 @@ font:
   normal:
     family: JetBrains Mono
   size: 11
+cursor:
+  style: Beam
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>-"
 scrolling:

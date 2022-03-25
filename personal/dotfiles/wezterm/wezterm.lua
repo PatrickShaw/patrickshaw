@@ -12,4 +12,5 @@ return {
   },
   font_size = 11,
   color_scheme = "Dark+",
+  scrollback_lines = 10000,
 };

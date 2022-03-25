@@ -1,8 +1,9 @@
 source (status dirname)/../shared/config.fish
 # alias code="code-oss"
 
-fish_add_path $HOME/.cargo/bin
-fish_add_path $HOME/.yarn/bin
+# All handled by Nix
+#fish_add_path $HOME/.cargo/bin
+#fish_add_path $HOME/.yarn/bin
 
 if status is-login 
 
@@ -15,7 +16,8 @@ if status is-login
 
     #sway --my-next-gpu-wont-be-nvidia &
 
-    dbus-launch pipewire &
-    dbus-launch pipewire-pulse &
-    dbus-launch pipewire-media-session &
+    # All handled by Nix
+    #dbus-launch pipewire &
+    #dbus-launch pipewire-pulse &
+    #dbus-launch pipewire-media-session &
 end

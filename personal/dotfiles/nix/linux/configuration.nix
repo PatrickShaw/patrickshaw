@@ -1,5 +1,11 @@
-{ config, pkgs, ... }:
-
+{ config, pkgs, lib, ... }:
+let
+  stable = import (builtins.fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-21.05.tar.gz) {
+    config = {
+      allowUnfree = true;
+    };
+  };
+in
 {
   imports = [
       ../shared/configuration.nix
@@ -19,8 +25,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
-
-  users.users.pshaw.shell = pkgs.fish;
 
   services.chrony.enable = true;
   services.timesyncd.enable = false;

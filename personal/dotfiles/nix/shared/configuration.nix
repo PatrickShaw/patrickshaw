@@ -7,7 +7,7 @@ let
   };
   sharedAliases = {
     ls = "exa";
-    cd = "z";
+    # Unfortunately zoxide relies on cd in Fish so can't do: cd = "z";
     vim = "nvim";
     vi = "nvim";
   };

@@ -5,4 +5,4 @@ sudo sh -c "echo $fish_path >> /etc/shells"
 source (status dirname)/../install-fisher.fish
 # fisher install jorgebucaran/fisher
 
-fisher install ilancosman/tide@v5.0.1 FabioAntunes/fish-nvm edc/bass
+fisher install ilancosman/tide@v5.0.1 edc/bass

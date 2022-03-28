@@ -8,6 +8,8 @@ with pkgs; [
   vscode  
   alacritty
 
+  fnm
+
   yarn
   rustup
   python3

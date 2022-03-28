@@ -21,7 +21,10 @@ zinit wait lucid light-mode for \
     @zsh-users/zsh-completions \
   ajeetdsouza/zoxide \
   @paulirish/git-open \
-  @lukechilds/zsh-nvm \
+  #@lukechilds/zsh-nvm \
   @OMZ::plugins/git \
   @OMZ::plugins/thefuck \
   @OMZ::plugins/yarn
+
+eval $(fnm completions --shell zsh)
+eval "$(fnm env --use-on-cd)"

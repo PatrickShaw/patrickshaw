@@ -20,11 +20,11 @@ zinit wait lucid light-mode for \
   blockf atpull='zinit creinstall -q .' \
     @zsh-users/zsh-completions \
   ajeetdsouza/zoxide \
-  @paulirish/git-open \
+  @paulirish/git-open
   #@lukechilds/zsh-nvm \
-  @OMZ::plugins/git \
-  @OMZ::plugins/thefuck \
-  @OMZ::plugins/yarn
+zinit snippet OMZ::plugins/git
+zinit snippet OMZ::plugins/thefuck
+zinit snippet OMZ::plugins/yarn
 
 eval $(fnm completions --shell zsh)
 eval "$(fnm env --use-on-cd)"

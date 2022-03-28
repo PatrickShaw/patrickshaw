@@ -27,5 +27,8 @@ with pkgs; [
   git-lfs
   neovim
 
+  zsh
+  fish
+
   coreutils
 ]

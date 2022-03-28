@@ -5,13 +5,20 @@ let
       allowUnfree = true;
     };
   };
+
+  unstable-pkgs = import ./unstable-pkgs.nix {};
+  default-pkgs = unstable-pkgs;
+
+  shared-configuration = import ../shared/configuration.nix {
+    pkgs = default-pkgs;
+  };
 in
 {
   imports = [
-      ../shared/configuration.nix
+      shared-configuration
   ];
 
-  environment.systemPackages = import ./apps.nix { inherit pkgs; };
+  environment.systemPackages = import ./apps.nix { pkgs = default-pkgs; };
 
   nixpkgs.config.packageOverrides = {
       edk2 = stable.edk2;
@@ -63,7 +70,7 @@ in
     config.pipewire = {
       "context.properties" = {
         "default.clock.rate" = 48000;
-	"default.clock.quantum" = 512;
+      	"default.clock.quantum" = 512;
       };
     };
   };
@@ -77,7 +84,7 @@ in
     # Fonts
     fonts = {
         enableDefaultFonts = true;
-        fonts = import ../shared/font-pkgs.nix { inherit pkgs; };
+        fonts = import ../shared/font-pkgs.nix { pkgs = default-pkgs; };
         fontconfig = {
         defaultFonts = {
             #systemUI = [ "Inter" "Noto Sans" ];

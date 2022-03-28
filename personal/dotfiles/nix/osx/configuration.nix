@@ -5,16 +5,11 @@ let
       allowUnfree = true;
     };
   };
-
-  unstable-pkgs = import (builtins.fetchTarball https://github.com/NixOS/nixpkgs/archive/nixpkgs-unstable.tar.gz) {
-    config = {
-      allowUnfree = true;
-    };
-  };
+  
+  unstable-pkgs = import ./unstable-pkgs.nix {};
   default-pkgs = unstable-pkgs;
 
   shared-configuration = import ../shared/configuration.nix {
-    inherit programs;
     pkgs = default-pkgs;
   };
 in

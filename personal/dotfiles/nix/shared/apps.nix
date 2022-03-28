@@ -22,6 +22,7 @@ with pkgs; [
   delta
   vscode
   git
+  git-lfs
   neovim
 
   coreutils

@@ -7,7 +7,6 @@ with pkgs; [
 
   vscode  
   alacritty
-  wezterm
 
   yarn
   rustup

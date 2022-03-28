@@ -52,6 +52,8 @@
 
     pkgs.kitty
 
+    pkgs.wezterm
+
     #pkgs."elementary-gtk-theme"
     #pkgs."elementary-icon-theme"
 ]

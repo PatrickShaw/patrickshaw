@@ -18,6 +18,8 @@ with pkgs; [
   poetry
   deno
 
+  bat
+
   exa
   thefuck
   zoxide

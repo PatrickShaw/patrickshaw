@@ -18,6 +18,7 @@ in
       shared-configuration
   ];
 
+  virtualisation.docker.enable = true;
   environment.systemPackages = import ./apps.nix { pkgs = default-pkgs; };
 
   nixpkgs.config.packageOverrides = {

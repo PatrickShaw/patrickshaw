@@ -54,6 +54,9 @@
 
     pkgs.wezterm
 
+    pkgs.docker
+    pkgs."docker-compose"
+
     #pkgs."elementary-gtk-theme"
     #pkgs."elementary-icon-theme"
 ]

@@ -3,9 +3,6 @@
 with pkgs; [
   discord
 
-  docker
-  docker-compose
-
   vscode  
   alacritty
 

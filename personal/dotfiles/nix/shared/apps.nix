@@ -4,6 +4,7 @@ with pkgs; [
   discord
 
   docker
+  docker-compose
 
   vscode  
   alacritty
@@ -31,6 +32,8 @@ with pkgs; [
 
   zsh
   fish
+
+  postgresql
 
   coreutils
 ]

@@ -10,7 +10,7 @@ return {
     top = 0,
     bottom = 0,
   },
-  font_size = 11,
-  color_scheme = "Dark+",
+  font_size = 12,
+  color_scheme = "Dracula+",
   scrollback_lines = 10000,
 };

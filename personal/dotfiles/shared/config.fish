@@ -1,5 +1,7 @@
 set fish_greeting
 
+fish_add_path $HOME/.cargo/bin
+
 bind \cW backward-kill-word
 
 if status is-interactive

@@ -1,0 +1,5 @@
+{
+	"name": "Patrick Shaw's Theme (Dark)",
+	"include": "./__generated__/vscode-themes/dark_plus.json",
+	"$schema": "vscode://schemas/color-theme"
+}

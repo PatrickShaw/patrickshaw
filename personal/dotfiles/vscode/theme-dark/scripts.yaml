@@ -1,0 +1,22 @@
+reload.build: vsce package -o extension.vsix
+reload.install: code --install-extension ./extension.vsix
+reload:
+  series:
+    - task: reload.build
+    - task: reload.install
+clean:
+  parallel:
+    - rm -rf ./src/__generated__/vscode-themes
+    - rm ./extension.vsix
+
+update.vscode-themes:
+  series:
+    - mkdir -p ./src/__generated__/vscode-themes
+    - parallel:
+      - curl https://raw.githubusercontent.com/microsoft/vscode/main/extensions/theme-defaults/themes/dark_plus.json -o ./src/__generated__/vscode-themes/dark_plus.json
+      - curl https://raw.githubusercontent.com/microsoft/vscode/main/extensions/theme-defaults/themes/dark_vs.json -o ./src/__generated__/vscode-themes/dark_vs.json
+
+update:
+  series:
+  - task: update.vscode-themes
+  - task: reload

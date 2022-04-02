@@ -1,0 +1,26 @@
+{
+    "name": "pshaw-theme-dark",
+    "displayName": "Patrick Shaw Theme (Dark)",
+    "description": "My dark colour theme",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.66.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/the-monorepo/monorepo/tree/master/.vscode",
+        "directory": "personal/dotfiles/vscode/theme-dark"
+    },
+    "categories": [
+        "Themes"
+    ],
+    "contributes": {
+        "themes": [
+            {
+                "label": "Patrick Shaw (Dark)",
+                "uiTheme": "vs-dark",
+                "path": "./src/index.json"
+            }
+        ]
+    }
+}

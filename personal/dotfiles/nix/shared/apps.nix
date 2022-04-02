@@ -25,6 +25,7 @@ with pkgs; [
   vscode
   git
   git-lfs
+  delta
   neovim
 
   zsh

@@ -1,5 +1,10 @@
 {
 	"name": "Patrick Shaw's Theme (Dark)",
 	"include": "./__generated__/vscode-themes/dark_plus.json",
-	"$schema": "vscode://schemas/color-theme"
+	"$schema": "vscode://schemas/color-theme",
+	"colors": {
+    "statusBar.background" : "#333333",
+    "statusBar.noFolderBackground" : "#212121",
+    "statusBar.debuggingBackground": "#263238"
+	}
 }

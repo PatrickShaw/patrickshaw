@@ -4,3 +4,16 @@ vim.opt.mouse = "a"
 vim.opt.expandtab = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
+
+vim.api.nvim_set_keymap('v', '<S-Up>', '<Up>', { noremap = true; })
+vim.api.nvim_set_keymap('v', '<S-Down>', '<Down>', { noremap = true })
+vim.api.nvim_set_keymap('v', '<S-Left>', '<Left>', { noremap = true })
+vim.api.nvim_set_keymap('v', '<S-Right>', '<Right>', { noremap = true })
+vim.api.nvim_set_keymap('i', '<S-Up>', '<esc>v<Up>', { noremap = true })
+vim.api.nvim_set_keymap('i', '<S-Down>', '<esc>v<Down>', { noremap = true })
+vim.api.nvim_set_keymap('i', '<S-Left>', '<esc>v<Left>', { noremap = true })
+vim.api.nvim_set_keymap('i', '<S-Right>', '<esc>v<Right>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<S-Up>', '<esc>v<Up>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<S-Down>', '<esc>v<Down>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<S-Left>', '<esc>v<Left>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<S-Right>', '<esc>v<Right>', { noremap = true })

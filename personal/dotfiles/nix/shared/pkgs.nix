@@ -8,7 +8,22 @@ let
     };
     programs = {
       git = {
+        enable = true;
         lfs.enable = true;
+      };
+      neovim = {
+        enable = true;
+        plugins = with pkgs.vimPlugins; [
+          coc
+          coc-nvim
+          coc-css
+          coc-yaml
+          coc-python
+          coc-git
+          coc-rust-analyzer
+          coc-tsserver
+          vim-nix
+        ];
       };
       zsh = {
         enable = true;

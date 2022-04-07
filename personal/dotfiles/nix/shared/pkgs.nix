@@ -7,6 +7,9 @@ let
       allowUnfreePredicate = (pkg: true);
     };
     programs = {
+      git = {
+        lfs.enable = true;
+      };
       zsh = {
         enable = true;
         shellAliases = sharedAliases;

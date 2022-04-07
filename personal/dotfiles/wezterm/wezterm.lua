@@ -1,7 +1,7 @@
 local w = require 'wezterm';
 
 return {
-  font = w.font("JetBrains Mono"),
+  font = w.font("JetBrainsMono Nerd Font Mono"),
   hide_tab_bar_if_only_one_tab = true,
   enable_scroll_bar = true,
   window_padding = {
@@ -13,4 +13,6 @@ return {
   font_size = 12,
   color_scheme = "Dracula+",
   scrollback_lines = 10000,
+  freetype_load_target = "HorizontalLcd",
+  font_antialias="Subpixel",
 };

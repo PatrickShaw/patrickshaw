@@ -1,0 +1,10 @@
+add_newline = true
+
+# You can also replace your username with a neat symbol like  to save some space
+[username]
+show_always = false
+
+[time]
+disabled = true
+
+

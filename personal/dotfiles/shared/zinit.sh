@@ -5,7 +5,7 @@ autoload -Uz _zinit
 
 # Custom zinit settings
 zinit ice depth=1
-zinit light romkatv/powerlevel10k
+#zinit light romkatv/powerlevel10k
 
 export NVM_AUTO_USE=true
 export NVM_COMPLETION=true

@@ -28,6 +28,8 @@ with pkgs; [
   delta
   neovim
 
+  pkgs.starship
+
   zsh
   fish
 

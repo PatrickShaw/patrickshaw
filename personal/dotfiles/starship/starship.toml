@@ -1,8 +1,5 @@
 add_newline = true
 
-[username]
-show_always = true
-
 [directory]
 truncation_length = 3
 truncation_symbol = "…/"

@@ -1,48 +1,9 @@
-format = """
-[](#3c3c3c)\
-$username\
-[\uE0B1](bg:#3c3c3c fg:#CCCCCC)\
-$directory\
-[\uE0B1](bg:#3c3c3c fg:#CCCCCC)\
-$git_branch\
-$git_status\
-[\uE0B1](bg:#3c3c3c fg:#CCCCCC)\
-$nodejs\
-$rust\
-[ ](fg:#3c3c3c)\
-"""
-
 add_newline = true
 
-[git_branch]
-symbol = ""
-style = "bg:#3c3c3c"
-format = '[[ $symbol $branch ](bg:#3c3c3c fg:#ec605b)]($style)'
-
-[git_status]
-style = "bg:#3c3c3c fg:#FCA17D"
-format = '[[($all_status$ahead_behind )](bg:#3c3c3c fg:#ec605b)]($style)'
-
-[nodejs]
-symbol = ""
-style = "bg:#3c3c3c fg:#f7cd7a"
-format = '[[ $symbol ($version) ](bg:#3c3c3c fg:#f7cd7a)]($style)'
-
-[rust]
-symbol = ""
-style = "bg:#3c3c3c fg:#f7cd7a"
-format = '[[ $symbol ($version) ](bg:#3c3c3c fg:#f7cd7a)]($style)'
-
-# You can also replace your username with a neat symbol like  to save some space
 [username]
 show_always = true
-style_user = "bg:#3c3c3c fg:#a2e7fa"
-style_root = "bg:#3c3c3c fg:#a2e7fa"
-format = '[$user ]($style)'
 
 [directory]
-style = "bg:#3c3c3c fg:#c096e5"
-format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
 

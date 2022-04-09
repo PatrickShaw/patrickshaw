@@ -2,7 +2,7 @@ set fish_greeting
 
 fish_add_path $HOME/.cargo/bin
 
-starship init fish | source
+#starship init fish | source
 
 bind \cW backward-kill-word
 

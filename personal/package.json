@@ -1,4 +1,7 @@
 {
   "name": "personal",
-  "private": true
+  "private": true,
+  "workspaces": [
+    "packages/*/javascript/*"
+  ]
 }

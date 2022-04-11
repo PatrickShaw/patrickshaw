@@ -19,11 +19,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       {\
         "name": "personal",\
         "reference": "workspace:."\
+      },\
+      {\
+        "name": "color–palette-generator-12af92",\
+        "reference": "workspace:packages/themes/javascript/color–palette-generator"\
       }\
     ],\
     "enableTopLevelFallback": true,\
     "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
     "fallbackExclusionList": [\
+      ["color–palette-generator-12af92", ["workspace:packages/themes/javascript/color–palette-generator"]],\
       ["personal", ["workspace:."]]\
     ],\
     "fallbackPool": [\
@@ -33,6 +38,25 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["ac-colors", [\
+        ["npm:1.4.3", {\
+          "packageLocation": "./.yarn/cache/ac-colors-npm-1.4.3-7b790c96dd-c28bb4da96.zip/node_modules/ac-colors/",\
+          "packageDependencies": [\
+            ["ac-colors", "npm:1.4.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["color–palette-generator-12af92", [\
+        ["workspace:packages/themes/javascript/color–palette-generator", {\
+          "packageLocation": "./packages/themes/javascript/color–palette-generator/",\
+          "packageDependencies": [\
+            ["color–palette-generator-12af92", "workspace:packages/themes/javascript/color–palette-generator"],\
+            ["ac-colors", "npm:1.4.3"]\
           ],\
           "linkType": "SOFT"\
         }]\

@@ -3,6 +3,22 @@
 
 __metadata:
   version: 6
+  cacheKey: 8
+
+"ac-colors@npm:^1.4.3":
+  version: 1.4.3
+  resolution: "ac-colors@npm:1.4.3"
+  checksum: c28bb4da96c85733d8abcb0ae5041db5bf81ef2ff374d512f891b55453a56bf0a56be206f9efe685471b127933513d240b357c567b07a0a18d752acabc25cdd5
+  languageName: node
+  linkType: hard
+
+"color–palette-generator-12af92@workspace:packages/themes/javascript/color–palette-generator":
+  version: 0.0.0-use.local
+  resolution: "color–palette-generator-12af92@workspace:packages/themes/javascript/color–palette-generator"
+  dependencies:
+    ac-colors: ^1.4.3
+  languageName: unknown
+  linkType: soft
 
 "personal@workspace:.":
   version: 0.0.0-use.local

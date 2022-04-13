@@ -15,4 +15,8 @@ return {
   scrollback_lines = 10000,
   freetype_load_target = "HorizontalLcd",
   font_antialias="Subpixel",
+  keys={
+    { key="LeftArrow", mods="OPT", action=w.action{SendString="\x1bb"} },
+    { key="RightArrow", mods="OPT", action=w.action{SendString="\x1bf"} },
+  }
 };

@@ -18,5 +18,6 @@ return {
   keys={
     { key="LeftArrow", mods="OPT", action=w.action{SendString="\x1bb"} },
     { key="RightArrow", mods="OPT", action=w.action{SendString="\x1bf"} },
-  }
+  },
+  default_cursor_style = "SteadyBar"
 };

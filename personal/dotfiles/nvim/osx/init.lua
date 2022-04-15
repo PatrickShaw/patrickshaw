@@ -1,0 +1,1 @@
+../me/personal/dotfiles/nvim/osx/init.lua

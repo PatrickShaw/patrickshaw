@@ -21,6 +21,7 @@ zinit wait lucid light-mode for \
     @zsh-users/zsh-completions \
   ajeetdsouza/zoxide \
   @paulirish/git-open
+  #@jeffreytse/zsh-vi-mode \
   #@lukechilds/zsh-nvm \
 zinit snippet OMZ::plugins/git
 zinit snippet OMZ::plugins/thefuck

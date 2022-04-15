@@ -1,7 +1,7 @@
 {
   "search.exclude": {
-    "community": true,
-    "personal": true,
+    "community/**": true,
+    "personal/**": true,
   },
   "files.exclude": {
     "community": true,

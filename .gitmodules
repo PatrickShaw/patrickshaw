@@ -3,5 +3,5 @@ branch = pshaw
 path = community
 url = git@github.com:the-monorepo/monorepo.git
 [submodule "personal/dotfiles/zsh/shared/zinit"]
-path = personal/dotfiles/zsh/shared/zinit
-url = git@github.com:zdharma-continuum/zinit.git
+	path = personal/dotfiles/zsh/shared/zinit
+	url = git@github.com:zdharma-continuum/zinit.git

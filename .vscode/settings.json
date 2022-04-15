@@ -1,0 +1,10 @@
+{
+  "search.exclude": {
+    "community": true,
+    "personal": true,
+  },
+  "files.exclude": {
+    "community": true,
+    "personal": true,
+  }
+}

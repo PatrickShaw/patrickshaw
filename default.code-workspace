@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "community"
+		},
+		{
+			"path": "personal"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
+}

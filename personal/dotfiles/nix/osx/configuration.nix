@@ -14,17 +14,12 @@ let
   };
 in
 {
-  # nix.package = default;
-  # nixpkgs.config.pkgs = default;
   imports = [
     shared-configuration
   ];
-  
+
   services.nix-daemon.enable = true;
   environment.systemPackages = import ./apps.nix { pkgs = default-pkgs; };
-
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowUnfreePredicate = (pkg: true);
   
   fonts = {
     enableFontDir = true;

@@ -13,7 +13,8 @@ let
     pkgs = default-pkgs;
   };
 in
-{
+{ 
+  programs.zsh.enable = true;
   imports = [
     shared-configuration
   ];

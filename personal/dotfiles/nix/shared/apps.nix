@@ -3,6 +3,10 @@
 with pkgs; [
   discord
 
+  gcc
+  cmake
+  gnumake
+
   vscode  
   alacritty
 
@@ -40,7 +44,7 @@ with pkgs; [
 
   pkgs.starship
 
-  zsh
+  # Causes collisions with gcc: zsh
   fish
 
   postgresql

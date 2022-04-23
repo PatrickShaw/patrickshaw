@@ -4,7 +4,7 @@
     "personal/**": true,
   },
   "files.exclude": {
-    "community": true,
-    "personal": true,
+    "community/**": true,
+    "personal/**": true,
   }
 }

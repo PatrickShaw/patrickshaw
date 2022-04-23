@@ -1,12 +1,12 @@
 { config, pkgs, programs, environment, ... }:
 let
-  stable-pkgs = import (builtins.fetchTarball https://github.com/NixOS/nixpkgs/archive/nixpkgs-21.11-darwin.tar.gz) {
+  stable-pkgs = import ./stable-pkgs.nix {
     config = {
       allowUnfree = true;
     };
-  };
-  
+  };  
   unstable-pkgs = import ./unstable-pkgs.nix {};
+
   default-pkgs = unstable-pkgs;
 
   shared-configuration = import ../shared/configuration.nix {

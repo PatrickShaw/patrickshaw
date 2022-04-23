@@ -44,7 +44,7 @@ with pkgs; [
 
   pkgs.starship
 
-  # Causes collisions with gcc: zsh
+  # zsh
   fish
 
   postgresql

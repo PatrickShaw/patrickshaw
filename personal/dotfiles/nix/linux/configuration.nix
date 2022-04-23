@@ -1,10 +1,6 @@
 { config, pkgs, lib, ... }:
 let
-  stable = import ./stable-pkgs.nix {
-    config = {
-      allowUnfree = true;
-    };
-  };
+  stable = import ./stable-pkgs.nix {};
 
   unstable-pkgs = import ./unstable-pkgs.nix {};
   default-pkgs = unstable-pkgs;
@@ -23,6 +19,38 @@ in
 
   nixpkgs.config.packageOverrides = {
       edk2 = stable.edk2;
+  };
+
+
+  programs = {
+    git = {
+      enable = true;
+      lfs.enable = true;
+    };
+    neovim = {
+      enable = true;
+      plugins = with pkgs.vimPlugins; [
+        coc
+        coc-nvim
+        coc-css
+        coc-yaml
+        coc-python
+        coc-git
+        coc-rust-analyzer
+        coc-tsserver
+        vim-nix
+      ];
+    };
+    zsh = {
+      enable = true;
+      shellAliases = sharedAliases;
+      # We do this ourselves
+      enableCompletion = false;
+    };
+    fish = {
+      enable = true;
+      shellAliases = sharedAliases;
+    };
   };
   
   systemd.tmpfiles.rules = [

@@ -3,5 +3,5 @@
 with pkgs; [
     pkgs.xcode-install
 
-    pkgs.iterm2
+    #pkgs.iterm2
 ]

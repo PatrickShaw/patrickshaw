@@ -1,62 +1,61 @@
 { pkgs }:
+with pkgs; [
+    google-chrome
+    firefox
 
-[
-    pkgs."google-chrome"
-    pkgs.firefox
+    sway
+    waybar
+    ulauncher
+    pavucontrol
+    wl-clipboard
+    looking-glass-client
 
-    pkgs.sway
-    pkgs.waybar
-    pkgs.ulauncher
-    pkgs.pavucontrol
-    pkgs."wl-clipboard"
-    pkgs."looking-glass-client"
+    gnome.nautilus
+    gnome.sushi
 
-    pkgs.gnome.nautilus
-    pkgs.gnome.sushi
-
-    pkgs.p7zip
-    pkgs.unzip
-    pkgs.gzip
+    p7zip
+    unzip
+    gzip
     
     # For lspci
-    pkgs.pciutils
+    pciutils
     # For lsusb
-    pkgs.usbutils
+    usbutils
     
-    pkgs.jack2
-    pkgs.helvum
+    jack2
+    helvum
 
-    pkgs.steam
-    pkgs.lutris
+    steam
+    lutris
 
-    pkgs.baobab
-    pkgs."cpu-x"
+    baobab
+    cpu-x
 
-    pkgs."wine64"
-    pkgs.wine
+    wine64
+    wine
 
-    pkgs.spotify
-    pkgs.signal-desktop
+    spotify
+    signal-desktop
 
-    pkgs.celluloid
+    celluloid
 
-    pkgs.qbittorrent
+    qbittorrent
 
-    pkgs."_1password-gui"
+    _1password-gui
 
-    pkgs.grim
+    grim
 
-    pkgs."virt-manager"
-    pkgs.virtiofsd
-    pkgs.OVMFFull
+    virt-manager
+    virtiofsd
+    OVMFFull
 
-    pkgs.kitty
+    kitty
 
-    pkgs.wezterm
+    wezterm
 
-    pkgs.docker
-    pkgs."docker-compose"
+    docker
+    docker-compose
 
-    #pkgs."elementary-gtk-theme"
-    #pkgs."elementary-icon-theme"
+    #elementary-gtk-theme
+    #elementary-icon-theme
 ]

@@ -1,0 +1,4 @@
+sync: |
+  yarn link -A -r ../community
+  rm .gitattributes && cp ../community/.gitattributes .
+  rm .gitignore && cp ../community/.gitignore .

@@ -15,10 +15,6 @@ in
   nixpkgs.overlays = [
     # Replace with our own set of pkgs
     (_: _: default-pkgs)
-    (_: prev: {
-      xcode-install = stable-pkgs."xcode-install";
-      iterm2 = stable-pkgs.iterm2;
-    })
   ];
   programs.zsh.enable = true;
   imports = [

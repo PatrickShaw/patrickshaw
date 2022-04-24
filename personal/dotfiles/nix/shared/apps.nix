@@ -3,7 +3,7 @@
 with pkgs; [
   discord
 
-  gcc
+  # Breaks in MacOS gcc
   cmake
   gnumake
 

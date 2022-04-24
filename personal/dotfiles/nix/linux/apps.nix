@@ -3,6 +3,8 @@ with pkgs; [
     google-chrome
     firefox
 
+    gcc
+
     sway
     waybar
     ulauncher

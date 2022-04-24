@@ -29,7 +29,7 @@ in
   environment.systemPackages = import ./apps.nix { pkgs = pkgs; };
   
   fonts = {
-    enableFontDir = true;
+    fontDir.enable = true;
     fonts = import ../shared/font-pkgs.nix { pkgs = pkgs; };
  };
 }

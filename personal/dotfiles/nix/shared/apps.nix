@@ -46,6 +46,7 @@ with pkgs; [
 
   # zsh
   fish
+  nushell
 
   postgresql
 

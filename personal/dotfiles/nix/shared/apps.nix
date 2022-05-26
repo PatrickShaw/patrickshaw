@@ -50,4 +50,6 @@ with pkgs; [
   postgresql
 
   coreutils
+
+  libiconv
 ]

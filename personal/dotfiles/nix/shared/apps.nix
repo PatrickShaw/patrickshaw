@@ -3,6 +3,8 @@
 with pkgs; [
   discord
 
+  vlc
+
   docker
 
   vscode  

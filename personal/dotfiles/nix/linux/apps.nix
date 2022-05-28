@@ -4,6 +4,12 @@
     pkgs."google-chrome"
     pkgs.firefox
 
+    pkgs.unrar
+
+    pkgs.haruna
+
+    pkgs.gptfdisk
+
     pkgs.sway
     pkgs.waybar
     pkgs.ulauncher
@@ -54,4 +60,5 @@
 
     #pkgs."elementary-gtk-theme"
     #pkgs."elementary-icon-theme"
+    pkgs.hicolor-icon-theme
 ]

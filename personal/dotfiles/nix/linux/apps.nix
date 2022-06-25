@@ -60,4 +60,6 @@ with pkgs; [
 
     #elementary-gtk-theme
     #elementary-icon-theme
+
+    obsidian
 ]

@@ -16,6 +16,8 @@ in
       shared-configuration
   ];
 
+  nixpkgs.config.allowUnfree = true;
+
   virtualisation.docker.enable = true;
   environment.systemPackages = import ./apps.nix { pkgs = default-pkgs; };
 

@@ -116,7 +116,7 @@ in
     # Fonts
     fonts = {
         enableDefaultFonts = true;
-        fonts = import ../shared/font-pkgs.nix { pkgs = default-pkgs; } ++ pkgs."jetbrains-mono";
+        fonts = import ../shared/font-pkgs.nix { pkgs = default-pkgs; } ++ [pkgs."jetbrains-mono"];
         fontconfig = {
         defaultFonts = {
             #systemUI = [ "Inter" "Noto Sans" ];

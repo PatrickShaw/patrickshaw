@@ -31,16 +31,15 @@ in
     };
     neovim = {
       enable = true;
-      plugins = with pkgs.vimPlugins; [
-        coc
-        coc-nvim
-        coc-css
-        coc-yaml
-        coc-python
-        coc-git
-        coc-rust-analyzer
-        coc-tsserver
-        vim-nix
+      plugins = with pkgs; [
+        vimPlugins.coc-nvim
+        vimPlugins.coc-css
+        vimPlugins.coc-yaml
+        vimPlugins.coc-python
+        vimPlugins.coc-git
+        vimPlugins.coc-rust-analyzer
+        vimPlugins.coc-tsserver
+        vimPlugins.vim-nix
       ];
     };
     zsh = {

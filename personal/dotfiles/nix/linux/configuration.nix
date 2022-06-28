@@ -31,7 +31,7 @@ in
     };
     neovim = {
       enable = true;
-      plugins = with pkgs; [
+      /*plugins = with pkgs; [
         vimPlugins.coc-nvim
         vimPlugins.coc-css
         vimPlugins.coc-yaml
@@ -40,7 +40,7 @@ in
         vimPlugins.coc-rust-analyzer
         vimPlugins.coc-tsserver
         vimPlugins.vim-nix
-      ];
+      ];*/
     };
     zsh = {
       enable = true;

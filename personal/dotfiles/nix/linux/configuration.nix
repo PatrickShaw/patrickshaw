@@ -8,6 +8,8 @@ let
   shared-configuration = import ../shared/configuration.nix {
     pkgs = default-pkgs;
   };
+
+  sharedAliases = import ../shared/program-aliases.nix {};
 in
 {
   imports = [

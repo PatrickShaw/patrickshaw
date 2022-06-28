@@ -53,4 +53,5 @@ with pkgs; [
   coreutils
 
   libiconv
+  google-cloud-sdk
 ]

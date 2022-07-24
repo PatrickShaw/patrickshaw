@@ -64,7 +64,6 @@ in
     # Bootloader/EFI
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   services.chrony.enable = true;
   services.timesyncd.enable = false;

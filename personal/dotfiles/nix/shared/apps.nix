@@ -56,4 +56,6 @@ with pkgs; [
   google-cloud-sdk
 
   syncthing
+
+  rWrapper
 ]

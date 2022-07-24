@@ -25,6 +25,7 @@ in
       edk2 = stable.edk2;
   };
 
+  i18n.defaultLocale = "en_AU.UTF-8";
 
   programs = {
     git = {

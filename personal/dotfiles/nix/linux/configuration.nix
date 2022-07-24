@@ -21,6 +21,8 @@ in
   virtualisation.docker.enable = true;
   environment.systemPackages = import ./apps.nix { pkgs = default-pkgs; };
 
+  i18n.defaultLocale = "en_AU.UTF-8";
+
   programs = {
     git = {
       enable = true;

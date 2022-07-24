@@ -54,4 +54,6 @@ with pkgs; [
 
   libiconv
   google-cloud-sdk
+
+  syncthing
 ]

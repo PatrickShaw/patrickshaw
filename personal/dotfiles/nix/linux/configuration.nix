@@ -21,10 +21,6 @@ in
   virtualisation.docker.enable = true;
   environment.systemPackages = import ./apps.nix { pkgs = default-pkgs; };
 
-  nixpkgs.config.packageOverrides = {
-      edk2 = stable.edk2;
-  };
-
   i18n.defaultLocale = "en_AU.UTF-8";
 
   programs = {

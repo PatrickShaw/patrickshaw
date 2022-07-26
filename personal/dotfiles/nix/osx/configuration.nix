@@ -15,6 +15,10 @@ in
   nixpkgs.overlays = [
     # Replace with our own set of pkgs
     (_: _: default-pkgs)
+    (_: _: {
+      deno = stable-pkgs.deno; # Depends on tcc
+      tcc = stable-pkgs.tcc; # Broken
+    })
   ];
   programs.zsh.enable = true;
   imports = [

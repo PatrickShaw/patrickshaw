@@ -58,4 +58,6 @@ with pkgs; [
   syncthing
 
   rWrapper
+
+  podman
 ]

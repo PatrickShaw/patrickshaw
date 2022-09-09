@@ -1,10 +1,6 @@
-{ config, pkgs, programs, environment, ... }:
+{ config, pkgs, stable-pkgs, programs, environment ... }:
 let
-  stable-pkgs = import ./stable-pkgs.nix {};  
-  unstable-pkgs = import ./unstable-pkgs.nix {};
-
-  default-pkgs = unstable-pkgs;
-
+  
   shared-configuration = import ../shared/configuration.nix {
     pkgs = pkgs;
   };
@@ -14,7 +10,7 @@ in
 { 
   nixpkgs.overlays = [
     # Replace with our own set of pkgs
-    (_: _: default-pkgs)
+    (_: _: pkgs)
     (_: _: {
       deno = stable-pkgs.deno; # Depends on tcc
       tcc = stable-pkgs.tcc; # Broken

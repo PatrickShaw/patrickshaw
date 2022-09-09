@@ -1,4 +1,4 @@
-{ config, pkgs, stable-pkgs, programs, environment ... }:
+{ config, pkgs, stable-pkgs, programs, environment, ... }:
 let
   
   shared-configuration = import ../shared/configuration.nix {
@@ -8,9 +8,7 @@ let
   sharedAliases = import ../shared/program-aliases.nix {};
 in
 { 
-  nixpkgs.overlays = [
-    # Replace with our own set of pkgs
-    (_: _: pkgs)
+  pkgs.overlays = [
     (_: _: {
       deno = stable-pkgs.deno; # Depends on tcc
       tcc = stable-pkgs.tcc; # Broken

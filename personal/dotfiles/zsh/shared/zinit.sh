@@ -1,5 +1,3 @@
-source $(dirname $0)/zinit/zinit.zsh
-
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
@@ -12,15 +10,15 @@ export NVM_COMPLETION=true
 
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
 
-zinit wait lucid light-mode for \
-  atload="_zsh_autosuggest_start; bindkey '\t' autosuggest-accept; bindkey '^[[A' history-beginning-search-backward; bindkey '^[[B' history-beginning-search-forward" \
-    @zsh-users/zsh-autosuggestions \
-  atinit="zicompinit; zicdreplay" \
-    @zdharma/fast-syntax-highlighting \
-  blockf atpull='zinit creinstall -q .' \
-    @zsh-users/zsh-completions \
-  ajeetdsouza/zoxide \
-  @paulirish/git-open
+# zinit wait lucid light-mode for \
+#   atload="_zsh_autosuggest_start; bindkey '\t' autosuggest-accept; bindkey '^[[A' history-beginning-search-backward; bindkey '^[[B' history-beginning-search-forward; " \
+#     @zsh-users/zsh-autosuggestions \
+#   atinit="zicompinit; zicdreplay" \
+#     @zdharma/fast-syntax-highlighting \
+#   blockf atpull='zinit creinstall -q .' \
+#     @zsh-users/zsh-completions \
+#   ajeetdsouza/zoxide \
+#   @paulirish/git-open
   #@jeffreytse/zsh-vi-mode \
   #@lukechilds/zsh-nvm \
 zinit snippet OMZ::plugins/git

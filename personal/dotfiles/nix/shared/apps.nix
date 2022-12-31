@@ -3,7 +3,7 @@
 with pkgs; [
   discord
 
-  # Breaks in MacOS gcc
+  gcc
   cmake
   gnumake
 
@@ -33,6 +33,8 @@ with pkgs; [
   delta
   neovim
 
+  wezterm
+
   pkgs.vimPlugins."coc-nvim"
   pkgs.vimPlugins."coc-css"
   pkgs.vimPlugins."coc-yaml"
@@ -60,4 +62,9 @@ with pkgs; [
   rWrapper
 
   podman
+
+  android-tools
+  arduino-cli
+
+  openssl
 ]

@@ -1,4 +1,4 @@
-{ config, pkgs, stable-pkgs, programs, environment, ... }:
+{ config, pkgs, programs, users, environment, ... }:
 let
   
   shared-configuration = import ../shared/configuration.nix {
@@ -8,12 +8,6 @@ let
   sharedAliases = import ../shared/program-aliases.nix {};
 in
 { 
-  pkgs.overlays = [
-    (_: _: {
-      deno = stable-pkgs.deno; # Depends on tcc
-      tcc = stable-pkgs.tcc; # Broken
-    })
-  ];
   programs.zsh.enable = true;
   imports = [
     shared-configuration

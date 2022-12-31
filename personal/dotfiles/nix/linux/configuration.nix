@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 let
-  stable = import ./stable-pkgs.nix {};
+  stable = import <stable-pkgs>;
 
-  unstable-pkgs = import ./unstable-pkgs.nix {};
+  unstable-pkgs = import <unstable-pkgs>;
   default-pkgs = unstable-pkgs;
 
   shared-configuration = import ../shared/configuration.nix {

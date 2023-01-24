@@ -67,4 +67,6 @@ with pkgs; [
   arduino-cli
 
   openssl
+
+  git-open
 ]

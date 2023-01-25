@@ -62,4 +62,7 @@ with pkgs; [
     #elementary-icon-theme
 
     obsidian
+
+    cpu-x
+    lxde.lxtask
 ]

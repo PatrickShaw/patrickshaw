@@ -5,4 +5,6 @@
     pkgs."font-awesome"
     pkgs."twemoji-color-font"
     pkgs."meslo-lgs-nf"
+    pkgs."cascadia-code"
+    pkgs."jetbrains-mono"
 ]

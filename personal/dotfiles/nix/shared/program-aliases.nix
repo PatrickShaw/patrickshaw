@@ -3,6 +3,7 @@
     # Unfortunately zoxide relies on cd in Fish so can't do: cd = "z";
     vim = "nvim";
     vi = "nvim";
+    cd = "z";
     # TODO: Bug in alises. Shouldn't need escaping
     upstream-push = ''
         echo \"git push --set-upstream (git remote show) (git branch --show-current)\" | fish

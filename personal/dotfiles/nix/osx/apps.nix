@@ -2,5 +2,5 @@
 
 with pkgs; [
     iterm2
-    #rectangle
+    rectangle
 ]

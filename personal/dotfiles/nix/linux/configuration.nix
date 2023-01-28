@@ -1,12 +1,7 @@
 { config, pkgs, lib, ... }:
 let
-  stable = import <stable-pkgs>;
-
-  unstable-pkgs = import <unstable-pkgs>;
-  default-pkgs = unstable-pkgs;
-
   shared-configuration = import ../shared/configuration.nix {
-    pkgs = default-pkgs;
+    inherit pkgs;
   };
 
   sharedAliases = import ../shared/program-aliases.nix {};
@@ -19,7 +14,7 @@ in
   nixpkgs.config.allowUnfree = true;
 
   virtualisation.docker.enable = true;
-  environment.systemPackages = import ./apps.nix { pkgs = default-pkgs; };
+  environment.systemPackages = import ./apps.nix { inherit pkgs; };
 
   i18n.defaultLocale = "en_AU.UTF-8";
 
@@ -112,7 +107,7 @@ in
     # Fonts
     fonts = {
         enableDefaultFonts = true;
-        fonts = import ../shared/font-pkgs.nix { pkgs = default-pkgs; };
+        fonts = import ../shared/font-pkgs.nix { inherit pkgs; };
         fontconfig = {
         defaultFonts = {
             #systemUI = [ "Inter" "Noto Sans" ];

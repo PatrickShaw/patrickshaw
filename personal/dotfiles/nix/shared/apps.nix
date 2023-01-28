@@ -15,7 +15,7 @@ with pkgs; [
   yarn
   rustup
   python3
-  python
+  # Security flaw: python
   adoptopenjdk-bin
   poetry
   deno

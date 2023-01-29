@@ -30,7 +30,6 @@ with pkgs; [
   git
   git-lfs
   gnupg
-  delta
   neovim
 
   wezterm

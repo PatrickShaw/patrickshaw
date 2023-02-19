@@ -4,6 +4,10 @@
 #
 # Read `man 5 sway` for a complete reference.
 
+# See https://discourse.nixos.org/t/xdg-desktop-portal-not-working-on-wayland-while-kde-is-installed/20919/3
+exec systemctl --user import-environment XDG_SESSION_TYPE XDG_CURRENT_DESKTOP
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
@@ -207,7 +211,7 @@ bar {
 focus_follows_mouse no
 
 set $my_font system-ui
-#set $my_cursor_theme elementary
+set $my_cursor_theme phinger-cursors
 
 #font pango:$my_font Regular 10
 
@@ -224,6 +228,10 @@ for_window [app_id="ulauncher"] border none
 for_window [app_id="pavucontrol"] floating toggle
 
 output * adaptive_sync on
+
+# See: https://www.reddit.com/r/swaywm/comments/ama2ff/comment/efn2uav/?utm_source=share&utm_medium=web2x&context=3
+bindsym Mod1+tab workspace next_on_output 
+bindsym Mod1+Shift+tab workspace prev_on_output
 
 #seat seat0 xcursor_theme $my_cursor_theme 24
 #exec_always {

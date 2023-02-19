@@ -1,6 +1,7 @@
-source $(dirname $0)/../shared/.zshrc
+source $HOME/personal/dotfiles/zsh/shared/.zshrc
 
 if ! which code &>/dev/null; then
   alias code=$(which code-oss)
 fi
-eval $(zoxide init zsh)
+
+echo "run"

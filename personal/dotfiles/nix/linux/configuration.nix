@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, options, ... }:
 let
   shared-configuration = import ../shared/configuration.nix {
     inherit pkgs;
@@ -13,10 +13,14 @@ in
 
   nixpkgs.config.allowUnfree = true;
 
-  virtualisation.docker.enable = true;
+  virtualisation.docker.enable = false;
   environment.systemPackages = import ./apps.nix { inherit pkgs; };
 
   i18n.defaultLocale = "en_AU.UTF-8";
+
+  # This is to make systemd past boots of journals actually log out when listed
+  # See https://www.reddit.com/r/NixOS/comments/kgziex/journald_not_keeping_past_boot_logs/
+  environment.etc.machine-id.text = "152099709ccc4cc79fec46efcb18d2a1";
 
   programs = {
     git = {
@@ -59,17 +63,18 @@ in
   services.chrony.enable = true;
   services.timesyncd.enable = false;
   
-  networking.timeServers =  [ "0.pool.ntp.org" "1.pool.ntp.org" "2.pool.ntp.org" "3.pool.ntp.org" "4.pool.ntp.org" "time.cloudflare.com" ]; 
+  networking.timeServers =  options.networking.timeServers.default ++ [ "time.cloudflare.com" ]; 
 
 
   systemd.services.libvirtd-config.script = lib.mkAfter ''
-    rm /var/lib/libvirt/qemu/networks/autostart/default.xml
+    #rm /var/lib/libvirt/qemu/networks/autostart/default.xml
   '';
-  boot.kernelPackages = pkgs.linuxPackages_zen;
-  boot.kernelParams = ["iommu=pt" "intel_iommu=on" "rd.driver.pre=vfio_pci" "vfio-pci.ids=10de:1c03,10de:10f1" "pcie_acs_override=downstream,multifunction"];
-  boot.kernelModules = ["kvm_intel" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
-  boot.blacklistedKernelModules = [ "nvidia" "nouveau" ];
-
+  
+  # See: https://nixos.org/manual/nixos/stable/release-notes.html#sec-release-22.05-notable-changes
+  # It auto enables Wayland flags for Electron apps
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  
+  
   environment.sessionVariables.LIBVIRT_DEFAULT_URI = [ "qemu:///system" ];
 
 

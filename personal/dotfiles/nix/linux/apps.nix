@@ -25,7 +25,7 @@ with pkgs; [
     usbutils
     
     jack2
-    helvum
+    #helvum
 
     steam
     lutris
@@ -59,10 +59,10 @@ with pkgs; [
     docker
     docker-compose
 
-    #elementary-gtk-theme
-    #elementary-icon-theme
+    phinger-cursors
 
     obsidian
+    haruna
 
     cpu-x
     lxde.lxtask

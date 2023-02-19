@@ -1,6 +1,6 @@
 { pkgs }:
 
 with pkgs; [
-    iterm2
-    rectangle
+  iterm2
+  rectangle
 ]

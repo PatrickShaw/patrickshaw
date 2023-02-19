@@ -8,17 +8,26 @@
       options = [ "defaults" "size=4G" "mode=755" ];
       neededForBoot = true;
     };
-    
-    "/boot" =
-      { device = boot.device;
-        fsType = "vfat";
-        options = [ "defaults" "discard" ];
-      };
+
+    "/boot" = {
+      device = boot.device;
+      fsType = "vfat";
+      options = [ "defaults" "discard" ];
+    };
 
     "/persist" = {
       device = persist.device;
       fsType = "btrfs";
-      options = [ "defaults" "subvol=persist-root" "rw" "relatime" "discard=async" "compress=zstd:1" "ssd" "space_cache=v2" ];
+      options = [
+        "defaults"
+        "subvol=persist-root"
+        "rw"
+        "relatime"
+        "discard=async"
+        "compress=zstd:1"
+        "ssd"
+        "space_cache=v2"
+      ];
       neededForBoot = true;
     };
 
@@ -32,7 +41,16 @@
     "/persist/nix/store" = {
       device = nixStore.device;
       fsType = "btrfs";
-      options = [ "defaults" "subvol=nix-store" "rw" "noatime" "discard=async" "compress=zstd:6" "ssd" "space_cache=v2" ];
+      options = [
+        "defaults"
+        "subvol=nix-store"
+        "rw"
+        "noatime"
+        "discard=async"
+        "compress=zstd:6"
+        "ssd"
+        "space_cache=v2"
+      ];
       neededForBoot = true;
     };
 
@@ -80,17 +98,17 @@
       fsType = "none";
       options = [ "bind" ];
     };
-    
+
     "/home" = {
       device = "/persist/home";
       fsType = "none";
-      options = ["bind"];
+      options = [ "bind" ];
     };
-    
+
     "/etc/shadow" = {
       device = "/persist/etc/shadow";
       fsType = "none";
-      options = ["bind"];
+      options = [ "bind" ];
     };
   };
 }

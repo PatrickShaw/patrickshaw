@@ -7,5 +7,4 @@ let
       allowUnfreePredicate = (pkg: true);
     };
   };
-in
-pkgs
+in pkgs

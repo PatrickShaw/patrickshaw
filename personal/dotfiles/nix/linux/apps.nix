@@ -1,69 +1,69 @@
 { pkgs }:
 with pkgs; [
-    google-chrome
-    firefox
+  google-chrome
+  firefox
 
-    gcc
+  gcc
 
-    sway
-    waybar
-    ulauncher
-    pavucontrol
-    wl-clipboard
-    looking-glass-client
+  sway
+  waybar
+  ulauncher
+  pavucontrol
+  wl-clipboard
+  looking-glass-client
 
-    gnome.nautilus
-    gnome.sushi
+  gnome.nautilus
+  gnome.sushi
 
-    p7zip
-    unzip
-    gzip
-    
-    # For lspci
-    pciutils
-    # For lsusb
-    usbutils
-    
-    jack2
-    #helvum
+  p7zip
+  unzip
+  gzip
 
-    steam
-    lutris
+  # For lspci
+  pciutils
+  # For lsusb
+  usbutils
 
-    baobab
-    cpu-x
+  jack2
+  #helvum
 
-    wine64
-    wine
+  steam
+  lutris
 
-    spotify
-    signal-desktop
+  baobab
+  cpu-x
 
-    celluloid
+  wine64
+  wine
 
-    qbittorrent
+  spotify
+  signal-desktop
 
-    _1password-gui
+  celluloid
 
-    grim
+  qbittorrent
 
-    virt-manager
-    virtiofsd
-    OVMFFull
+  _1password-gui
 
-    kitty
+  grim
 
-    wezterm
-    vlc
+  virt-manager
+  virtiofsd
+  OVMFFull
 
-    docker
-    docker-compose
+  kitty
 
-    phinger-cursors
+  wezterm
+  vlc
 
-    obsidian
-    haruna
+  docker
+  docker-compose
 
-    cpu-x
-    lxde.lxtask
+  phinger-cursors
+
+  obsidian
+  haruna
+
+  cpu-x
+  lxde.lxtask
 ]

@@ -70,6 +70,10 @@ wheels/
 .installed.cfg
 *.egg
 
+# Dependency directories
+node_modules/
+jspm_packages/
+
 # PyInstaller
 #  Usually these files are written by a python script from a template
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.

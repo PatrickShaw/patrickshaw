@@ -3,11 +3,13 @@
 with pkgs; [
   discord
 
-  gcc
+  # Node canvas doesn't work without Mac's default GCC
+  #gcc
   cmake
   gnumake
 
   vscode  
+  lapce
   alacritty
 
   fnm

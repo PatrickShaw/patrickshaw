@@ -6,7 +6,7 @@ source (status dirname)/../shared/config.fish
 #fish_add_path $HOME/.yarn/bin
 
 if status is-login 
-
+    # Was only required when running Void Linux/non-systemd
     #if test -z "$XDG_RUNTIME_DIR"
     #  set runtime_dir "/tmp/"(id -u)"-xdg-runtime-dir"
     #  mkdir "$runtime_dir"
@@ -14,7 +14,7 @@ if status is-login
     #  set -gx XDG_RUNTIME_DIR $runtime_dir       
     #end
 
-    #sway --my-next-gpu-wont-be-nvidia &
+    WLR_NO_HARDWARE_CURSORS=1 sway --unsupported-gpu  &
 
     # All handled by Nix
     #dbus-launch pipewire &

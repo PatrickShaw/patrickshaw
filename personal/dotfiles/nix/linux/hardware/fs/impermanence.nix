@@ -86,5 +86,11 @@
       fsType = "none";
       options = ["bind"];
     };
+    
+    "/etc/shadow" = {
+      device = "/persist/etc/shadow";
+      fsType = "none";
+      options = ["bind"];
+    };
   };
 }

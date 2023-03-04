@@ -8,6 +8,10 @@
 exec systemctl --user import-environment XDG_SESSION_TYPE XDG_CURRENT_DESKTOP
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
+# See https://wiki.archlinux.org/title/sway#Change_cursor_theme_and_size
+seat seat0 xcursor_theme phinger_cursors 32
+exec autotiling-rs
+
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
@@ -233,7 +237,7 @@ output * adaptive_sync on
 bindsym Mod1+tab workspace next_on_output 
 bindsym Mod1+Shift+tab workspace prev_on_output
 
-#seat seat0 xcursor_theme $my_cursor_theme 24
+#seat seat0 xcursor_theme $my_cursor_theme 32
 #exec_always {
 #    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
 #    gsettings set org.gnome.desktop.interface cursor-theme $my_cursor_theme

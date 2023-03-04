@@ -6,6 +6,8 @@ with pkgs; [
   gcc
 
   sway
+  autotiling-rs
+
   waybar
   ulauncher
   pavucontrol

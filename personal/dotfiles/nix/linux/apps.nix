@@ -17,9 +17,21 @@ with pkgs; [
   gnome.nautilus
   gnome.sushi
 
+  gamescope
+  protontricks
+  proton-caller
+  winetricks
   p7zip
   unzip
   gzip
+  
+  # For lspci
+  pciutils
+  # For lsusb
+  usbutils
+  
+  jack2
+  #helvum
 
   # For lspci
   pciutils

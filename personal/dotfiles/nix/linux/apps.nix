@@ -11,6 +11,7 @@ with pkgs; [
   waybar
   ulauncher
   pavucontrol
+  helvum
   wl-clipboard
   looking-glass-client
 

@@ -8,11 +8,15 @@ with pkgs; [
   sway
   autotiling-rs
 
+
   waybar
   ulauncher
+
   pavucontrol
   helvum
+
   wl-clipboard
+
   looking-glass-client
 
   gnome.nautilus
@@ -22,6 +26,9 @@ with pkgs; [
   protontricks
   proton-caller
   winetricks
+  
+  river
+
   p7zip
   unzip
   gzip

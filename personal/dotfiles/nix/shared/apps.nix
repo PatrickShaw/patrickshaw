@@ -33,6 +33,7 @@ with pkgs; [
   git-lfs
   gnupg
   neovim
+  unrar
 
   wezterm
 

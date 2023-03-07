@@ -2,14 +2,50 @@
 let
   shared-configuration = import ../shared/configuration.nix { inherit pkgs; };
 
-  sharedAliases = import ../shared/program-aliases.nix { };
-in {
-  imports = [ shared-configuration ];
+  sharedAliases = import ../shared/program-aliases.nix {};
+
+
+  flake-compat = builtins.fetchTarball "https://github.com/edolstra/flake-compat/archive/master.tar.gz";
+  
+  nixpkgs-wayland = (import flake-compat {
+    src = builtins.fetchTarball "https://github.com/nix-community/nixpkgs-wayland/archive/master.tar.gz";
+  }).defaultNix;
+  
+  hyprland = (import flake-compat {
+    src = builtins.fetchTarball "https://github.com/hyprwm/Hyprland/archive/master.tar.gz";
+  }).defaultNix;
+
+  eww = (import flake-compat {
+    src = builtins.fetchTarball "https://github.com/elkowar/eww/archive/master.tar.gz";
+  }).defaultNix;
+in
+{
+  imports = [
+      shared-configuration
+      hyprland.nixosModules.default
+  ];
+  
+  programs.hyprland = {
+    enable = true;
+
+    # default options, you don't need to set them
+    package = hyprland.packages.${pkgs.system}.default;
+
+    xwayland = {
+      enable = true;
+      hidpi = true;
+    };
+
+    nvidiaPatches = false;
+  };
 
   nixpkgs.config.allowUnfree = true;
 
   virtualisation.docker.enable = false;
-  environment.systemPackages = import ./apps.nix { inherit pkgs; };
+  environment.systemPackages = [
+    nixpkgs-wayland.packages.${pkgs.system}.swww
+    eww.packages.${pkgs.system}.eww-wayland
+  ] ++ import ./apps.nix { inherit pkgs; };
 
   i18n.defaultLocale = "en_AU.UTF-8";
 

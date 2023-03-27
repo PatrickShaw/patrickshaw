@@ -70,6 +70,8 @@ with pkgs; [
   virt-manager
   virtiofsd
   OVMFFull
+  
+  vlc
 
   kitty
 

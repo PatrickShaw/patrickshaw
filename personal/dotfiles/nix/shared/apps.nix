@@ -71,4 +71,6 @@ with pkgs; [
   openssl
 
   git-open
+
+  nickel
 ]

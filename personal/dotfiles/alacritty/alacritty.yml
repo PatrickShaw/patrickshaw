@@ -11,6 +11,8 @@ scrolling:
   multiplier: 1
   faux_multiplier: 1
   auto_scroll: true
+window:
+  opacity: 0.9
   
 # Colors (Konsole's Dark Pastels)
 colors:

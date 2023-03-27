@@ -23,6 +23,7 @@ let
 in
 {
   imports = [
+      "../shared/binary-caching.nix"
       shared-configuration
       hyprland.nixosModules.default
   ];

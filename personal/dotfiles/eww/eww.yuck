@@ -3,7 +3,7 @@
 ;; Maintaned by https://github.com/rxyhn
 
 ;; put path to aesthetic bar config files here ;;
-(defvar eww "$HOME/.local/bin/eww -c $HOME/.config/eww/bar")
+(defvar eww "eww -c $HOME/.config/eww/bar")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;							Widget Section's							 ;;	

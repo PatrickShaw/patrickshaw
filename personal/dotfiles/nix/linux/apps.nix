@@ -15,8 +15,6 @@ with pkgs; [
   pavucontrol
   helvum
 
-  wl-clipboard
-
   looking-glass-client
 
   gnome.nautilus

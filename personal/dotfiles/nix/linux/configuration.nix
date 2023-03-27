@@ -7,9 +7,11 @@ let
 
   flake-compat = builtins.fetchTarball "https://github.com/edolstra/flake-compat/archive/master.tar.gz";
   
-  nixpkgs-wayland = (import flake-compat {
+  nixpkgs-wayland-flake = (import flake-compat {
     src = builtins.fetchTarball "https://github.com/nix-community/nixpkgs-wayland/archive/master.tar.gz";
   }).defaultNix;
+  
+  wayland-pkgs = nixpkgs-wayland-flake.packages.${pkgs.system};
   
   hyprland = (import flake-compat {
     src = builtins.fetchTarball "https://github.com/hyprwm/Hyprland/archive/master.tar.gz";
@@ -58,11 +60,26 @@ in
     nvidiaPatches = false;
   };
 
+  # See: https://wiki.archlinux.org/title/PipeWire#xdg-desktop-portal-wlr
+  # See: https://nixos.wiki/wiki/Sway#Using_NixOS
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    # gtk portal needed to make gtk apps happy
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      # Saw this declared in: https://discourse.nixos.org/t/xdg-desktop-portal-not-working-on-wayland-while-kde-is-installed/20919
+      pkgs.xdg-desktop-portal-wlr
+    ];
+  };
+
   nixpkgs.config.allowUnfree = true;
 
   virtualisation.docker.enable = false;
   environment.systemPackages = [
-    nixpkgs-wayland.packages.${pkgs.system}.swww
+    wayland-pkgs.wl-clipboard
+    wayland-pkgs.swww
+    wayland-pkgs.wofi
     eww.packages.${pkgs.system}.eww-wayland
   ] ++ import ./apps.nix { inherit pkgs; };
 

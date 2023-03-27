@@ -5,9 +5,10 @@ with pkgs; [
 
   gcc
 
+  killall
+
   sway
   autotiling-rs
-
 
   waybar
   ulauncher
@@ -70,7 +71,7 @@ with pkgs; [
   virt-manager
   virtiofsd
   OVMFFull
-  
+
   vlc
 
   kitty

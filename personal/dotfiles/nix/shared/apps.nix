@@ -54,7 +54,7 @@ with pkgs; [
 
   postgresql
 
-  coreutils
+  uutils-coreutils
 
   libiconv
   google-cloud-sdk

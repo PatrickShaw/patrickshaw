@@ -10,7 +10,7 @@ with pkgs; [
 
   vscode
   lapce
-  
+
   alacritty
   wezterm
 

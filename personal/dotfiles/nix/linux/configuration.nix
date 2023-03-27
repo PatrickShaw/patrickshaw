@@ -2,32 +2,34 @@
 let
   shared-configuration = import ../shared/configuration.nix { inherit pkgs; };
 
-  sharedAliases = import ../shared/program-aliases.nix {};
+  sharedAliases = import ../shared/program-aliases.nix { };
 
+  flake-compat = builtins.fetchTarball
+    "https://github.com/edolstra/flake-compat/archive/master.tar.gz";
 
-  flake-compat = builtins.fetchTarball "https://github.com/edolstra/flake-compat/archive/master.tar.gz";
-  
   nixpkgs-wayland-flake = (import flake-compat {
-    src = builtins.fetchTarball "https://github.com/nix-community/nixpkgs-wayland/archive/master.tar.gz";
+    src = builtins.fetchTarball
+      "https://github.com/nix-community/nixpkgs-wayland/archive/master.tar.gz";
   }).defaultNix;
 
   wayland-pkgs = nixpkgs-wayland-flake.packages.${pkgs.system};
-  
+
   hyprland = (import flake-compat {
-    src = builtins.fetchTarball "https://github.com/hyprwm/Hyprland/archive/master.tar.gz";
+    src = builtins.fetchTarball
+      "https://github.com/hyprwm/Hyprland/archive/master.tar.gz";
   }).defaultNix;
 
   eww = (import flake-compat {
-    src = builtins.fetchTarball "https://github.com/elkowar/eww/archive/master.tar.gz";
+    src = builtins.fetchTarball
+      "https://github.com/elkowar/eww/archive/master.tar.gz";
   }).defaultNix;
-in
-{
+in {
   imports = [
-      "../shared/binary-caching.nix"
-      shared-configuration
-      hyprland.nixosModules.default
+    "../shared/binary-caching.nix"
+    shared-configuration
+    hyprland.nixosModules.default
   ];
-  
+
   programs.hyprland = {
     enable = true;
 
@@ -157,17 +159,17 @@ in
 
   # Fonts
   fonts = {
-      enableDefaultFonts = true;
-      fonts = import ../shared/font-pkgs.nix { inherit pkgs; };
-      fontconfig = {
-        defaultFonts = {
-            #systemUI = [ "Inter" "Noto Sans" ];
-            #sans = ["Inter" "Noto Sans"]; 
-            sansSerif = ["Inter" "Noto Sans"]; 
-            serif = [ "Noto Serif"];
-            monospace = ["JetBrains Mono" "Noto Sans Mono"];
-            emoji = [ "Twitter Color Emoji" ];
-        };
+    enableDefaultFonts = true;
+    fonts = import ../shared/font-pkgs.nix { inherit pkgs; };
+    fontconfig = {
+      defaultFonts = {
+        #systemUI = [ "Inter" "Noto Sans" ];
+        #sans = ["Inter" "Noto Sans"]; 
+        sansSerif = [ "Inter" "Noto Sans" ];
+        serif = [ "Noto Serif" ];
+        monospace = [ "JetBrains Mono" "Noto Sans Mono" ];
+        emoji = [ "Twitter Color Emoji" ];
+      };
     };
   };
 }

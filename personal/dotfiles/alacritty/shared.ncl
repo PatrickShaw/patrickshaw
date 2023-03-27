@@ -1,4 +1,4 @@
-{
+fun system => {
   font = {
     normal = {
       family = "JetBrains Mono",
@@ -44,4 +44,7 @@
       white =      "0xffffff",
     },
   },
+  window = {
+    opacity = if system == "linux" then 0.9 else 1
+  }
 }

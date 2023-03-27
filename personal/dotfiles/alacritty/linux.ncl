@@ -1,3 +1,1 @@
-(fun a => {
-  system = a,
-})("linux")
+import "./shared.ncl" "linux"

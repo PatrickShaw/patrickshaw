@@ -10,7 +10,7 @@ let
   nixpkgs-wayland-flake = (import flake-compat {
     src = builtins.fetchTarball "https://github.com/nix-community/nixpkgs-wayland/archive/master.tar.gz";
   }).defaultNix;
-  
+
   wayland-pkgs = nixpkgs-wayland-flake.packages.${pkgs.system};
   
   hyprland = (import flake-compat {
@@ -175,17 +175,17 @@ in
 
   # Fonts
   fonts = {
-    enableDefaultFonts = true;
-    fonts = import ../shared/font-pkgs.nix { inherit pkgs; };
-    fontconfig = {
-      defaultFonts = {
-        #systemUI = [ "Inter" "Noto Sans" ];
-        #sans = ["Inter" "Noto Sans"]; 
-        sansSerif = [ "Inter" "Noto Sans" ];
-        serif = [ "Noto Serif" ];
-        monospace = [ "JetBrains Mono" "Noto Sans Mono" ];
-        emoji = [ "Twitter Color Emoji" ];
-      };
+      enableDefaultFonts = true;
+      fonts = import ../shared/font-pkgs.nix { inherit pkgs; };
+      fontconfig = {
+        defaultFonts = {
+            #systemUI = [ "Inter" "Noto Sans" ];
+            #sans = ["Inter" "Noto Sans"]; 
+            sansSerif = ["Inter" "Noto Sans"]; 
+            serif = [ "Noto Serif"];
+            monospace = ["JetBrains Mono" "Noto Sans Mono"];
+            emoji = [ "Twitter Color Emoji" ];
+        };
     };
   };
 }

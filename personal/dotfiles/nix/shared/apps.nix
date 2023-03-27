@@ -37,8 +37,6 @@ with pkgs; [
   neovim
   unrar
 
-  wezterm
-
   pkgs.vimPlugins."coc-nvim"
   pkgs.vimPlugins."coc-css"
   pkgs.vimPlugins."coc-yaml"

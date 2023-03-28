@@ -1,3 +1,3 @@
 build: |
-  nickel -f linux.ncl export --format yaml > ./linux/alacritty.yaml
-  nickel -f macos.ncl export --format yaml > ./macos/alacritty.yaml
+  nickel export --format yaml <<< 'import "shared.ncl" "linux"' > ./linux/alacritty.yaml
+  nickel export --format yaml <<< 'import "shared.ncl" "macos"' > ./macos/alacritty.yaml

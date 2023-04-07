@@ -56,9 +56,16 @@
 
         i18n.defaultLocale = "en_AU.UTF-8";
 
-        # This is to make systemd past boots of journals actually log out when listed
-        # See https://www.reddit.com/r/NixOS/comments/kgziex/journald_not_keeping_past_boot_logs/
-        environment.etc.machine-id.text = "152099709ccc4cc79fec46efcb18d2a1";
+        environment.etc = {
+          # This is to make systemd past boots of journals actually log out when listed
+          # See https://www.reddit.com/r/NixOS/comments/kgziex/journald_not_keeping_past_boot_logs/
+          machine-id.text = "152099709ccc4cc79fec46efcb18d2a1";
+          "pipewire/pipewire.conf.d/10-personal-settings".text = ''
+default.clock.rate = 96000;
+default.clock.quantum = 24;
+default.clock.min-quantum = 24;
+          '';
+        };
 
         programs = {
           git = {
@@ -128,13 +135,6 @@
 
           # Copied from: https://forum.level1techs.com/t/nixos-vfio-pcie-passthrough/130916/4
           socketActivation = true;
-
-          # config.pipewire = {
-          #   "context.properties" = {
-          #     "default.clock.rate" = 48000;
-          #     "default.clock.quantum" = 512;
-          #   };
-          # };
         };
 
         programs.dconf.enable = true;

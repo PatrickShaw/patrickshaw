@@ -49,6 +49,8 @@ with pkgs; [
   #helvum
 
   steam
+  # Steam was trying to use this
+  xdg-user-dirs
   lutris
 
   baobab

@@ -52,6 +52,7 @@
           wayland-pkgs.swww
           wayland-pkgs.wofi
           wayland-pkgs.grim
+          wayland-pkgs.imv
           wayland-pkgs.sway
           inputs.eww.packages.${pkgs.system}.eww-wayland
         ] ++ import ./linux/apps.nix { inherit pkgs; };

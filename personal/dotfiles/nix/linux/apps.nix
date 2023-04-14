@@ -7,7 +7,6 @@ with pkgs; [
 
   killall
 
-  sway
   autotiling-rs
 
   waybar
@@ -67,8 +66,6 @@ with pkgs; [
   qbittorrent
 
   _1password-gui
-
-  grim
 
   virt-manager
   virtiofsd

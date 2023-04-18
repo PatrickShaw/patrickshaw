@@ -58,7 +58,7 @@
           extraPortals = [
             pkgs.xdg-desktop-portal-gtk
             # Saw this declared in: https://discourse.nixos.org/t/xdg-desktop-portal-not-working-on-wayland-while-kde-is-installed/20919
-            pkgs.xdg-desktop-portal-wlr
+            #wayland-pkgs.xdg-desktop-portal-wlr
           ];
         };
 
@@ -71,7 +71,7 @@
           wayland-pkgs.wofi
           wayland-pkgs.grim
           wayland-pkgs.imv
-          wayland-pkgs.sway
+          wayland-pkgs.sway-unwrapped
           inputs.eww.packages.${pkgs.system}.eww-wayland
         ] ++ import ./linux/apps.nix { inherit pkgs; };
 

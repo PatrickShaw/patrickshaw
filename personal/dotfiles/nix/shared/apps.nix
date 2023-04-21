@@ -12,7 +12,7 @@ with pkgs; [
   lapce
 
   alacritty
-  wezterm
+  #wezterm
 
   fnm
 

@@ -63,8 +63,6 @@ with pkgs; [
 
   rWrapper
 
-  podman
-
   android-tools
   arduino-cli
 
@@ -73,4 +71,6 @@ with pkgs; [
   git-open
 
   nickel
+
+  direnv
 ]

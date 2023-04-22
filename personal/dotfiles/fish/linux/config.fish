@@ -16,7 +16,7 @@ if status is-login
 
     # WLR_RENDERER=vulkan WLR_NO_HARDWARE_CURSORS=1 dbus-run-session sway --unsupported-gpu
     # WLR_RENDERER=vulkan WLR_NO_HARDWARE_CURSORS=1 dbus-run-session river
-    WLR_RENDERER=vulkan WLR_NO_HARDWARE_CURSORS=1 dbus-run-session Hyprland
+    WLR_RENDERER=vulkan WLR_NO_HARDWARE_CURSORS=1 Hyprland
 
     # All handled by Nix
     #dbus-launch pipewire &

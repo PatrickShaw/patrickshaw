@@ -35,6 +35,9 @@
             inputs.hyprland.nixosModules.default
         ];
         
+        # See: https://github.com/NixOS/nixpkgs/issues/16327
+        services.gnome.at-spi2-core.enable = true;
+        
         programs.hyprland = {
           enable = true;
 

@@ -151,6 +151,8 @@ default.clock.min-quantum = 24;
 
         services.pipewire = {
           enable = true;
+          alsa.enable = false;
+          alsa.support32Bit = false;
           #alsa.enable = true;
           #alsa.support32Bit = true;
           pulse.enable = true;

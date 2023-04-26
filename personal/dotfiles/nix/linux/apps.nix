@@ -87,5 +87,7 @@ with pkgs; [
   haruna
 
   cpu-x
-  lxde.lxtask
+
+  # See "External monitors" in https://wiki.archlinux.org/title/backlight
+  ddcutil
 ]

@@ -73,4 +73,6 @@ with pkgs; [
   nickel
 
   direnv
+
+  libreoffice-fresh
 ]

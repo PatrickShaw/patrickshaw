@@ -54,16 +54,20 @@
 
         # See: https://wiki.archlinux.org/title/PipeWire#xdg-desktop-portal-wlr
         # See: https://nixos.wiki/wiki/Sway#Using_NixOS
-        xdg.portal = {
-          enable = true;
-          wlr.enable = true;
-          # gtk portal needed to make gtk apps happy
-          extraPortals = [
-            pkgs.xdg-desktop-portal-gtk
-            # Saw this declared in: https://discourse.nixos.org/t/xdg-desktop-portal-not-working-on-wayland-while-kde-is-installed/20919
-            #wayland-pkgs.xdg-desktop-portal-wlr
-          ];
-        };
+        # As per https://github.com/hyprwm/Hyprland/blob/f23455e592bca14e0abd9249de467cc71cd2850e/nix/module.nix#L88, this is turned on by Hyprland itself
+        # xdg.portal = {
+        #    enable = true;
+        #   wlr.enable = false;
+        #   # gtk portal needed to make gtk apps happy
+          #  extraPortals = [
+        #     # 2023-04-26: Commneted out because of the following
+        #     # See: https://wiki.hyprland.org/Useful-Utilities/Hyprland-desktop-portal/
+        #     # "It’s recommended to uninstall any other portal implementations to avoid conflicts with the -hyprland or -wlr ones. -kde and -gnome are known to cause issues."
+              # pkgs.xdg-desktop-portal-gtk
+        #     # Saw this declared in: https://discourse.nixos.org/t/xdg-desktop-portal-not-working-on-wayland-while-kde-is-installed/20919
+        #     #wayland-pkgs.xdg-desktop-portal-wlr
+        #    ];
+        # };
 
         nixpkgs.config.allowUnfree = true;
 

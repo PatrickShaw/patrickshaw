@@ -1,3 +1,11 @@
+(deflisten workspaces "scripts/workspaces")
+(deflisten curr :initial "1" "scripts/active-workspace.sh")
+
+(defwidget workspaceList []
+	(box :orientation "vertical" (for workspaceId in workspaces
+		(workspaceButton :id workspaceId)
+	))
+)
 
 (defwidget timeSubsection [] 
 (box
@@ -11,13 +19,13 @@
 	(clickable
 		(box
 			:orientation "vertical" 
-			:class "time" 
+			:class "time"
 			:space-evenly false
 			(timeSubsection
-	(box
+				(box
 					:valign "start"
 					:class "timeHours" hour)
-	(box
+				(box
 					:valign "start"
 					:class "timeMinutes"  min)		
 			)
@@ -51,24 +59,53 @@
 		)
 )
 
+(defwidget workspaceButton [id]
+	(clickable
+		:class "${id == curr ? "active" : ""}"
+		:onclick "hyprctl dispatch workspace ${id}"
+		(box
+			:class "workspaceButton"
+			"${id}"
+		)
+	)
+)
+
+(defwidget icon [class]
 	(box
-		:class "icon files"
-		:valign "end"
+		:class "icon ${class}"
+		:height "32"
+		(children)
+	)	
+)
+
+(defwidget files []
+	(clickable
+		:onclick "nautilus &"
+		(icon
+			:class "files"
+		)	
 	)
 )
 
 (defwidget sound []
-  (box
-		:class "icon sound"
+	(box
+		:orientation "vertical"
+		:space-evenly false
+		:height 400
+		(scale :orientation "vertical" :min 0 :max 100 		:vexpand true)
+		(clickable
+			:onclick "pavucontrol &"
+			:onrightclick "pavucontrol &"
+			(icon
+				:class "sound"
+			)
+		)
 	)
 )
-
-
 
 (defwidget taskbar []
 	(
 		box 
-			:valign "end"
 			:orientation "vertical"
 			:vexpand true
 			:class "taskbar"
@@ -80,14 +117,26 @@
 	:monitor 0
 	:geometry (geometry
 		:x "0px"
-											:y "0px"
-											:width "40px"
-											:height "100%"
+		:y "0px"
+		:width "40px"
+		:height "100%"
 		:anchor "left center"
 	)
 	:stacking "fg"
 	:focuseable true
 	:exclusive true
 	:namespace "taskbar"
-		(taskbar (files) (sound) (time))
+		(
+			taskbar
+				(box :orientation "vertical" (files))
+				(box :space-evenly false
+					:vexpand true :orientation "vertical" (workspaceList))
+				(box
+					:orientation "vertical" 
+					:space-evenly false
+					:valign "end"
+					(sound)
+					(time)
+				)
+		)
 )

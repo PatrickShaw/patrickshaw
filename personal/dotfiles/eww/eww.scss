@@ -25,6 +25,14 @@ $vertical-default-button-padding:  grid(1);
   all: unset;
 }
 
+.workspaceButton {
+  padding: buttonPadding(0.5);
+}
+
+.workspaceEventBox {
+  transition-property: background-color;
+  transition-duration: 0.1s;
+}
 .clickable:hover {
   background-color: rgba(255, 255, 255, 0.05);
 }

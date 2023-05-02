@@ -24,18 +24,18 @@ with pkgs; [
   protontricks
   proton-caller
   winetricks
-  
+
   river
 
   p7zip
   unzip
   gzip
-  
+
   # For lspci
   pciutils
   # For lsusb
   usbutils
-  
+
   jack2
   #helvum
 

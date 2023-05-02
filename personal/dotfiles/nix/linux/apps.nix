@@ -63,6 +63,7 @@ with pkgs; [
   signal-desktop
 
   celluloid
+  haruna
 
   qbittorrent
 
@@ -85,7 +86,6 @@ with pkgs; [
   phinger-cursors
 
   obsidian
-  haruna
 
   cpu-x
 

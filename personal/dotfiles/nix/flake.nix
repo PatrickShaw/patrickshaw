@@ -146,6 +146,11 @@ default.clock.min-quantum = 24;
         # It auto enables Wayland flags for Electron apps
           NIXOS_OZONE_WL = "1";
 
+          # What I currently use as my wlroots backend ATM
+          WLR_RENDERER = "vulkan";
+          # Current GPU won't render hardware cursors
+          WLR_NO_HARDWARE_CURSORS="1";
+
         };
 
         hardware.opengl.enable = true;

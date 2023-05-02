@@ -148,6 +148,8 @@ default.clock.min-quantum = 24;
         '';
 
         environment.sessionVariables = {
+          # See: https://wiki.archlinux.org/title/Cursor_themes
+          XCURSOR_THEME = "phinger-cursors";
 
           LIBVIRT_DEFAULT_URI = [ "qemu:///system" ];
 

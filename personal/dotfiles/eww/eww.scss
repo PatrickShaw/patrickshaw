@@ -13,13 +13,22 @@
   @return proportionFactor($level) * 1rem;
 }
 
-.time {
-  padding: grid(0);
-  font-size: fontSize(0);
+$horizontal-default-button-padding: grid(1.5);
+$vertical-default-button-padding:  grid(1);
+@function buttonPadding($level) {
+  $factor: proportionFactor($level);
+  $vertical: $vertical-default-button-padding * $factor;
+  @return $vertical $horizontal-default-button-padding;
+}
+.clickable:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.clickable.active {
+  background-color: rgba(255, 255, 255, 0.025);
 }
 
 .taskbar {
-  padding: grid(0) 0px;
+  padding: grid(1) 0px;
 }
 
 window {
@@ -31,7 +40,7 @@ window {
 }
 
 .icon {
-  background-size:100% 100%;
+  background-size: 100% 100%;
 }
 
 .icon {
@@ -43,6 +52,15 @@ window {
   }
 }
 
-.time>*:not(:last-child) {
-  margin-bottom: grid(-1);
+.time {
+  font-size: fontSize(0);
+  padding: buttonPadding(0);
+}
+
+.time > *:not(:last-child) {
+  padding-bottom: grid(2);
+}
+
+.timeSubsection > *:not(:last-child) {
+  padding-bottom: grid(0.5);
 }

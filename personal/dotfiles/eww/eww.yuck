@@ -1,19 +1,56 @@
-(deflisten workspace "scripts/workspace")
-(defwidget workspaces []
-	(literal :content workspace))
+
+(defwidget timeSubsection [] 
+(box
+	:space-evenly false
+	:orientation "vertical"
+	:class "timeSubsection"
+		(children)	
+))
 
 (defwidget time []
-	(box	:orientation "v" 
+	(clickable
+		(box
+			:orientation "vertical" 
 			:class "time" 
-			:valign "end"
+			:space-evenly false
+			(timeSubsection
 	(box
-			:class "time-hour" hour)
+					:valign "start"
+					:class "timeHours" hour)
 	(box
-			:class "time-min"  min)))
+					:valign "start"
+					:class "timeMinutes"  min)		
+			)
+			(timeSubsection
+				(box
+					:valign "start"
+					:class "timeDayOfWeek" dayOfWeek
+				)
+				(box
+					:valign "start"
+						:class "timeDayOfMonth" dayOfMonth
+				)
+			)
+		)
+	)
+)
 (defpoll hour	:interval "1s"	"date '+%H'")
 (defpoll min	:interval "1s"	"date '+%M'")
+(defpoll dayOfWeek :interval "1m" "date \"+%a\"")
+(defpoll dayOfMonth :interval "1m" "date \"+%d\"")
 
-(defwidget files []
+(
+	defwidget clickable [?onclick ?onrightclick ?class]
+		(eventbox
+			:class "clickable ${class}"
+			:onclick onclick
+			:onrightclick onrightclick
+			(
+				children
+			)	
+		)
+)
+
 	(box
 		:class "icon files"
 		:valign "end"
@@ -35,16 +72,19 @@
 			:orientation "vertical"
 			:vexpand true
 			:class "taskbar"
+			:space-evenly false
 			(children)
 	)
 )
 (defwindow sidebar
 	:monitor 0
-	:geometry (geometry :x "0px"
+	:geometry (geometry
+		:x "0px"
 											:y "0px"
 											:width "40px"
 											:height "100%"
-											:anchor "left center")
+		:anchor "left center"
+	)
 	:stacking "fg"
 	:focuseable true
 	:exclusive true

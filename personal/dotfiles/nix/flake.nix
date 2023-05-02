@@ -3,6 +3,7 @@
     nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
     hyprland.url = "github:hyprwm/Hyprland";
     eww.url = "github:elkowar/eww";
+    helix.url = "github:helix-editor/helix";
   };
   nixConfig = {
     extra-substituters = [
@@ -81,6 +82,8 @@
           wayland-pkgs.imv
           wayland-pkgs.sway-unwrapped
           inputs.eww.packages.${pkgs.system}.eww-wayland
+
+          inputs.helix.packages.${pkgs.system}.default
         ] ++ import ./linux/apps.nix { inherit pkgs; };
 
         i18n.defaultLocale = "en_AU.UTF-8";

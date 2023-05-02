@@ -84,6 +84,9 @@ with pkgs; [
   docker-compose
 
   phinger-cursors
+  papirus-icon-theme
+  
+  orchis-theme
 
   obsidian
 

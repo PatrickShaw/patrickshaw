@@ -77,6 +77,7 @@
           wayland-pkgs.swww
           wayland-pkgs.wofi
           wayland-pkgs.grim
+          wayland-pkgs.slurp
           wayland-pkgs.imv
           wayland-pkgs.sway-unwrapped
           inputs.eww.packages.${pkgs.system}.eww-wayland

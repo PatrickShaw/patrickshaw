@@ -94,6 +94,9 @@ with pkgs; [
 
   # See "External monitors" in https://wiki.archlinux.org/title/backlight
   ddcutil
+  # UI
+  ddcui
+
 
 
   # For managing workspaces

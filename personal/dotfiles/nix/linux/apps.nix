@@ -94,4 +94,9 @@ with pkgs; [
 
   # See "External monitors" in https://wiki.archlinux.org/title/backlight
   ddcutil
+
+
+  # For managing workspaces
+  pkgs.jaq
+  pkgs.socat
 ]

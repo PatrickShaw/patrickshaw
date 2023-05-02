@@ -138,11 +138,15 @@ default.clock.min-quantum = 24;
           #rm /var/lib/libvirt/qemu/networks/autostart/default.xml
         '';
 
+        environment.sessionVariables = {
+
+          LIBVIRT_DEFAULT_URI = [ "qemu:///system" ];
+
         # See: https://nixos.org/manual/nixos/stable/release-notes.html#sec-release-22.05-notable-changes
         # It auto enables Wayland flags for Electron apps
-        environment.sessionVariables.NIXOS_OZONE_WL = "1";
+          NIXOS_OZONE_WL = "1";
 
-        environment.sessionVariables.LIBVIRT_DEFAULT_URI = [ "qemu:///system" ];
+        };
 
         hardware.opengl.enable = true;
 

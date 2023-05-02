@@ -20,6 +20,11 @@ $vertical-default-button-padding:  grid(1);
   $vertical: $vertical-default-button-padding * $factor;
   @return $vertical $horizontal-default-button-padding;
 }
+
+* {
+  all: unset;
+}
+
 .clickable:hover {
   background-color: rgba(255, 255, 255, 0.05);
 }

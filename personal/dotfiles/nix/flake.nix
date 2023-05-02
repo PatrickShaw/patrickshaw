@@ -35,7 +35,7 @@
             shared-configuration
             inputs.hyprland.nixosModules.default
         ];
-        
+
         # See: https://github.com/NixOS/nixpkgs/issues/16327
         # Also: https://github.com/NixOS/nixpkgs/issues/197188#issuecomment-1320990068
         services.gnome.at-spi2-core.enable = true;
@@ -139,7 +139,7 @@ default.clock.min-quantum = 24;
 
         services.chrony.enable = true;
         services.timesyncd.enable = false;
-
+        
         networking.timeServers = options.networking.timeServers.default
           ++ [ "time.cloudflare.com" ];
 
@@ -153,8 +153,8 @@ default.clock.min-quantum = 24;
 
           LIBVIRT_DEFAULT_URI = [ "qemu:///system" ];
 
-        # See: https://nixos.org/manual/nixos/stable/release-notes.html#sec-release-22.05-notable-changes
-        # It auto enables Wayland flags for Electron apps
+          # See: https://nixos.org/manual/nixos/stable/release-notes.html#sec-release-22.05-notable-changes
+          # It auto enables Wayland flags for Electron apps
           NIXOS_OZONE_WL = "1";
 
           # What I currently use as my wlroots backend ATM

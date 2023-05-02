@@ -55,8 +55,9 @@ with pkgs; [
   baobab
   cpu-x
 
-  wine64
-  wine
+  # See: https://nixos.wiki/wiki/Wine
+  #wineWowPackages.stable
+  wineWowPackages.waylandFull
 
   spotify
   signal-desktop

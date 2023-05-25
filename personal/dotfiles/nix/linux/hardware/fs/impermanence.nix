@@ -80,6 +80,7 @@
       options = [ "bind" ];
     };
 
+    # Without this you'd have to keep approving each newly generated SSH on each boot if you enable SSHing into the machine
     "/etc/ssh" = {
       device = "/persist/etc/ssh";
       fsType = "none";

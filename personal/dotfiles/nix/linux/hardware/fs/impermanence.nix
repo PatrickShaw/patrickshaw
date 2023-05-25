@@ -80,6 +80,13 @@
       options = [ "bind" ];
     };
 
+    # This is where waydroid stores its files such as images and configs - If you use waydroid, that is
+    "/var/lib/waydroid" = {
+      device = "/persist/var/lib/waydroid";
+      fsType = "none";
+      options = [ "bind" ];
+    };
+
     # Without this you'd have to keep approving each newly generated SSH on each boot if you enable SSHing into the machine
     "/etc/ssh" = {
       device = "/persist/etc/ssh";

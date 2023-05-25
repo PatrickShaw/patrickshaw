@@ -78,4 +78,6 @@ with pkgs; [
 
   rust-analyzer
 
+
+  go
 ]

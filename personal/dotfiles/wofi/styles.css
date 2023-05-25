@@ -1,11 +1,13 @@
+@import 'colors';
+
 #window {
   border-radius: 20px;
 }
 
 
 #input {
-  color: #999999;
-  border: 1px solid rgba(100, 100, 100, 1);
+  color: #FFFFFF;
+  border: 1px solid @unfocused_borders;
   border-radius: 20px; 
 
   margin-left: 100px;
@@ -14,20 +16,17 @@
   margin-bottom: 20px;
 
   box-shadow: none;
-  background-color: rgba(0.7, 0.7, 0.7, 0.9);
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 #input:focus {
-  color: #999999;
-  border: 1px solid rgba(255, 0, 0, 1);
+  border: 1px solid;
+  border-color: @theme_selected_bg_color;
 
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-top: 10px;
-  margin-bottom: 20px;
-
-  box-shadow: none;
-  background-color: rgba(0.5, 0.5, 0.5, 0.9);
+  margin-left: 12px;
+  margin-right: 12px;
+  margin-top: 12px;
+  margin-bottom: 24px;
 }
 
 #entry {
@@ -40,5 +39,4 @@
 
 #entry:focus {
   background: rgba(0, 0, 0, 0.1);
-  border: 0px;
 }

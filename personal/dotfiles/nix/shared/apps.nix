@@ -78,6 +78,7 @@ with pkgs; [
 
   rust-analyzer
 
+  efibootmgr
 
   go
 ]

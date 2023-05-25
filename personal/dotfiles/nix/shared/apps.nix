@@ -75,4 +75,7 @@ with pkgs; [
   direnv
 
   libreoffice-fresh
+
+  rust-analyzer
+
 ]

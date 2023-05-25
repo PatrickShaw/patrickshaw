@@ -117,6 +117,7 @@
       device = "/persist/etc/shadow";
       fsType = "none";
       options = [ "bind" ];
+      # Verified: This isn't needed for boot
     };
   };
 }

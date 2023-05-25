@@ -105,4 +105,6 @@ with pkgs; [
   # For managing workspaces
   jaq
   socat
+  
+  handlr
 ]

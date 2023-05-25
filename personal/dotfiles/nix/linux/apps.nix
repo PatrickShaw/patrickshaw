@@ -103,6 +103,6 @@ with pkgs; [
 
 
   # For managing workspaces
-  pkgs.jaq
-  pkgs.socat
+  jaq
+  socat
 ]

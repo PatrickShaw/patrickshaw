@@ -150,6 +150,11 @@ default.clock.min-quantum = 24;
         environment.sessionVariables = {
           # See: https://wiki.archlinux.org/title/Cursor_themes
           XCURSOR_THEME = "phinger-cursors";
+          XCURSOR_SIZE = "24";
+
+          # Enable if you want to unbind and rebind secondary GPU cards easily 
+          # Hyprland attaches processes to other GPUs too
+          #WLR_DRM_DEVICES="/dev/dri/card0";
 
           LIBVIRT_DEFAULT_URI = [ "qemu:///system" ];
 

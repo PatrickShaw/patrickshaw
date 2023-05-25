@@ -51,7 +51,7 @@
             hidpi = true;
           };
 
-          nvidiaPatches = true;
+          nvidiaPatches = false;
         };
 
         # See: https://wiki.archlinux.org/title/PipeWire#xdg-desktop-portal-wlr

@@ -170,6 +170,8 @@ default.clock.min-quantum = 24;
           # For whatever reason nautilus won't respect my theme without this
           GTK_THEME = "Orchis-Green:dark";
 
+          MOZ_ENABLE_WAYLAND = "1";
+
           # See https://discourse.nixos.org/t/how-to-reload-mime-database-after-update-gtk-application-crashes-on-icon-load/14152/3
           # Appears to make final pickers work properly (although chooses one I wouldn't expect)
           #QT_QPA_PLATFORMTHEME="xdgdesktopportal";

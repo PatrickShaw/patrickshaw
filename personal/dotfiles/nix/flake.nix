@@ -153,6 +153,10 @@ default.clock.min-quantum = 24;
         # For automounting disks
         services.udisks2.enable = true;
 
+        services.udev.packages = [
+          pkgs.android-udev-rules
+        ];
+        
         networking.timeServers = options.networking.timeServers.default
           ++ [ "time.cloudflare.com" ];
 

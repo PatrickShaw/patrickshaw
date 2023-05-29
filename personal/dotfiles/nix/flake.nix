@@ -85,7 +85,16 @@
           inputs.eww.packages.${pkgs.system}.eww-wayland
 
           inputs.helix.packages.${pkgs.system}.default
+
+          pkgs.libimobiledevice
+          pkgs.ifuse 
         ] ++ import ./linux/apps.nix { inherit pkgs; };
+
+
+        services.usbmuxd = {
+          enable = true;
+          package = pkgs.usbmuxd2;
+        };
 
         i18n.defaultLocale = "en_AU.UTF-8";
 

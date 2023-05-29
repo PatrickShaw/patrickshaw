@@ -101,6 +101,7 @@ with pkgs; [
   # See: https://nixos.wiki/wiki/GNOME and the "Known Issues" section of "https://nixos.wiki/wiki/Lutris"
   gnome.adwaita-icon-theme
 
+  newsflash
 
   # For managing workspaces
   jaq

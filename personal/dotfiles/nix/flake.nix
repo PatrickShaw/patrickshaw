@@ -149,6 +149,10 @@ default.clock.min-quantum = 24;
         services.chrony.enable = true;
         services.timesyncd.enable = false;
         
+
+        # For automounting disks
+        services.udisks2.enable = true;
+
         networking.timeServers = options.networking.timeServers.default
           ++ [ "time.cloudflare.com" ];
 

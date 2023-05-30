@@ -74,6 +74,18 @@
       options = [ "bind" ];
     };
 
+    "/etc/wpa_supplicant" = {
+    	device = "/persist/etc/wpa_supplicant";
+	fsType = "none";
+	options = [ "bind" ];
+    };
+
+    "/var/lib/iwd" = {
+      device = "/persist/var/lib/iwd";
+      fsType = "none";
+      options = [ "bind"];
+    };
+
     "/var/lib/bluetooth" = {
       device = "/persist/var/lib/bluetooth";
       fsType = "none";

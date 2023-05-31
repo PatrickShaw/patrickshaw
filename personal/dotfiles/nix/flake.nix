@@ -25,7 +25,49 @@
   };
   outputs = { self, ... }@inputs: 
   {
-    nixosModules={
+    nixosModules= rec {
+      nvidia = { config, ... }: {
+        boot.kernelModules = [
+          "nvidia"
+          "nvidia_modeset"
+          "nvidia_uvm"
+          "nvidia_drm"
+        ];
+        services.xserver.videoDrivers = [ "nvidia" ];
+        hardware.nvidia = {
+          package = config.boot.kernelPackages.nvidiaPackages.stable;
+          # See KMS doco in Arch. Meant to enable newer rendering methods, etc
+          modesetting.enable = true;
+        };
+
+        environment.sessionVariables = {
+          # See: https://wiki.hyprland.org/Configuring/Environment-variables/
+          # See: https://github.com/hyprwm/Hyprland/issues/1878
+          GBM_BACKEND="nvidia";
+          __GLX_VENDOR_LIBRARY_NAME="nvidia";
+          LIBVA_DRIVER_NAME="nvidia";
+
+          # https://nixos.wiki/wiki/Nvidia
+          #__NV_PRIME_RENDER_OFFLOAD="1";
+          #__NV_PRIME_RENDER_OFFLOAD_PROVIDER="NVIDIA-G0";
+          #__VK_LAYER_NV_optimus="NVIDIA_only";
+        };
+      };
+      nvidia-a1000 = { ... }: {
+        imports = [nvidia];
+        hardware.nvidia = {
+          open = true;
+          prime = {
+            offload = {
+              enable = true;
+              enableOffloadCmd = true;
+            };
+          };
+        };
+      };
+      nvidia-gtx1060 = { ... }: {
+        imports = [nvidia];
+      };
       vfio = { ... }: {
             systemd.tmpfiles.rules = [ "f /dev/shm/looking-glass 0660 1000 kvm -" ];
             environment.sessionVariables = {
@@ -193,17 +235,6 @@
           # See https://discourse.nixos.org/t/how-to-reload-mime-database-after-update-gtk-application-crashes-on-icon-load/14152/3
           # Appears to make final pickers work properly (although chooses one I wouldn't expect)
           #QT_QPA_PLATFORMTHEME="xdgdesktopportal";
-          
-          # See: https://wiki.hyprland.org/Configuring/Environment-variables/
-          # See: https://github.com/hyprwm/Hyprland/issues/1878
-          GBM_BACKEND="nvidia";
-          __GLX_VENDOR_LIBRARY_NAME="nvidia";
-          LIBVA_DRIVER_NAME="nvidia";
-
-          # https://nixos.wiki/wiki/Nvidia
-          #__NV_PRIME_RENDER_OFFLOAD="1";
-          #__NV_PRIME_RENDER_OFFLOAD_PROVIDER="NVIDIA-G0";
-          #__VK_LAYER_NV_optimus="NVIDIA_only";
         };
 
         hardware.opengl.enable = true;

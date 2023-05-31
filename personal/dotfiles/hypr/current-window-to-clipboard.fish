@@ -1,1 +1,0 @@
-../../code_snippets/desktop/current-window-to-clipboard.fish

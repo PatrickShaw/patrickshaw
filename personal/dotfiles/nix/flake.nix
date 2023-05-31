@@ -41,6 +41,9 @@
         };
 
         environment.sessionVariables = {
+          # What I currently use as my wlroots backend ATM
+          WLR_RENDERER = "vulkan";
+
           # See: https://wiki.hyprland.org/Configuring/Environment-variables/
           # See: https://github.com/hyprwm/Hyprland/issues/1878
           GBM_BACKEND="nvidia";
@@ -64,13 +67,23 @@
             };
           };
         };
+        environment.sessionVariables = {
+          WLR_NO_HARDWARE_CURSORS="0";
+        };
       };
       nvidia-gtx1060 = { ... }: {
         imports = [nvidia];
+        hardware.nvidia = {
+          open = false; 
+        };
+        environment.sessionVariables = {
+          # Won't render hardware cursors
+          WLR_NO_HARDWARE_CURSORS="1";
+        }
       };
       vfio = { ... }: {
-            systemd.tmpfiles.rules = [ "f /dev/shm/looking-glass 0660 1000 kvm -" ];
-            environment.sessionVariables = {
+        systemd.tmpfiles.rules = [ "f /dev/shm/looking-glass 0660 1000 kvm -" ];
+        environment.sessionVariables = {
         LIBVIRT_DEFAULT_URI = [ "qemu:///system" ];
       };
     };
@@ -106,7 +119,7 @@
             };
           };
         };
-        
+
         programs.hyprland = {
           enable = true;
 
@@ -237,10 +250,6 @@
           # It auto enables Wayland flags for Electron apps
           NIXOS_OZONE_WL = "1";
 
-          # What I currently use as my wlroots backend ATM
-          WLR_RENDERER = "vulkan";
-          # Current GPU won't render hardware cursors
-          WLR_NO_HARDWARE_CURSORS="1";
 
           # For whatever reason nautilus won't respect my theme without this
           GTK_THEME = "Orchis-Green:dark";

@@ -119,6 +119,13 @@
             inputs.hyprland.nixosModules.default
         ];
 
+        nix.gc = {
+          automatic = true;
+          dates = "weekly";
+          persistent = true;
+          options = "--delete-older-than 30d";
+        };
+
         hardware.enableRedistributableFirmware = true;
 
         # See: https://github.com/NixOS/nixpkgs/issues/16327

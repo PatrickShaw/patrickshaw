@@ -25,13 +25,14 @@
   };
   outputs = { self, ... }@inputs: 
   {
-      nixosModules.vfio = { ... }: {
+    nixosModules={
+      vfio = { ... }: {
             systemd.tmpfiles.rules = [ "f /dev/shm/looking-glass 0660 1000 kvm -" ];
             environment.sessionVariables = {
         LIBVIRT_DEFAULT_URI = [ "qemu:///system" ];
       };
     };
-    nixosModules.default = { config, pkgs, lib, options, ... }:
+    default = { config, pkgs, lib, options, ... }:
       let
         wayland-pkgs = inputs.nixpkgs-wayland.packages.${pkgs.system};
         shared-configuration = import ./shared/configuration.nix { inherit pkgs; };
@@ -246,6 +247,6 @@
           };
         };
       };
-
+    };
   };
 }

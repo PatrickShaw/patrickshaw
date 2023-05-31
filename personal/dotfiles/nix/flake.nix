@@ -26,7 +26,15 @@
   outputs = { self, ... }@inputs: 
   {
     nixosModules= rec {
-      nvidia = { config, ... }: {
+      intel-integrated-graphics = { pkgs, ... }: {
+        hardware.opengl = {
+          enable=true;
+          extraPackages = [
+        pkgs.intel-media-driver # LIBVA_DRIVER_NAME=iHD
+          ];
+      };
+      };
+      nvidia = { config, pkgs, ... }: {
         boot.kernelModules = [
           "nvidia"
           "nvidia_modeset"
@@ -55,6 +63,18 @@
           #__NV_PRIME_RENDER_OFFLOAD_PROVIDER="NVIDIA-G0";
           #__VK_LAYER_NV_optimus="NVIDIA_only";
         };
+
+        hardware.opengl.driSupport = true;
+        hardware.opengl.driSupport32Bit = true;
+        hardware.opengl = {
+          enable = true;
+          extraPackages = [
+            # See: https://nixos.wiki/wiki/Accelerated_Video_Playback
+            pkgs.nvidia-vaapi-driver
+            pkgs.vaapiVdpau
+            pkgs.libvdpau-va-gl
+          ];
+        };
       };
       nvidia-a1000 = { ... }: {
         imports = [nvidia];
@@ -79,7 +99,7 @@
         environment.sessionVariables = {
           # Won't render hardware cursors
           WLR_NO_HARDWARE_CURSORS="1";
-        }
+        };
       };
       vfio = { ... }: {
         systemd.tmpfiles.rules = [ "f /dev/shm/looking-glass 0660 1000 kvm -" ];

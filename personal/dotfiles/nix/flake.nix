@@ -23,7 +23,14 @@
       "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
     ];
   };
-  outputs = { self, ... }@inputs: {
+  outputs = { self, ... }@inputs: 
+  {
+      nixosModules.vfio = { ... }: {
+            systemd.tmpfiles.rules = [ "f /dev/shm/looking-glass 0660 1000 kvm -" ];
+            environment.sessionVariables = {
+        LIBVIRT_DEFAULT_URI = [ "qemu:///system" ];
+      };
+    };
     nixosModules.default = { config, pkgs, lib, options, ... }:
       let
         wayland-pkgs = inputs.nixpkgs-wayland.packages.${pkgs.system};

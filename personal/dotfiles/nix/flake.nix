@@ -91,6 +91,21 @@
         # See: https://github.com/NixOS/nixpkgs/issues/16327
         # Also: https://github.com/NixOS/nixpkgs/issues/197188#issuecomment-1320990068
         services.gnome.at-spi2-core.enable = true;
+        services.xserver = {
+          enable = false;
+          
+          libinput = {
+            enable = true;
+
+            mouse = {
+              accelProfile = "flat";
+            };
+
+            touchpad = {
+              accelProfile = "adaptive";
+            };
+          };
+        };
         
         programs.hyprland = {
           enable = true;

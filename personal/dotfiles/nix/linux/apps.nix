@@ -13,7 +13,13 @@ with pkgs; [
   ulauncher
 
   pavucontrol
-  helvum
+  # Prefer qpwgraph: helvum
+  qpwgraph
+
+  # Camera app
+  gnome.cheese
+  # Allows tweaking of camera
+  v4l-utils
 
   looking-glass-client
 

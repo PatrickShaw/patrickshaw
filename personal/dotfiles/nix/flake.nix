@@ -144,8 +144,6 @@
           };
         };
 
-        systemd.tmpfiles.rules = [ "f /dev/shm/looking-glass 0660 1000 kvm -" ];
-
         # Bootloader/EFI
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
@@ -176,8 +174,6 @@
           # Enable if you want to unbind and rebind secondary GPU cards easily 
           # Hyprland attaches processes to other GPUs too
           #WLR_DRM_DEVICES="/dev/dri/card0";
-
-          LIBVIRT_DEFAULT_URI = [ "qemu:///system" ];
 
           # See: https://nixos.org/manual/nixos/stable/release-notes.html#sec-release-22.05-notable-changes
           # It auto enables Wayland flags for Electron apps

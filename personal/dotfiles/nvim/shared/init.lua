@@ -4,7 +4,6 @@ vim.opt.mouse = "a"
 vim.opt.expandtab = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
-
 vim.api.nvim_set_keymap('v', '<S-Up>', '<Up>', { noremap = true; })
 vim.api.nvim_set_keymap('v', '<S-Down>', '<Down>', { noremap = true })
 vim.api.nvim_set_keymap('v', '<S-Left>', '<Left>', { noremap = true })

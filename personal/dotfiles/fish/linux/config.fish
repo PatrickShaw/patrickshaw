@@ -14,9 +14,9 @@ if status is-login
     #  set -gx XDG_RUNTIME_DIR $runtime_dir       
     #end
 
-    # WLR_RENDERER=vulkan WLR_NO_HARDWARE_CURSORS=1 dbus-run-session sway --unsupported-gpu
-    # WLR_RENDERER=vulkan WLR_NO_HARDWARE_CURSORS=1 dbus-run-session river
-    WLR_RENDERER=vulkan WLR_NO_HARDWARE_CURSORS=1 dbus-run-session Hyprland
+    #dbus-run-session sway --unsupported-gpu
+    #dbus-run-session river
+    Hyprland
 
     # All handled by Nix
     #dbus-launch pipewire &

@@ -74,12 +74,32 @@
       options = [ "bind" ];
     };
 
+    "/etc/wpa_supplicant" = {
+    	device = "/persist/etc/wpa_supplicant";
+	fsType = "none";
+	options = [ "bind" ];
+    };
+
+    "/var/lib/iwd" = {
+      device = "/persist/var/lib/iwd";
+      fsType = "none";
+      options = [ "bind"];
+    };
+
     "/var/lib/bluetooth" = {
       device = "/persist/var/lib/bluetooth";
       fsType = "none";
       options = [ "bind" ];
     };
 
+    # This is where waydroid stores its files such as images and configs - If you use waydroid, that is
+    "/var/lib/waydroid" = {
+      device = "/persist/var/lib/waydroid";
+      fsType = "none";
+      options = [ "bind" ];
+    };
+
+    # Without this you'd have to keep approving each newly generated SSH on each boot if you enable SSHing into the machine
     "/etc/ssh" = {
       device = "/persist/etc/ssh";
       fsType = "none";
@@ -109,6 +129,7 @@
       device = "/persist/etc/shadow";
       fsType = "none";
       options = [ "bind" ];
+      # Verified: This isn't needed for boot
     };
   };
 }

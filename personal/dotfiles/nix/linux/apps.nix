@@ -21,6 +21,10 @@ with pkgs; [
   # Allows tweaking of camera
   v4l-utils
 
+  brightnessctl
+
+  frawk
+
   looking-glass-client
 
   gnome.nautilus

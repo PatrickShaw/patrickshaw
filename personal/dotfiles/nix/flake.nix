@@ -57,11 +57,6 @@
           GBM_BACKEND="nvidia";
           __GLX_VENDOR_LIBRARY_NAME="nvidia";
           LIBVA_DRIVER_NAME="nvidia";
-
-          # https://nixos.wiki/wiki/Nvidia
-          #__NV_PRIME_RENDER_OFFLOAD="1";
-          #__NV_PRIME_RENDER_OFFLOAD_PROVIDER="NVIDIA-G0";
-          #__VK_LAYER_NV_optimus="NVIDIA_only";
         };
 
         hardware.opengl.driSupport = true;
@@ -89,6 +84,12 @@
         };
         environment.sessionVariables = {
           WLR_NO_HARDWARE_CURSORS="0";
+
+          # https://nixos.wiki/wiki/Nvidia
+          # Note: Zoom doesn't 
+          __NV_PRIME_RENDER_OFFLOAD="1";
+          __NV_PRIME_RENDER_OFFLOAD_PROVIDER="NVIDIA-G0";
+          __VK_LAYER_NV_optimus="NVIDIA_only";
         };
       };
       nvidia-gtx1060 = { ... }: {

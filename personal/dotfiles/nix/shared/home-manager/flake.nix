@@ -35,9 +35,20 @@
           git-zsh-autosuggestions
           git-zsh-fast-syntax-highlighting;
       };
-    in utils.lib.eachDefaultSystem (system: {
-      lib = {
-        inherit zsh-config;
+    in {
+      nixosModules.default = {pkgs, ... }: {
+        config = {
+          home-manager = {
+            users.pshaw = { config, lib, ... }: {
+                programs.zsh = {
+                    enable = true;
+                    initExtra = ''
+                      ${zsh-config}
+                    '';
+                };
+            };
+          };
+        };
       };
-    });
+    };
 }

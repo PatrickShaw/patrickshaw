@@ -40,6 +40,15 @@
         config = {
           home-manager = {
             users.pshaw = { config, lib, ... }: {
+                programs.fish = {
+                  enable = true;
+                  plugins = [
+                      {
+                          name = "tide";
+                          src = pkgs.fishPlugins.tide.src;
+                      }
+                  ];
+                };
                 programs.zsh = {
                     enable = true;
                     initExtra = ''

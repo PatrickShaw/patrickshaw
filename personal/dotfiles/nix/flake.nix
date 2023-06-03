@@ -74,6 +74,8 @@
       nvidia-a1000 = { ... }: {
         imports = [nvidia];
         hardware.nvidia = {
+          # https://nixos.wiki/wiki/Nvidia mentions it'll fix sleep
+          powerManagement.enable = true;
           open = true;
           prime = {
             offload = {

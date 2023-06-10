@@ -8,7 +8,7 @@ with pkgs; [
   cmake
   gnumake
 
-  vscode
+  vscodium
   lapce
 
   alacritty
@@ -30,7 +30,6 @@ with pkgs; [
   thefuck
   zoxide
   delta
-  vscode
   git
   git-lfs
   gnupg

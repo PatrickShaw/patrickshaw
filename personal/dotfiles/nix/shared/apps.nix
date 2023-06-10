@@ -58,8 +58,6 @@ with pkgs; [
   libiconv
   google-cloud-sdk
 
-  syncthing
-
   rWrapper
 
   android-tools

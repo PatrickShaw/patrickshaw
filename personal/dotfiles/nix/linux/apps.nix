@@ -77,8 +77,6 @@ with pkgs; [
 
   qbittorrent
 
-  _1password-gui
-
   virt-manager
   virtiofsd
   OVMFFull

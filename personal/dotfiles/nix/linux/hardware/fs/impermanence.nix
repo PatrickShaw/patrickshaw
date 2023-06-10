@@ -1,5 +1,13 @@
 { boot, persist, nixStore }:
-
+let
+  persist-directories = directories: builtins.foldl' (fileSystems: directory: (fileSystems // {
+    "${directory}" = {
+      device = "/persist${directory}";
+      fsType = "none";
+      options = ["bind"];
+    };
+  })) {} directories;
+in
 {
   fileSystems = {
     "/" = {
@@ -54,58 +62,6 @@
       neededForBoot = true;
     };
 
-    "/nix/store" = {
-      device = "/persist/nix/store";
-      fsType = "none";
-      options = [ "bind" ];
-      neededForBoot = true;
-    };
-
-    "/root" = {
-      device = "/persist/root";
-      fsType = "none";
-      options = [ "bind" ];
-      neededForBoot = false;
-    };
-
-    "/etc/NetworkManager/system-connections" = {
-      device = "/persist/etc/NetworkManager/system-connections";
-      fsType = "none";
-      options = [ "bind" ];
-    };
-
-    "/etc/wpa_supplicant" = {
-    	device = "/persist/etc/wpa_supplicant";
-	fsType = "none";
-	options = [ "bind" ];
-    };
-
-    "/var/lib/iwd" = {
-      device = "/persist/var/lib/iwd";
-      fsType = "none";
-      options = [ "bind"];
-    };
-
-    "/var/lib/bluetooth" = {
-      device = "/persist/var/lib/bluetooth";
-      fsType = "none";
-      options = [ "bind" ];
-    };
-
-    # This is where waydroid stores its files such as images and configs - If you use waydroid, that is
-    "/var/lib/waydroid" = {
-      device = "/persist/var/lib/waydroid";
-      fsType = "none";
-      options = [ "bind" ];
-    };
-
-    # Without this you'd have to keep approving each newly generated SSH on each boot if you enable SSHing into the machine
-    "/etc/ssh" = {
-      device = "/persist/etc/ssh";
-      fsType = "none";
-      options = [ "bind" ];
-    };
-
     "/var/log" = {
       device = "/persist/var/log";
       fsType = "none";
@@ -113,23 +69,38 @@
       neededForBoot = true;
     };
 
-    "/etc/nixos" = {
-      device = "/persist/etc/nixos";
-      fsType = "none";
-      options = [ "bind" ];
-    };
 
-    "/home" = {
-      device = "/persist/home";
+    "/nix/store" = {
+      device = "/persist/nix/store";
       fsType = "none";
       options = [ "bind" ];
+      neededForBoot = true;
     };
+  } // (persist-directories [
+    # Where fprint fingerprint data lives
+    "/var/lib/fprint"
 
-    "/etc/shadow" = {
-      device = "/persist/etc/shadow";
-      fsType = "none";
-      options = [ "bind" ];
-      # Verified: This isn't needed for boot
-    };
-  };
+    "/root"
+
+    # Where NetworkManager stores WiFi info (and other connection types)
+    "/etc/NetworkManager/system-connections"
+    # Where wpa_supplicant stores WiFi info
+    "/etc/wpa_supplicant"
+    # Where iwd stores WiFi info
+    "/var/lib/iwd"
+
+    "/var/lib/bluetooth"
+
+    # This is where waydroid stores its files such as images and configs - If you use waydroid, that is
+    "/var/lib/waydroid"
+
+    # Without this you'd have to keep approving each newly generated SSH on each boot if you enable SSHing into the machine
+    "/etc/ssh"
+
+    "/etc/nixos"
+
+    "/home"
+
+    "/etc/shadow"
+  ]);
 }

@@ -195,7 +195,8 @@
           wayland-pkgs.slurp
           wayland-pkgs.imv
           wayland-pkgs.sway-unwrapped
-          inputs.eww.packages.${pkgs.system}.eww-wayland
+          wayland-pkgs.mako
+
 
           inputs.helix.packages.${pkgs.system}.default
 

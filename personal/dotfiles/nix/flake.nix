@@ -76,7 +76,10 @@
         hardware.nvidia = {
           # https://nixos.wiki/wiki/Nvidia mentions it'll fix sleep
           powerManagement.enable = true;
-          open = true;
+          powerManagement.finegrained = false;
+
+          open = false;
+
           prime = {
             offload = {
               enable = true;
@@ -85,7 +88,7 @@
           };
         };
         environment.sessionVariables = {
-          WLR_NO_HARDWARE_CURSORS="0";
+          WLR_NO_HARDWARE_CURSORS="1";
 
           # https://nixos.wiki/wiki/Nvidia
           # Note: Zoom doesn't 

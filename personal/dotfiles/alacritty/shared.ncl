@@ -45,6 +45,6 @@ fun system => {
     },
   },
   window = {
-    opacity = if system == "linux" then 0.9 else 1
+    opacity = if system == "linux" then 0.95 else 1
   }
 }

@@ -3,6 +3,8 @@ with pkgs; [
   google-chrome
   firefox
 
+  pkgs.gnome.gnome-clocks
+
   gcc
 
   killall

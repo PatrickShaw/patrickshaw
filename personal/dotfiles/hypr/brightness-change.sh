@@ -3,6 +3,7 @@
 MAX="$(brightnessctl -m m)"
 CURRENT="$(brightnessctl -m g)"
 
-NEXT="$(echo $CURRENT $MAX | frawk '{ printf int($1 - $2 * 0.1) }')"
+NEXT="$(frawk "BEGIN { print int($CURRENT $1 $MAX * 0.1 + 0.5) }")"
+echo $NEXT
 
 brightnessctl s $NEXT

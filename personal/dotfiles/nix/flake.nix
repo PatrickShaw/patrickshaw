@@ -319,6 +319,7 @@
         services.gvfs.enable = true;
 
         services.openssh.enable = true;
+        programs.nm-applet.enable = true;
 
         # Fonts
         fonts = {

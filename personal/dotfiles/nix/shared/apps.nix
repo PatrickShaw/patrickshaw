@@ -53,7 +53,7 @@ with pkgs; [
 
   postgresql
 
-  uutils-coreutils
+  libnotify
 
   libiconv
   google-cloud-sdk

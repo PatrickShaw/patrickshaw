@@ -147,6 +147,8 @@ with pkgs; [
 
   # See: https://nixos.wiki/wiki/GNOME and the "Known Issues" section of "https://nixos.wiki/wiki/Lutris"
   gnome.adwaita-icon-theme
+  # Added assuming it might cause the same problems as above ^
+  hicolor-icon-theme
 
   newsflash
 

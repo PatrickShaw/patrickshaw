@@ -17,6 +17,11 @@
       flake = false;
     };
     utils.url = "github:numtide/flake-utils";
+    
+    dracula-dircolors = {
+      url = "github:dracula/dircolors";
+      flake = false;
+    };
   };
   
   outputs = {
@@ -25,6 +30,7 @@
       git-zsh-defer,
       git-zsh-autosuggestions,
       git-zsh-fast-syntax-highlighting,
+      dracula-dircolors,
       utils
   }:
     let
@@ -40,6 +46,13 @@
         config = {
           home-manager = {
             users.pshaw = { config, lib, ... }: {
+                home = {
+                  file = {
+                    ".dircolors" = {
+                      source = "${dracula-dircolors}/.dircolors";
+                    };
+                  };
+                };
                 programs.fish = {
                   enable = true;
                   plugins = [

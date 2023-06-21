@@ -88,7 +88,6 @@ with pkgs; [
   kitty
 
   wezterm
-  vlc
 
   docker
   docker-compose

@@ -64,7 +64,7 @@
 
 (defwidget workspaceButton [id]
 	(clickable
-		:class "${id == curr ? "active" : ""}"
+		:class "${id == current-workspace ? "active" : ""}"
 		:onclick "hyprctl dispatch workspace ${id}"
 		(box
 			:class "workspaceButton"
@@ -100,7 +100,7 @@
 			:onclick "pavucontrol &"
 			:onrightclick "pavucontrol &"
 			(icon
-				:class "sound"
+				:class "sound ${audio-level}"
 			)
 		)
 	)

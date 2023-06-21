@@ -1,3 +1,6 @@
+(deflisten current-workspace "scripts/active-workspace.sh")
+(deflisten workspaces :initial "[]" "scripts/workspaces.sh")
+(deflisten audio-level :initial "zero" "scripts/subscribe-audio-level.sh")
 (deflisten workspaces "scripts/workspaces")
 (deflisten curr :initial "1" "scripts/active-workspace.sh")
 

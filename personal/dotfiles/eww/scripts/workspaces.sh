@@ -3,6 +3,7 @@
 workspaces() {
   # https://wiki.hyprland.org/Configuring/Expanding-functionality/
   hyprctl workspaces -j | jaq -c 'map(.id | select(. > 0)) | sort'
+  #notify-send -r 200000002 -t 1000 --icon audio-volume-high-symbolic hmmm
 }
 
 workspaces

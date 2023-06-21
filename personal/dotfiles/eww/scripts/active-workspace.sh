@@ -1,4 +1,11 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-hyprctl monitors -j | jaq --raw-output .[0].activeWorkspace.id
-socat -u UNIX-CONNECT:/tmp/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | stdbuf -o0 grep '^workspace>>' | stdbuf -o0 awk -F '>>|,' '{print $2}'
+activeWorkspace() {
+  # https://wiki.hyprland.org/Configuring/Expanding-functionality/
+  hyprctl monitors -j | jaq .[0].activeWorkspace.id  
+}
+
+activeWorkspace
+socat -u UNIX-CONNECT:/tmp/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | while read -r line; do
+	activeWorkspace
+done

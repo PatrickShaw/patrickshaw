@@ -58,10 +58,21 @@ window {
 
 .icon {
   &.sound {
-    background-image: -gtk-icontheme("audio-volume-high");
+    &.mute, &.zero {
+      background-image: -gtk-icontheme("audio-volume-muted-symbolic");
+    }
+    &.low {
+      background-image: -gtk-icontheme("audio-volume-low-symbolic");
+    }
+    &.medium {
+      background-image: -gtk-icontheme("audio-volume-medium-symbolic");
+    }
+    &.high {
+      background-image: -gtk-icontheme("audio-volume-high-symbolic");
+    }
   }
   &.files {
-    background-image: -gtk-icontheme("folder");
+    background-image: -gtk-icontheme("folder-symbolic");
   }
 }
 

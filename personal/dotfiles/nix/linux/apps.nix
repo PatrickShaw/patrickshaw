@@ -100,6 +100,8 @@ with pkgs; [
 
   obsidian
 
+  playerctl
+
   cpu-x
 
   # See "External monitors" in https://wiki.archlinux.org/title/backlight

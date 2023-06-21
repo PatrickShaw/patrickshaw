@@ -96,6 +96,42 @@ with pkgs; [
   phinger-cursors
   papirus-icon-theme
   
+  # Some great programs mentioned over at https://github.com/ibraheemdev/modern-unix
+  tldr
+  cheat
+
+  bottom
+  glances
+  
+  hyperfine
+  
+  gping
+  
+  procs
+
+  curlie
+  xh
+
+  dogdns
+
+  lsd
+
+  du-dust
+
+  caprine-bin
+  
+  duf
+
+  broot
+
+  fd
+
+  ripgrep
+
+  choose
+
+  mcfly
+
   orchis-theme
 
   obsidian

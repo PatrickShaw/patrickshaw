@@ -5,4 +5,5 @@ border-size=0
 background-color=#000000BB
 icons=1
 actions=1
+layer=overlay
 icon-path=/run/current-system/sw/share/icons/Papirus/

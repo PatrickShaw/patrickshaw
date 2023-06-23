@@ -39,48 +39,48 @@
   outputs = { self, ... }@inputs: 
   {
     nixosModules= rec {
-      intel-integrated-graphics = { pkgs, ... }: {
+      opengl = { pkgs, ... }: {
         hardware.opengl = {
-          enable=true;
+          enable = true;
+          driSupport = true;
+          driSupport32Bit = true;
           extraPackages = [
-        pkgs.intel-media-driver # LIBVA_DRIVER_NAME=iHD
+            # See https://nixos.wiki/wiki/Accelerated_Video_Playback
+            pkgs.vaapiVdpau
+            pkgs.libvdpau-va-gl
+          ];
+        };
+      };
+      intel-integrated-graphics = { pkgs, ... }: {
+        imports = [opengl];
+        hardware.opengl = {
+          extraPackages = [
+            # See https://nixos.wiki/wiki/Accelerated_Video_Playback
+            pkgs.intel-media-driver
           ];
       };
+        environment.sessionVariables = {
+          LIBVA_DRIVER_NAME="iHD";
+          # What I currently use as my wlroots backend ATM
+          WLR_RENDERER = "vulkan";
+        };
       };
       nvidia = { config, pkgs, ... }: {
-        boot.kernelModules = [
-          "nvidia"
-          "nvidia_modeset"
-          "nvidia_uvm"
-          "nvidia_drm"
-        ];
+        imports = [opengl];
         services.xserver.videoDrivers = [ "nvidia" ];
         hardware.nvidia = {
           package = config.boot.kernelPackages.nvidiaPackages.stable;
-          # See KMS doco in Arch. Meant to enable newer rendering methods, etc
-          modesetting.enable = true;
         };
 
         environment.sessionVariables = {
           # What I currently use as my wlroots backend ATM
           WLR_RENDERER = "vulkan";
-
-          # See: https://wiki.hyprland.org/Configuring/Environment-variables/
-          # See: https://github.com/hyprwm/Hyprland/issues/1878
-          GBM_BACKEND="nvidia";
-          __GLX_VENDOR_LIBRARY_NAME="nvidia";
-          LIBVA_DRIVER_NAME="nvidia";
         };
 
-        hardware.opengl.driSupport = true;
-        hardware.opengl.driSupport32Bit = true;
         hardware.opengl = {
-          enable = true;
           extraPackages = [
             # See: https://nixos.wiki/wiki/Accelerated_Video_Playback
             pkgs.nvidia-vaapi-driver
-            pkgs.vaapiVdpau
-            pkgs.libvdpau-va-gl
           ];
         };
       };
@@ -90,6 +90,7 @@
           # https://nixos.wiki/wiki/Nvidia mentions it'll fix sleep
           powerManagement.enable = true;
           powerManagement.finegrained = false;
+          modesetting.enable = false;
 
           open = false;
 
@@ -101,23 +102,37 @@
           };
         };
         environment.sessionVariables = {
-          WLR_NO_HARDWARE_CURSORS="1";
+          # WLR_NO_HARDWARE_CURSORS="1";
 
+          # Update: Realisitically, not worth offloading everything
           # https://nixos.wiki/wiki/Nvidia
-          # Note: Zoom doesn't 
-          __NV_PRIME_RENDER_OFFLOAD="1";
-          __NV_PRIME_RENDER_OFFLOAD_PROVIDER="NVIDIA-G0";
-          __VK_LAYER_NV_optimus="NVIDIA_only";
+          # __NV_PRIME_RENDER_OFFLOAD="1";
+          # __NV_PRIME_RENDER_OFFLOAD_PROVIDER="NVIDIA-G0";
+          # __VK_LAYER_NV_optimus="NVIDIA_only";
         };
       };
       nvidia-gtx1060 = { ... }: {
+        boot.kernelModules = [
+          "nvidia"
+          "nvidia_modeset"
+          "nvidia_uvm"
+          "nvidia_drm"
+        ];
         imports = [nvidia];
         hardware.nvidia = {
           open = false; 
+          # See KMS doco in Arch. Meant to enable newer rendering methods, etc
+          modesetting.enable = true;
         };
         environment.sessionVariables = {
           # Won't render hardware cursors
           WLR_NO_HARDWARE_CURSORS="1";
+          
+          # See: https://wiki.hyprland.org/Configuring/Environment-variables/
+          # See: https://github.com/hyprwm/Hyprland/issues/1878
+          GBM_BACKEND="nvidia";
+          __GLX_VENDOR_LIBRARY_NAME="nvidia";
+          LIBVA_DRIVER_NAME="nvidia";
         };
       };
       vfio = { ... }: {

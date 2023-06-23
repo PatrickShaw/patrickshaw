@@ -72,7 +72,15 @@ with pkgs; [
   wineWowPackages.waylandFull
 
   spotify
-  signal-desktop
+  (signal-desktop.overrideAttrs (old: {
+    # See https://github.com/NixOS/nixpkgs/issues/222043#issuecomment-1589411268
+    preFixup = old.preFixup + ''
+      gappsWrapperArgs+=(
+        --add-flags "--enable-features=UseOzonePlatform"
+        --add-flags "--ozone-platform=wayland"
+      )
+    '';
+  }))
 
   celluloid
   haruna

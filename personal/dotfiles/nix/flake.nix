@@ -1,9 +1,22 @@
 {
   inputs = {
+    nixpkgs = { url = "github:nixos/nixpkgs/nixos-unstable"; };
+
     nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
+    nixpkgs-wayland.inputs.nixpkgs.follows = "nixpkgs";
+
     hyprland.url = "github:hyprwm/Hyprland";
+    hyprland.inputs.nixpkgs.follows = "nixpkgs";
+    
+    rust-overlay.url = "github:oxalica/rust-overlay";
+
     eww.url = "github:elkowar/eww";
+    eww.inputs.nixpkgs.follows = "nixpkgs";
+    eww.inputs.rust-overlay.follows = "rust-overlay";
+
     helix.url = "github:helix-editor/helix";
+    helix.inputs.nixpkgs.follows = "nixpkgs";
+    helix.inputs.rust-overlay.follows = "rust-overlay";
   };
   nixConfig = {
     extra-substituters = [

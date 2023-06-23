@@ -1,8 +1,8 @@
 (deflisten current-workspace "scripts/active-workspace.sh")
 (deflisten workspaces :initial "[]" "scripts/workspaces.sh")
 (deflisten audio-level :initial "zero" "scripts/subscribe-audio-level.sh")
-(deflisten workspaces "scripts/workspaces")
-(deflisten curr :initial "1" "scripts/active-workspace.sh")
+(deflisten min "scripts/minutes.sh")
+(deflisten hour "scripts/hours.sh")
 
 (defwidget workspaceList []
 	(box :orientation "vertical" (for workspaceId in workspaces
@@ -45,8 +45,6 @@
 		)
 	)
 )
-(defpoll hour	:interval "1s"	"date '+%H'")
-(defpoll min	:interval "1s"	"date '+%M'")
 (defpoll dayOfWeek :interval "1m" "date \"+%a\"")
 (defpoll dayOfMonth :interval "1m" "date \"+%d\"")
 

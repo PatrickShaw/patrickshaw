@@ -14,6 +14,7 @@ source "$(dirname $0)/zsh_bindings.zsh"
 
 fnm use --log-level quiet
 eval "$(zoxide init zsh)"
+eval "$(mcfly init zsh)"
 
 alias ls=exa
 alias cd=z

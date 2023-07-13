@@ -244,6 +244,8 @@
           # This is to make systemd past boots of journals actually log out when listed
           # See https://www.reddit.com/r/NixOS/comments/kgziex/journald_not_keeping_past_boot_logs/
           machine-id.text = "152099709ccc4cc79fec46efcb18d2a1";
+
+          # Note: Writing systemd units here won't work. Use systemd.user.*
         };
 
         programs = {

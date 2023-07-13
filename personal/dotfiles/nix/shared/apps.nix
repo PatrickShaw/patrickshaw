@@ -8,7 +8,7 @@ with pkgs; [
   cmake
   gnumake
 
-  vscodium
+  vscode
   lapce
 
   alacritty

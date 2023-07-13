@@ -76,8 +76,6 @@ with pkgs; [
 
   nickel
 
-  direnv
-
   libreoffice-fresh
 
   rust-analyzer

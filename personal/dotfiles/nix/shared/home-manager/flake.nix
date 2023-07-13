@@ -51,6 +51,11 @@
                     ".dircolors" = {
                       source = "${dracula-dircolors}/.dircolors";
                     };
+                    ".config/direnv/direnvrc".source = pkgs.writeTextFile {
+                      name = "direnvrc";
+                      text = "source /run/current-system/sw/share/nix-direnv/direnvrc";
+                      executable = true;
+                    };
                   };
                 };
                 programs.fish = {

@@ -17,6 +17,9 @@
     helix.url = "github:helix-editor/helix";
     helix.inputs.nixpkgs.follows = "nixpkgs";
     helix.inputs.rust-overlay.follows = "rust-overlay";
+
+    nix-direnv.url = "github:nix-community/nix-direnv";
+    nix-direnv.inputs.nixpkgs.follows = "nixpkgs";
   };
   nixConfig = {
     extra-substituters = [
@@ -141,16 +144,36 @@
         LIBVIRT_DEFAULT_URI = [ "qemu:///system" ];
       };
     };
-    default = { config, pkgs, lib, options, ... }:
-      let
+      direnv = { pkgs, ... }: {
+        nixpkgs.overlays = [
+          inputs.nix-direnv.overlay
+          (final: super: {
+            nix-direnv = super.nix-direnv.overrideAttrs (old: old // {
+              enableFlakes = true;
+            });
+          })
+        ];
+
+        environment.systemPackages = [
+          # (inputs.nix-direnv.packages.${pkgs.system}.default.override {
+          #   enableFlakes = true;
+          # })
+          pkgs.direnv
+        ];
+
+        environment.pathsToLink = [
+          "/share/nix-direnv"
+        ];
+      };
+      default = { config, pkgs, lib, options, ... }: let
         wayland-pkgs = inputs.nixpkgs-wayland.packages.${pkgs.system};
         shared-configuration = import ./shared/configuration.nix { inherit pkgs; };
         shared-aliases = import ./shared/program-aliases.nix { };
-      in 
-      {
+      in {
         imports = [
             shared-configuration
             inputs.hyprland.nixosModules.default
+            self.nixosModules.direnv
         ];
 
         nix.gc = {
@@ -234,6 +257,8 @@
 
           pkgs.libimobiledevice
           pkgs.ifuse 
+
+          pkgs.nix-direnv
         ] ++ import ./linux/apps.nix { inherit pkgs; };
 
 

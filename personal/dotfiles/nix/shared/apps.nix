@@ -53,6 +53,10 @@ with pkgs; [
 
   postgresql
 
+  (uutils-coreutils.override {
+    prefix = "";
+  })
+
   libnotify
 
   libiconv

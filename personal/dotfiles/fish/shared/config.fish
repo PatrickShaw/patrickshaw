@@ -12,4 +12,5 @@ if status is-interactive
   thefuck --alias | source  
   fnm env --shell fish --use-on-cd | source
   fnm completions --shell fish | source
+  mcfly init fish | source
 end

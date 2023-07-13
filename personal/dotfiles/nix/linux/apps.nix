@@ -123,6 +123,8 @@ with pkgs; [
 
   lsd
 
+  sd
+
   du-dust
 
   caprine-bin

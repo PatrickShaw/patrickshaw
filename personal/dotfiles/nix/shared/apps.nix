@@ -32,7 +32,10 @@ with pkgs; [
   delta
   git
   git-lfs
+  
   gnupg
+  pinentry
+
   neovim
   unrar
 

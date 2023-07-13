@@ -203,12 +203,16 @@
            enable = true;
           wlr.enable = false;
            extraPortals = [
-        #     # 2023-04-26: Commneted out because of the following
-        #     # See: https://wiki.hyprland.org/Useful-Utilities/Hyprland-desktop-portal/
+              # 2023-04-26: Commented out because of the following
+              # See: https://wiki.hyprland.org/Useful-Utilities/Hyprland-desktop-portal/
               # "It’s recommended to uninstall any other portal implementations to avoid conflicts with the -hyprland or -wlr ones. -kde and -gnome are known to cause issues."
+              # 2023-07-03: Uncommented because
+              # a) It stops vite working - More or less confirmed this is the case
+              # b) The Hyprland doco actually says "Only -gtk will work with -hyprland or -wlr on Hyprland.". See: https://wiki.hyprland.org/Useful-Utilities/Hyprland-desktop-portal/#debugging
+              # c) I remember I orginally uncommented because of VSCode kept crashing but that's since been fixed by changing the title bar from native to custom
               pkgs.xdg-desktop-portal-gtk
-        #     # Saw this declared in: https://discourse.nixos.org/t/xdg-desktop-portal-not-working-on-wayland-while-kde-is-installed/20919
-        #     #wayland-pkgs.xdg-desktop-portal-wlr
+              # Saw this declared in: https://discourse.nixos.org/t/xdg-desktop-portal-not-working-on-wayland-while-kde-is-installed/20919
+              #wayland-pkgs.xdg-desktop-portal-wlr
            ];
         };
 

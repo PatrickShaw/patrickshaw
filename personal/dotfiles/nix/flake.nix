@@ -204,20 +204,6 @@
           };
         };
 
-        programs.hyprland = {
-          enable = true;
-
-          # default options, you don't need to set them
-          package = inputs.hyprland.packages.${pkgs.system}.default;
-
-          xwayland = {
-            enable = true;
-            hidpi = true;
-          };
-
-          nvidiaPatches = false;
-        };
-
         # See: https://wiki.archlinux.org/title/PipeWire#xdg-desktop-portal-wlr
         # See: https://nixos.wiki/wiki/Sway#Using_NixOS
         # As per https://github.com/hyprwm/Hyprland/blob/f23455e592bca14e0abd9249de467cc71cd2850e/nix/module.nix#L88, this is turned on by Hyprland itself

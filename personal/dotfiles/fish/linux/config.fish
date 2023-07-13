@@ -20,7 +20,7 @@ if status is-login
 
     #dbus-run-session sway --unsupported-gpu
     #dbus-run-session river
-    Hyprland
+    # Hyprland
 
     # All handled by Nix
     #dbus-launch pipewire &

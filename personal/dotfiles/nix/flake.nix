@@ -38,7 +38,7 @@
   };
   outputs = { self, ... }@inputs: 
   {
-    nixosModules= rec {
+    nixosModules = {
       opengl = { pkgs, ... }: {
         hardware.opengl = {
           enable = true;
@@ -52,7 +52,7 @@
         };
       };
       intel-integrated-graphics = { pkgs, ... }: {
-        imports = [opengl];
+        imports = [self.nixosModules.opengl];
         hardware.opengl = {
           extraPackages = [
             # See https://nixos.wiki/wiki/Accelerated_Video_Playback
@@ -66,7 +66,7 @@
         };
       };
       nvidia = { config, pkgs, ... }: {
-        imports = [opengl];
+        imports = [self.nixosModules.opengl];
         services.xserver.videoDrivers = [ "nvidia" ];
         hardware.nvidia = {
           package = config.boot.kernelPackages.nvidiaPackages.stable;
@@ -85,7 +85,7 @@
         };
       };
       nvidia-a1000 = { ... }: {
-        imports = [nvidia];
+        imports = [self.nixosModules.nvidia];
         hardware.nvidia = {
           # https://nixos.wiki/wiki/Nvidia mentions it'll fix sleep
           powerManagement.enable = true;
@@ -118,7 +118,7 @@
           "nvidia_uvm"
           "nvidia_drm"
         ];
-        imports = [nvidia];
+        imports = [self.nixosModules.nvidia];
         hardware.nvidia = {
           open = false; 
           # See KMS doco in Arch. Meant to enable newer rendering methods, etc

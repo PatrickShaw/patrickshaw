@@ -5,7 +5,7 @@ source (status dirname)/../shared/config.fish
 #fish_add_path $HOME/.cargo/bin
 #fish_add_path $HOME/.yarn/bin
 if status is-interactive
-    # See: See: https://github.com/keybase/keybase-issues/issues/2798
+    # See: https://github.com/keybase/keybase-issues/issues/2798
     set -x GPG_TTY $(tty)
 end
 

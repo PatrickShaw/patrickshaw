@@ -42,6 +42,7 @@ with pkgs; [
   p7zip
   unzip
   gzip
+  gnome.file-roller
 
   # For lspci
   pciutils

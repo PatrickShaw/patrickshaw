@@ -171,4 +171,8 @@ with pkgs; [
 
   # Has xdg-open in it. I assume a few apps depend on this globally
   xdg-utils
+
+  # Image viewers
+  pkgs.gnome.eog
+  pkgs.feh
 ]

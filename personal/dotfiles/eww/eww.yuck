@@ -5,8 +5,8 @@
 (deflisten hour "scripts/hours.sh")
 
 (defwidget workspaceList []
-	(box :orientation "vertical" (for workspaceId in workspaces
-		(workspaceButton :id workspaceId)
+	(box :orientation "vertical" (for workspace in workspaces
+		(workspaceButton :workspace workspace)
 	))
 )
 
@@ -60,13 +60,13 @@
 		)
 )
 
-(defwidget workspaceButton [id]
+(defwidget workspaceButton [workspace]
 	(clickable
-		:class "${id == current-workspace ? "active" : ""}"
-		:onclick "hyprctl dispatch workspace ${id}"
+		:class "${workspace.id == current-workspace ? "active" : ""}"
+		:onclick "hyprctl dispatch workspace ${workspace.id}"
 		(box
 			:class "workspaceButton"
-			"${id}"
+			"${workspace.name}"
 		)
 	)
 )

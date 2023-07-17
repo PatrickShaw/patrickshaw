@@ -1,143 +1,143 @@
-(deflisten current-workspace "scripts/active-workspace.sh")
+(deflisten current-workspace-id "scripts/active-workspace.sh")
 (deflisten workspaces :initial "[]" "scripts/workspaces.sh")
 (deflisten audio-level :initial "zero" "scripts/subscribe-audio-level.sh")
 (deflisten min "scripts/minutes.sh")
 (deflisten hour "scripts/hours.sh")
 
-(defwidget workspaceList []
-	(box :orientation "vertical" (for workspace in workspaces
-		(workspaceButton :workspace workspace)
-	))
+(defwidget workspaceList [workspaces current-workspace-id]
+  (box :orientation "vertical" (for workspace in workspaces
+      (workspaceButton :workspace workspace :current-workspace-id current-workspace-id)
+    ))
 )
 
-(defwidget timeSubsection [] 
-(box
-	:space-evenly false
-	:orientation "vertical"
-	:class "timeSubsection"
-		(children)	
-))
+(defwidget timeSubsection []
+  (box
+    :space-evenly false
+    :orientation "vertical"
+    :class "timeSubsection"
+    (children)
+  ))
 
 (defwidget time []
-	(clickable
-		(box
-			:orientation "vertical" 
-			:class "time"
-			:space-evenly false
-			(timeSubsection
-				(box
-					:valign "start"
-					:class "timeHours" hour)
-				(box
-					:valign "start"
-					:class "timeMinutes"  min)		
-			)
-			(timeSubsection
-				(box
-					:valign "start"
-					:class "timeDayOfWeek" dayOfWeek
-				)
-				(box
-					:valign "start"
-						:class "timeDayOfMonth" dayOfMonth
-				)
-			)
-		)
-	)
+  (clickable
+    (box
+      :orientation "vertical"
+      :class "time"
+      :space-evenly false
+      (timeSubsection
+        (box
+          :valign "start"
+        :class "timeHours" hour)
+        (box
+          :valign "start"
+        :class "timeMinutes"  min)
+      )
+      (timeSubsection
+        (box
+          :valign "start"
+          :class "timeDayOfWeek" dayOfWeek
+        )
+        (box
+          :valign "start"
+          :class "timeDayOfMonth" dayOfMonth
+        )
+      )
+    )
+  )
 )
 (defpoll dayOfWeek :interval "1m" "date \"+%a\"")
 (defpoll dayOfMonth :interval "1m" "date \"+%d\"")
 
 (
-	defwidget clickable [?onclick ?onrightclick ?class]
-		(eventbox
-			:class "clickable ${class}"
-			:onclick onclick
-			:onrightclick onrightclick
-			(
-				children
-			)	
-		)
+  defwidget clickable [?onclick ?onrightclick ?class]
+  (eventbox
+    :class "clickable ${class}"
+    :onclick onclick
+    :onrightclick onrightclick
+    (
+      children
+    )
+  )
 )
 
-(defwidget workspaceButton [workspace]
-	(clickable
-		:class "${workspace.id == current-workspace ? "active" : ""}"
-		:onclick "hyprctl dispatch workspace ${workspace.id}"
-		(box
-			:class "workspaceButton"
-			"${workspace.name}"
-		)
-	)
+(defwidget workspaceButton [workspace current-workspace-id]
+  (clickable
+    :class "${workspace.id == current-workspace-id ? "active" : ""}"
+    :onclick "hyprctl dispatch workspace ${workspace.id}"
+    (box
+      :class "workspaceButton"
+      "${workspace.name}"
+    )
+  )
 )
 
 (defwidget icon [class]
 	(box
-		:class "icon ${class}"
-		:height "32"
-		(children)
-	)	
+    :class "icon ${class}"
+    :height "32"
+    (children)
+  )
 )
 
 (defwidget files []
-	(clickable
-		:onclick "nautilus &"
-		(icon
-			:class "files"
-		)	
-	)
+  (clickable
+    :onclick "nautilus &"
+    (icon
+      :class "files"
+    )
+  )
 )
 
 (defwidget sound []
-	(box
-		:orientation "vertical"
-		:space-evenly false
-		:height 400
-		(scale :orientation "vertical" :min 0 :max 100 		:vexpand true)
-		(clickable
-			:onclick "pavucontrol &"
-			:onrightclick "pavucontrol &"
-			(icon
-				:class "sound ${audio-level}"
-			)
-		)
-	)
+  (box
+    :orientation "vertical"
+    :space-evenly false
+    :height 400
+    (scale :orientation "vertical" :min 0 :max 100 		:vexpand true)
+    (clickable
+      :onclick "pavucontrol &"
+      :onrightclick "pavucontrol &"
+      (icon
+        :class "sound ${audio-level}"
+      )
+    )
+  )
 )
 
 (defwidget taskbar []
-	(
-		box 
-			:orientation "vertical"
-			:vexpand true
-			:class "taskbar"
-			:space-evenly false
-			(children)
-	)
+  (
+    box
+    :orientation "vertical"
+    :vexpand true
+    :class "taskbar"
+    :space-evenly false
+    (children)
+  )
 )
 (defwindow sidebar
-	:monitor 0
-	:geometry (geometry
-		:x "0px"
-		:y "0px"
-		:width "40px"
-		:height "100%"
-		:anchor "left center"
-	)
-	:stacking "fg"
-	:focuseable true
-	:exclusive true
-	:namespace "taskbar"
-		(
-			taskbar
-				(box :orientation "vertical" (files))
-				(box :space-evenly false
-					:vexpand true :orientation "vertical" (workspaceList))
-				(box
-					:orientation "vertical" 
-					:space-evenly false
-					:valign "end"
-					(sound)
-					(time)
-				)
-		)
+  :monitor 0
+  :geometry (geometry
+    :x "0px"
+    :y "0px"
+    :width "40px"
+    :height "100%"
+    :anchor "left center"
+  )
+  :stacking "fg"
+  :focuseable true
+  :exclusive true
+  :namespace "taskbar"
+  (
+    taskbar
+    (box :orientation "vertical" (files))
+    (box :space-evenly false
+      :vexpand true :orientation "vertical" (workspaceList :current-workspace-id current-workspace-id :workspaces workspaces))
+    (box
+      :orientation "vertical"
+      :space-evenly false
+      :valign "end"
+      (sound)
+      (time)
+    )
+  )
 )

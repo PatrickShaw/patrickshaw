@@ -96,6 +96,8 @@ with pkgs; [
 
   kitty
 
+  gammastep
+
   wezterm
 
   docker

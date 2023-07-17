@@ -238,6 +238,7 @@
           wayland-pkgs.sway-unwrapped
           wayland-pkgs.mako
 
+          inputs.eww.packages.${pkgs.system}.eww-wayland
 
           inputs.helix.packages.${pkgs.system}.default
 

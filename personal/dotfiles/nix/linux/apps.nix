@@ -86,6 +86,8 @@ with pkgs; [
   celluloid
   haruna
 
+  jetbrains.idea-community
+
   qbittorrent
 
   virt-manager

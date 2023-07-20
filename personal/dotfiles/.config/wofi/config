@@ -1,1 +1,3 @@
 layer=overlay
+gtk_dark=true
+single_click=true

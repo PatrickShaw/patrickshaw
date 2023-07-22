@@ -5,6 +5,10 @@ CURRENT="$(brightnessctl -m g)"
 
 NEXT="$(frawk "BEGIN { print int($CURRENT $1 $MAX * 0.1 + 0.5) }")"
 
+if [ $NEXT -le 0 ]; then
+  NEXT=0
+fi
+
 brightnessctl s $NEXT
 
 NEW_CURRENT="$(brightnessctl -m g)"

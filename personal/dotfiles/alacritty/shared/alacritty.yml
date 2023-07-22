@@ -8,9 +8,9 @@ import:
 - ~/personal/dotfiles/alacritty/shared/theme.yml
 scrolling:
   auto_scroll: true
-  faux_multiplier: 1
+  faux_multiplier: 10
   history: 40000
-  multiplier: 1
+  multiplier: 10
 selection:
   semantic_escape_chars: ',│`|:="'' ()[]{}<>-'
 window:

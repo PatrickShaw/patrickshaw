@@ -1,15 +1,11 @@
 {
-  inputs = {
-    fontConf.url = "./default-font.conf";
-    fontConf.flake = false;
-  };
-  outputs = { fontConf }: {
+  outputs = { ... }: {
     nixosModules.default = { ... }: {
       fonts = {
         fontconfig = {
-          localConf = fontConf;
+          localConf = builtins.readFile ./default-font.conf;
         };
       };
-    }
+    };
   };
 }

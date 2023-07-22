@@ -14,7 +14,6 @@ scrolling:
 selection:
   semantic_escape_chars: ',│`|:="'' ()[]{}<>-'
 window:
-  opacity: 0.95
   padding:
     x: 12
     y: 12

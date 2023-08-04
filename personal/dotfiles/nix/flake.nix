@@ -339,6 +339,12 @@
           # See https://discourse.nixos.org/t/how-to-reload-mime-database-after-update-gtk-application-crashes-on-icon-load/14152/3
           # Appears to make final pickers work properly (although chooses one I wouldn't expect)
           #QT_QPA_PLATFORMTHEME="xdgdesktopportal";
+
+          # See https://github.com/cantino/mcfly#fuzzy-searching
+          MCFLY_FUZZY="2";
+          MCFLY_HISTORY_LIMIT="40000";
+          MCFLY_PROMPT="❯";
+          MCFLY_RESULTS="15";
         };
 
         hardware.opengl.enable = true;

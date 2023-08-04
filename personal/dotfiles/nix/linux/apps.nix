@@ -177,6 +177,10 @@ with pkgs; [
   xdg-utils
 
   # Image viewers
-  pkgs.gnome.eog
-  pkgs.feh
+  gnome.eog
+  feh
+
+  # Font viewer
+  # TODO: Haven't looked at other apps yet
+  gnome.gnome-font-viewer
 ]

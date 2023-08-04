@@ -6,4 +6,8 @@
 pamixer $1 $2
 
 VOLUME=$(pamixer --get-volume)
+
+DEFAULT_SINK=$(pactl info | grep "Default Sink" | cut -d " " -f3)
+pactl set-sink-mute $DEFAULT_SINK false
+
 notify-send -r 1324923423 -t 1000 --icon audio-volume-high-symbolic --urgency critical --category sound --transient $VOLUME

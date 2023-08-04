@@ -377,12 +377,10 @@
 
         # Fonts
         fonts = {
-            enableDefaultFonts = true;
-            fonts = import ./shared/font-pkgs.nix { inherit pkgs; };
+            enableDefaultPackages = true;
+            packages = import ./shared/font-pkgs.nix { inherit pkgs; };
             fontconfig = {
               defaultFonts = {
-                  #systemUI = [ "Inter" "Noto Sans" ];
-                  #sans = ["Inter" "Noto Sans"]; 
                   sansSerif = ["Inter" "Noto Sans"]; 
                   serif = [ "Noto Serif"];
                   monospace = ["JetBrains Mono" "Noto Sans Mono"];

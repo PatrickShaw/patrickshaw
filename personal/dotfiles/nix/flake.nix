@@ -176,6 +176,13 @@
             self.nixosModules.direnv
         ];
 
+        nixpkgs.overlays = [
+          inputs.hyprland.overlays.default
+        ];
+
+        programs.hyprland.package = inputs.hyprland.packages.${pkgs.system}.default;
+        programs.hyprland.enable = true;
+
         nix.gc = {
           automatic = true;
           dates = "weekly";

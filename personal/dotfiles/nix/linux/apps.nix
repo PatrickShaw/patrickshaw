@@ -25,6 +25,8 @@ with pkgs; [
   # Allows tweaking of camera
   v4l-utils
 
+  swayidle
+
   brightnessctl
 
   frawk

@@ -17,7 +17,7 @@ with pkgs; [
   ulauncher
 
   pavucontrol
-  # Prefer qpwgraph: helvum
+  # Prefer qpwgraph to helvum
   qpwgraph
 
   # Camera app

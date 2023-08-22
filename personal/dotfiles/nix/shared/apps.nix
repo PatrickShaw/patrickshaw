@@ -24,6 +24,10 @@ with pkgs; [
   poetry
   deno
 
+  adoptopenjdk-bin
+  gradle
+  maven
+
   bat
 
   exa

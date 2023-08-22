@@ -31,7 +31,7 @@
       git-zsh-autosuggestions,
       git-zsh-fast-syntax-highlighting,
       dracula-dircolors,
-      utils
+      utils,
   }:
     let
       zsh-config = import ./zsh-initExtra.nix {
@@ -47,7 +47,80 @@
           home-manager = {
             users.pshaw = { config, lib, ... }: {
                 home = {
-                  file = {
+                  file = let
+                    getLastPartOfPath = path:
+                      let
+                        parts = builtins.split "/" path;
+                      in
+                        builtins.elemAt parts (builtins.length parts - 1);
+
+                    # Some of these were taken form: https://github.com/mrcjkb/nvim-config/blob/b2cb412469bd4c2bf155976742cd2349f69a90ca/nix/plugin-overlay.nix#L15
+                    plugins = map (item: "${item}") (with pkgs.vimPlugins; [
+                      # Nix direnv integration
+                      direnv-vim
+
+                      # Syntax stuff
+                      nvim-treesitter.withAllGrammars
+                      nvim-lspconfig
+
+                      # Hex color highlighting
+                      colorizer
+
+                      # Auto complete
+                      nvim-cmp
+
+                      # Clipboard
+                      vim-vsnip
+
+                      # Theme
+                      catppuccin-nvim
+
+                      # Auto complete
+                      cmp-vsnip
+                      cmp-treesitter
+                      cmp-path
+                      cmp-nvim-lsp
+                      cmp-cmdline
+                      cmp-nvim-lsp-document-symbol
+                      cmp-nvim-lsp-signature-help
+                      cmp-rg
+                      cmp-dap
+
+                      # Sane word jumping
+                      vim-wordmotion
+                    
+                      vim-nix
+
+                      # Gives icons to certain explorers
+                      nvim-web-devicons
+
+                      nvim-comment
+
+                      # init.lua doco
+                      neoconf-nvim
+
+                      # Debugger adapter protocol
+                      nvim-dap
+
+                      # Code action lightbulb
+                      nvim-lightbulb
+
+                      # Search and replace
+                      ssr-nvim
+
+                      nvim-ts-rainbow2
+                    ]);
+                    nvimPackageLinks = (builtins.listToAttrs (
+                      map (item: {
+                        name = ".config/nvim/pack/all/start/${getLastPartOfPath item}"; 
+                        value = {
+                          source = item;
+                        };
+                      }) plugins 
+                    ));
+
+                    initPackageLuaText = builtins.concatStringsSep "\n" (map (item: "vim.cmd [[packadd ${getLastPartOfPath item}]]") plugins);
+                  in {
                     ".dircolors" = {
                       source = "${dracula-dircolors}/.dircolors";
                     };
@@ -56,7 +129,13 @@
                       text = "source /run/current-system/sw/share/nix-direnv/direnvrc";
                       executable = true;
                     };
-                  };
+
+                    ".config/nvim/lua/personal.lua".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/personal/dotfiles/nvim/shared/init.lua";
+                    ".config/nvim/init.lua".text = initPackageLuaText + ''
+                    
+                      require("personal")
+                    '';
+                  } // nvimPackageLinks;
                 };
                 programs.fish = {
                   enable = true;

@@ -39,15 +39,6 @@ with pkgs; [
   neovim
   unrar
 
-  pkgs.vimPlugins."coc-nvim"
-  pkgs.vimPlugins."coc-css"
-  pkgs.vimPlugins."coc-yaml"
-  pkgs.vimPlugins."coc-python"
-  pkgs.vimPlugins."coc-git"
-  pkgs.vimPlugins."coc-rust-analyzer"
-  pkgs.vimPlugins."coc-tsserver"
-  pkgs.vimPlugins."vim-nix"
-
   pkgs.starship
 
   # zsh

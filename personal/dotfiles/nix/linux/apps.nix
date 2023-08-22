@@ -7,6 +7,8 @@ with pkgs; [
 
   gcc
 
+  cliphist
+
   killall
 
   autotiling-rs

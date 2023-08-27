@@ -72,10 +72,13 @@
 )
 
 (defwidget icon [class]
-	(box
-    :class "icon ${class}"
-    :height "32"
-    (children)
+  (
+    box
+      :class "icon-container"
+      (image
+        :class "icon ${class}"
+        (children)
+      )  
   )
 )
 

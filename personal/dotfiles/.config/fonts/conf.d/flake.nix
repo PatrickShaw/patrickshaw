@@ -30,13 +30,12 @@
 
         fontconfig = {
           localConf = builtins.readFile ./default-font.conf;
-        };
-      
-        defaultFonts = {
-          sansSerif = ["Inter" "Noto Sans"]; 
-          serif = [ "Noto Serif"];
-          monospace = ["JetBrains Mono" "Noto Sans Mono"];
-          emoji = [ "Twitter Color Emoji" ];
+          defaultFonts = {
+            sansSerif = ["Inter" "Noto Sans"]; 
+            serif = [ "Noto Serif"];
+            monospace = ["JetBrains Mono" "Noto Sans Mono"];
+            emoji = [ "Twitter Color Emoji" ];
+          };
         };
       };
     };

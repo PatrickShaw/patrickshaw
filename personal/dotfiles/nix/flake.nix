@@ -14,9 +14,9 @@
     eww.inputs.nixpkgs.follows = "nixpkgs";
     eww.inputs.rust-overlay.follows = "rust-overlay";
 
-    helix.url = "github:helix-editor/helix";
-    helix.inputs.nixpkgs.follows = "nixpkgs";
-    helix.inputs.rust-overlay.follows = "rust-overlay";
+    # helix.url = "github:helix-editor/helix";
+    # helix.inputs.nixpkgs.follows = "nixpkgs";
+    # helix.inputs.rust-overlay.follows = "rust-overlay";
 
     nix-direnv.url = "github:nix-community/nix-direnv";
     nix-direnv.inputs.nixpkgs.follows = "nixpkgs";
@@ -247,7 +247,7 @@
 
           inputs.eww.packages.${pkgs.system}.eww-wayland
 
-          inputs.helix.packages.${pkgs.system}.default
+          # inputs.helix.packages.${pkgs.system}.default
 
           pkgs.libimobiledevice
           pkgs.ifuse 

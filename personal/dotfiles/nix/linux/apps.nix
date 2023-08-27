@@ -61,9 +61,6 @@ with pkgs; [
   # For lsusb
   usbutils
 
-  jack2
-  #helvum
-
   steam
   # Steam was trying to use this
   xdg-user-dirs

@@ -14,11 +14,13 @@ with pkgs; [
   alacritty
   #wezterm
 
+  nodePackages.nodejs
   fnm
-
   yarn
+
   rustup
-  python3
+  rust-analyzer
+  python3Full
   # Security flaw: python
   adoptopenjdk-bin
   poetry

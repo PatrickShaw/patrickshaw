@@ -370,20 +370,6 @@
         
         # Should start a service based on https://github.com/NixOS/nixpkgs/blob/27bd67e55fe09f9d68c77ff151c3e44c4f81f7de/nixos/modules/programs/nm-applet.nix#L26
         programs.nm-applet.enable = true;
-
-        # Fonts
-        fonts = {
-            enableDefaultPackages = true;
-            packages = import ./shared/font-pkgs.nix { inherit pkgs; };
-            fontconfig = {
-              defaultFonts = {
-                  sansSerif = ["Inter" "Noto Sans"]; 
-                  serif = [ "Noto Serif"];
-                  monospace = ["JetBrains Mono" "Noto Sans Mono"];
-                  emoji = [ "Twitter Color Emoji" ];
-              };
-          };
-        };
       };
     };
   };

@@ -4,6 +4,7 @@ vim.opt.mouse = "a"
 vim.opt.expandtab = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
+vim.opt.autoindent = true
 vim.api.nvim_set_keymap('v', '<S-Up>', '<Up>', { noremap = true; })
 vim.api.nvim_set_keymap('v', '<S-Down>', '<Down>', { noremap = true })
 vim.api.nvim_set_keymap('v', '<S-Left>', '<Left>', { noremap = true })
@@ -49,17 +50,33 @@ require("neoconf").setup({
   -- override any of the default settings here
 })
 
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 -- Language servers
 local lspconfig = require('lspconfig')
-lspconfig.pyright.setup {}
-lspconfig.tsserver.setup {}
+lspconfig.pyright.setup {
+  capabilities = capabilities,
+}
+lspconfig.tsserver.setup {
+  capabilities = capabilities,
+}
 lspconfig.rust_analyzer.setup {
   -- Server-specific settings. See `:help lspconfig-setup`
   settings = {
     ['rust-analyzer'] = {},
   },
+  capabilities = capabilities,
 }
+lspconfig.lua_ls.setup {
+  capabilities = capabilities,
+}
+lspconfig.rnix.setup({
+  cmd = { "rnix-lsp", "--stdio" },
+  capabilities = capabilities,
+})
 
+require('mini.basics').setup({
+})
 
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -98,32 +115,57 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end, opts)
   end,
 })
---
 
 require'nvim-treesitter.configs'.setup({
   highlight={enable=true},
-
-  rainbow = {
-    enable = true,
-    -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
-    extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-    max_file_lines = nil, -- Do not enable for files with more than n lines, int
-    -- colors = {}, -- table of hex strings
-    -- termcolors = {} -- table of colour name strings
-  }
 })
 
+local rainbow_delimiters = require 'rainbow-delimiters'
+
+vim.g.rainbow_delimiters = {
+    strategy = {
+        [''] = rainbow_delimiters.strategy['global'],
+        vim = rainbow_delimiters.strategy['local'],
+    },
+    query = {
+        [''] = 'rainbow-delimiters',
+        lua = 'rainbow-blocks',
+    },
+    highlight = {
+        'RainbowDelimiterRed',
+        'RainbowDelimiterYellow',
+        'RainbowDelimiterBlue',
+        'RainbowDelimiterOrange',
+        'RainbowDelimiterGreen',
+        'RainbowDelimiterViolet',
+        'RainbowDelimiterCyan',
+    },
+}
+
+
+
 local cmp = require'cmp'
+local lspkind = require('lspkind')
 
 cmp.setup({
   snippet = {
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
       vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-      -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-      -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-      -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
     end,
+  },
+  formatting = {
+    format = lspkind.cmp_format({
+      mode = 'symbol', -- show only symbol annotations
+      maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+      ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+
+      -- The function below will be called before any actual modifications from lspkind
+      -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+      before = function (entry, vim_item)
+        return vim_item
+      end
+    })
   },
   window = {
     -- completion = cmp.config.window.bordered(),
@@ -138,18 +180,25 @@ cmp.setup({
   }),
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
-    { name = 'vsnip' }, -- For vsnip users.
-    -- { name = 'luasnip' }, -- For luasnip users.
-    -- { name = 'ultisnips' }, -- For ultisnips users.
-    -- { name = 'snippy' }, -- For snippy users.
-    { name = 'treesitter' },
-    { name = 'rg'},
-    { name = 'nvim_lsp_document_symbol'},
     { name = 'nvim_lsp_signature_help' },
-  }, {
+    { name = 'nvim_lsp_document_symbol'},
+    { name = 'treesitter' },
     { name = 'buffer' },
+    { name = 'rg', keyword_length = 8 },
+    { name = 'vsnip' }, -- For vsnip users.
+    { name = 'path' },
+    { name = 'git' },
   })
 })
+
+require('nvim-autopairs').setup({
+})
+
+require("which-key").setup {
+  -- your configuration comes here
+  -- or leave it empty to use the default settings
+  -- refer to the configuration section below
+}
 
 require("cmp").setup({
   enabled = function()
@@ -164,7 +213,8 @@ require("cmp").setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
   },
 })
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+require('gitsigns').setup()
+
 
 require("nvim-lightbulb").setup({
   autocmd = { enabled = true }

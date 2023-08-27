@@ -1,5 +1,9 @@
 {
   inputs = {
+    git-rainbow-delimiters-nvim = {
+      url = "github:hiphish/rainbow-delimiters.nvim";
+      flake = false;
+    };
     git-zsh-powerlevel10k = {
       url = "github:romkatv/powerlevel10k";
       flake = false;
@@ -30,6 +34,7 @@
       git-zsh-defer,
       git-zsh-autosuggestions,
       git-zsh-fast-syntax-highlighting,
+      git-rainbow-delimiters-nvim,
       dracula-dircolors,
       utils,
   }:
@@ -44,6 +49,11 @@
     in {
       nixosModules.default = {pkgs, ... }: {
         config = {
+          environment.systemPackages = [
+            pkgs.rnix-lsp
+            pkgs.lua-language-server
+            pkgs.tree-sitter
+          ];
           home-manager = {
             users.pshaw = { config, lib, ... }: {
                 home = {
@@ -68,23 +78,39 @@
 
                       # Auto complete
                       nvim-cmp
+                      lspkind-nvim
 
-                      # Clipboard
+                      git-rainbow-delimiters-nvim
+
+                      # Adds a bunch of pretty decent auto completes
+                      vim-vsnip-integ
                       vim-vsnip
+                      cmp-vsnip
+                      friendly-snippets
+
+
+                      git-blame-nvim
+                      gitsigns-nvim
 
                       # Theme
                       catppuccin-nvim
 
+                      which-key-nvim
+
                       # Auto complete
-                      cmp-vsnip
                       cmp-treesitter
+                      cmp-git
                       cmp-path
                       cmp-nvim-lsp
-                      cmp-cmdline
                       cmp-nvim-lsp-document-symbol
                       cmp-nvim-lsp-signature-help
+                      cmp-buffer
                       cmp-rg
                       cmp-dap
+
+                      nvim-autopairs
+
+                      mini-nvim
 
                       # Sane word jumping
                       vim-wordmotion
@@ -107,8 +133,6 @@
 
                       # Search and replace
                       ssr-nvim
-
-                      nvim-ts-rainbow2
                     ]);
                     nvimPackageLinks = (builtins.listToAttrs (
                       map (item: {

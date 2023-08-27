@@ -18,10 +18,25 @@
         pkgs.font-awesome
         pkgs.vistafonts
 
+        pkgs.inter
+        pkgs.noto-fonts
+        pkgs.twemoji-color-font
+        pkgs.meslo-lgs-nf
+        pkgs.cascadia-code
+        pkgs.jetbrains-mono
       ];
       fonts = {
+        enableDefaultPackages = true;
+
         fontconfig = {
           localConf = builtins.readFile ./default-font.conf;
+        };
+      
+        defaultFonts = {
+          sansSerif = ["Inter" "Noto Sans"]; 
+          serif = [ "Noto Serif"];
+          monospace = ["JetBrains Mono" "Noto Sans Mono"];
+          emoji = [ "Twitter Color Emoji" ];
         };
       };
     };

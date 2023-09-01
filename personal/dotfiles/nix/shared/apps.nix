@@ -69,6 +69,8 @@ with pkgs; [
 
   openssl
 
+  trash-cli
+
   git-open
 
   nickel

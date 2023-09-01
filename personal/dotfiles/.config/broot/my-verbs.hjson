@@ -1,0 +1,11 @@
+verbs: [
+{
+  invocation: cq
+  external: "/usr/bin/env bash -c ':'"
+}
+{
+  invocation: touch
+  external: touch {new_file}
+  leave_broot: false
+}
+]

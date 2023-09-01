@@ -1,0 +1,41 @@
+imports: [
+  conf.hjson
+]
+
+cols_order: [
+  mark
+  git
+  branch
+  name
+]
+
+date_time_format: %y/%m/%d
+
+verbs: [
+  {
+    key: enter
+    execution: /home/pshaw/.config/broot/temp.sh {file}
+    leave_broot: false
+    apply_to: file
+  }
+  {
+    invocation: git-add
+    shortcut: ga
+    execution: git add {file}
+    leave_broot: false
+    key: shift--
+  }
+  {
+    invocation: git-unstage
+    execution: git reset @ -- {file}
+    leave_broot: false
+    ctrl: shift-+
+  }
+  {
+    invocation: git-diff
+    shortcut: gd
+    key: shift-d
+    execution: git difftool -y {file}
+    apply_to: file
+  }
+]

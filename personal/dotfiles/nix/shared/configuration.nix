@@ -6,5 +6,7 @@
   environment.variables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
+    TERMINAL = "wezterm";
+    BROWSER = "firefox";
   };
 }

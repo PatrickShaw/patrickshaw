@@ -138,7 +138,7 @@ with pkgs; [
   duf
 
   broot
-
+  
   fd
 
   ripgrep

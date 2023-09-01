@@ -17,6 +17,7 @@ vim.api.nvim_set_keymap('n', '<S-Up>', '<esc>v<Up>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<S-Down>', '<esc>v<Down>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<S-Left>', '<esc>v<Left>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<S-Right>', '<esc>v<Right>', { noremap = true })
+vim.api.nvim_set_keymap('v', '<S-Tab>', '>', { noremap = true })
 
 vim.api.nvim_set_keymap('n', '<S-Right>', '<esc>v<Right>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<S-Right>', '<esc>v<Right>', { noremap = true })
@@ -45,11 +46,6 @@ vim.cmd [[
   hi LineNr guibg=NONE ctermbg=NONE
 ]]
 
---require('Comment').setup()
-require("neoconf").setup({
-  -- override any of the default settings here
-})
-
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Language servers
@@ -73,9 +69,6 @@ lspconfig.lua_ls.setup {
 lspconfig.rnix.setup({
   cmd = { "rnix-lsp", "--stdio" },
   capabilities = capabilities,
-})
-
-require('mini.basics').setup({
 })
 
 -- Global mappings.
@@ -121,7 +114,7 @@ require'nvim-treesitter.configs'.setup({
 })
 
 local rainbow_delimiters = require 'rainbow-delimiters'
-
+vim.g.nvim_autopairs = {}
 vim.g.rainbow_delimiters = {
     strategy = {
         [''] = rainbow_delimiters.strategy['global'],
@@ -142,7 +135,26 @@ vim.g.rainbow_delimiters = {
     },
 }
 
+vim.opt.list = true
+vim.opt.termguicolors = true
+vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
 
+vim.g.ident_blankline = {
+  space_char_blankline = " ",
+  char_highlight_list = {
+      "IndentBlanklineIndent1",
+      "IndentBlanklineIndent2",
+      "IndentBlanklineIndent3",
+      "IndentBlanklineIndent4",
+      "IndentBlanklineIndent5",
+      "IndentBlanklineIndent6",
+  },
+}
 
 local cmp = require'cmp'
 local lspkind = require('lspkind')
@@ -176,7 +188,7 @@ cmp.setup({
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.abort(),
-    ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
   }),
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
@@ -184,21 +196,16 @@ cmp.setup({
     { name = 'nvim_lsp_document_symbol'},
     { name = 'treesitter' },
     { name = 'buffer' },
-    { name = 'rg', keyword_length = 8 },
+    { name = 'rg', 
+              option = {
+                additional_arguments = "--max-depth 4 --one-file-system",
+              }
+                    , keyword_length = 1 },
     { name = 'vsnip' }, -- For vsnip users.
     { name = 'path' },
     { name = 'git' },
   })
 })
-
-require('nvim-autopairs').setup({
-})
-
-require("which-key").setup {
-  -- your configuration comes here
-  -- or leave it empty to use the default settings
-  -- refer to the configuration section below
-}
 
 require("cmp").setup({
   enabled = function()
@@ -212,9 +219,6 @@ require("cmp").setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
     { name = "dap" },
   },
 })
-
-require('gitsigns').setup()
-
 
 require("nvim-lightbulb").setup({
   autocmd = { enabled = true }

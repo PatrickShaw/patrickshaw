@@ -294,10 +294,12 @@
         # Bootloader/EFI
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
+        boot.loader.timeout = 2;
+
 
         services.chrony.enable = true;
         services.timesyncd.enable = false;
-        
+ 
 
         # For automounting disks
         services.udisks2.enable = true;

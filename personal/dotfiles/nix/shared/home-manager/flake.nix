@@ -81,6 +81,7 @@
                       lspkind-nvim
 
                       git-rainbow-delimiters-nvim
+                      indent-blankline-nvim
 
                       # Adds a bunch of pretty decent auto completes
                       vim-vsnip-integ
@@ -112,9 +113,11 @@
 
                       mini-nvim
 
+                      vim-lastplace
+
                       # Sane word jumping
                       vim-wordmotion
-                    
+
                       vim-nix
 
                       # Gives icons to certain explorers

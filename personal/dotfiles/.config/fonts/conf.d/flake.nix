@@ -37,6 +37,7 @@
 
           pkgs.inter
           pkgs.noto-fonts
+          pkgs.noto-fonts-emoji
           pkgs.twemoji-color-font
           pkgs.meslo-lgs-nf
           pkgs.cascadia-code

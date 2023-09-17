@@ -55,7 +55,10 @@ in
         "rw"
         "noatime"
         "discard=async"
-        "compress=zstd:6"
+        # TODO: As much as i'd love a higher compression level fore the nix store - subvolume compression is not possible.
+        # So we use zstd level 1 as the lowest common denominator. Uncomment if this is ever fixed
+        #"compress=zstd:6"
+        "compress=zstd:1"
         "ssd"
         "space_cache=v2"
       ];

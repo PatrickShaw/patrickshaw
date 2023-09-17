@@ -171,7 +171,7 @@
         shared-aliases = import ./shared/program-aliases.nix { };
       in {
         imports = [
-            # shared-configuration
+            shared-configuration
             inputs.hyprland.nixosModules.default
             self.nixosModules.direnv
         ];
@@ -375,7 +375,8 @@
             self.nixosModules.core
         ];
 
-        virtualisation.docker.enable = false;
+        virtualisation.docker.enable = true;
+        virtualisation.docker.storageDriver = "btrfs";
       };
     };
   };

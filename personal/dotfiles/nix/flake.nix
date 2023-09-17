@@ -165,7 +165,7 @@
           "/share/nix-direnv"
         ];
       };
-      default = { config, pkgs, lib, options, ... }: let
+      core = { pkgs, lib, options, ...}: let
         wayland-pkgs = inputs.nixpkgs-wayland.packages.${pkgs.system};
         shared-configuration = import ./shared/configuration.nix { inherit pkgs; };
         shared-aliases = import ./shared/program-aliases.nix { };
@@ -176,12 +176,14 @@
             self.nixosModules.direnv
         ];
 
+        programs.hyprland.package = inputs.hyprland.packages.${pkgs.system}.default;
+        programs.hyprland.enable = true;
+
         nixpkgs.overlays = [
           inputs.hyprland.overlays.default
         ];
 
-        programs.hyprland.package = inputs.hyprland.packages.${pkgs.system}.default;
-        programs.hyprland.enable = true;
+        hardware.enableRedistributableFirmware = true;
 
         nix.gc = {
           automatic = true;
@@ -189,8 +191,6 @@
           persistent = true;
           options = "--delete-older-than 30d";
         };
-
-        hardware.enableRedistributableFirmware = true;
 
         # See: https://github.com/NixOS/nixpkgs/issues/16327
         # Also: https://github.com/NixOS/nixpkgs/issues/197188#issuecomment-1320990068
@@ -211,7 +211,9 @@
           };
         };
 
-        # See: https://wiki.archlinux.org/title/PipeWire#xdg-desktop-portal-wlr
+        nixpkgs.config.allowUnfree = true;
+
+                # See: https://wiki.archlinux.org/title/PipeWire#xdg-desktop-portal-wlr
         # See: https://nixos.wiki/wiki/Sway#Using_NixOS
         # As per https://github.com/hyprwm/Hyprland/blob/f23455e592bca14e0abd9249de467cc71cd2850e/nix/module.nix#L88, this is turned on by Hyprland itself
         # ^ Update: But for file choosers xdg-desktop-portal-gtk is needed
@@ -232,9 +234,6 @@
            ];
         };
 
-        nixpkgs.config.allowUnfree = true;
-
-        virtualisation.docker.enable = false;
         environment.systemPackages = [
           wayland-pkgs.wl-clipboard
           wayland-pkgs.swww
@@ -255,22 +254,6 @@
           pkgs.nix-direnv
         ] ++ import ./linux/apps.nix { inherit pkgs; };
 
-
-        services.usbmuxd = {
-          enable = true;
-          package = pkgs.usbmuxd2;
-        };
-
-        i18n.defaultLocale = "en_AU.UTF-8";
-
-        environment.etc = {
-          # This is to make systemd past boots of journals actually log out when listed
-          # See https://www.reddit.com/r/NixOS/comments/kgziex/journald_not_keeping_past_boot_logs/
-          machine-id.text = "152099709ccc4cc79fec46efcb18d2a1";
-
-          # Note: Writing systemd units here won't work. Use systemd.user.*
-        };
-
         programs = {
           git = {
             enable = true;
@@ -290,19 +273,30 @@
             shellAliases = shared-aliases;
           };
         };
+        i18n.defaultLocale = "en_AU.UTF-8";
 
         # Bootloader/EFI
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
-        boot.loader.timeout = 2;
+        boot.loader.timeout = lib.mkDefault 2;
 
 
         services.chrony.enable = true;
         services.timesyncd.enable = false;
- 
 
         # For automounting disks
         services.udisks2.enable = true;
+
+        environment.etc = {
+          # This is to make systemd past boots of journals actually log out when listed
+          # See https://www.reddit.com/r/NixOS/comments/kgziex/journald_not_keeping_past_boot_logs/
+          machine-id.text = "152099709ccc4cc79fec46efcb18d2a1";
+
+          # Note: Writing systemd units here won't work. Use systemd.user.*
+        };
+
+ 
+
 
         services.udev.packages = [
           pkgs.android-udev-rules
@@ -314,7 +308,6 @@
         systemd.services.libvirtd-config.script = lib.mkAfter ''
           #rm /var/lib/libvirt/qemu/networks/autostart/default.xml
         '';
-
         environment.sessionVariables = {
           # See: https://wiki.archlinux.org/title/Cursor_themes
           XCURSOR_THEME = "phinger-cursors";
@@ -344,11 +337,15 @@
           MCFLY_PROMPT="❯";
           MCFLY_RESULTS="15";
         };
-
         hardware.opengl.enable = true;
 
         # See: https://nixos.wiki/wiki/PipeWire
         security.rtkit.enable = true;
+        
+        services.usbmuxd = {
+          enable = true;
+          package = pkgs.usbmuxd2;
+        };
 
         services.pipewire = {
           enable = true;
@@ -372,6 +369,14 @@
         
         # Should start a service based on https://github.com/NixOS/nixpkgs/blob/27bd67e55fe09f9d68c77ff151c3e44c4f81f7de/nixos/modules/programs/nm-applet.nix#L26
         programs.nm-applet.enable = true;
+      };
+      default = { config, pkgs, lib, options, ... }: {
+        imports = [
+            self.nixosModules.core
+        ];
+
+        virtualisation.docker.enable = true;
+        virtualisation.docker.storageDriver = "btrfs";
       };
     };
   };

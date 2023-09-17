@@ -3,14 +3,17 @@ return {
   font = w.font("JetBrains Mono", {
     weight = "Light"
   }),
+  use_resize_increments = true,
   check_for_updates = false,
   hide_tab_bar_if_only_one_tab = true,
   enable_scroll_bar = false,
   enable_wayland = true,
   color_scheme   = "followSystem",
   window_padding = {
-    left = "5%",
-    right = "5%",
+    --Buggy: left = "5%",
+    --Buggy: right = "5%",
+    left = 40,
+    right = 40,
     top = 20,
     bottom = 20,
   },

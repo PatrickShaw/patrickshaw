@@ -107,7 +107,6 @@ with pkgs; [
   # UI
   ddcui
 
-
   # See: https://nixos.wiki/wiki/GNOME and the "Known Issues" section of "https://nixos.wiki/wiki/Lutris"
   gnome.adwaita-icon-theme
 
@@ -121,4 +120,6 @@ with pkgs; [
 
   # Has xdg-open in it. I assume a few apps depend on this globally
   xdg-utils
+
+  gptfdisk
 ]

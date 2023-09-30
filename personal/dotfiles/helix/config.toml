@@ -1,1 +1,28 @@
+# See: https://github.com/LGUG2Z/helix-vim/blob/master/config.toml
 theme = "base16_transparent"
+[editor]
+
+[editor.file-picker]
+hidden=false
+
+[editor.cursor-shape]
+insert= "bar"
+
+[editor.indent-guides]
+render = true
+
+[editor.soft-wrap]
+enable=true
+
+[editor.lsp]
+display-inlay-hints=true
+
+[keys.normal]
+A-c = ":primary-clipboard-yank"
+A-v = ":primary-clipboard-paste-replace"
+"$" = "goto_line_end"
+"^" = "goto_line_start"
+
+[keys.select]
+"$" = "goto_line_end"
+"^" = "goto_line_start"

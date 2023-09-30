@@ -1,0 +1,4 @@
+import:
+- ~/personal/dotfiles/alacritty/shared/alacritty.yml
+window:
+  opacity: 1

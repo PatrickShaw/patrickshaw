@@ -1,1 +1,0 @@
-../../code_snippets/desktop/mouse-selection-to-clipboard.fish

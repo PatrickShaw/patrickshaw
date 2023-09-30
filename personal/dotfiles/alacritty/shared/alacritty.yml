@@ -1,0 +1,19 @@
+cursor:
+  style: Beam
+font:
+  normal:
+    family: JetBrains Mono
+  size: 11
+import:
+- ~/personal/dotfiles/alacritty/shared/theme.yml
+scrolling:
+  auto_scroll: true
+  faux_multiplier: 10
+  history: 40000
+  multiplier: 10
+selection:
+  semantic_escape_chars: ',│`|:="'' ()[]{}<>-'
+window:
+  padding:
+    x: 12
+    y: 12

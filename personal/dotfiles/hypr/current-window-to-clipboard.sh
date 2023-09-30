@@ -1,2 +1,6 @@
 #!/bin/sh
-grim -g "$(hyprctl activewindow -j | jaq  '.at[0], ",", .at[1], " ", .size[0], "x", .size[1]' --raw-output -j -c)" - | wl-copy
+DIMENSIONS=$(hyprctl activewindow -j | jaq  '.at[0], ",", .at[1], " ", .size[0], "x", .size[1]' --raw-output -j -c)
+grim -g "$DIMENSIONS" - | wl-copy
+TITLE=$(hyprctl activewindow -j | jaq  '.title' --raw-output -j -c)
+
+notify-send -t 3000 "Screenshot caputed for \"$TITLE\""

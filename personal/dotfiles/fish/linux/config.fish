@@ -4,6 +4,10 @@ source (status dirname)/../shared/config.fish
 # All handled by Nix
 #fish_add_path $HOME/.cargo/bin
 #fish_add_path $HOME/.yarn/bin
+if status is-interactive
+    # See: https://github.com/keybase/keybase-issues/issues/2798
+    set -x GPG_TTY $(tty)
+end
 
 if status is-login; and not set -q SSH_TTY
     # Was only required when running Void Linux/non-systemd

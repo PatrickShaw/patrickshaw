@@ -3,7 +3,11 @@ with pkgs; [
   google-chrome
   firefox
 
+  pkgs.gnome.gnome-clocks
+
   gcc
+
+  cliphist
 
   killall
 
@@ -13,13 +17,15 @@ with pkgs; [
   ulauncher
 
   pavucontrol
-  # Prefer qpwgraph: helvum
+  # Prefer qpwgraph to helvum
   qpwgraph
 
   # Camera app
   gnome.cheese
   # Allows tweaking of camera
   v4l-utils
+
+  swayidle
 
   brightnessctl
 
@@ -40,6 +46,7 @@ with pkgs; [
   p7zip
   unzip
   gzip
+  gnome.file-roller
 
   # For lspci
   pciutils
@@ -53,9 +60,6 @@ with pkgs; [
   pciutils
   # For lsusb
   usbutils
-
-  jack2
-  #helvum
 
   steam
   # Steam was trying to use this
@@ -70,14 +74,22 @@ with pkgs; [
   wineWowPackages.waylandFull
 
   spotify
-  signal-desktop
+  (signal-desktop.overrideAttrs (old: {
+    # See https://github.com/NixOS/nixpkgs/issues/222043#issuecomment-1589411268
+    preFixup = old.preFixup + ''
+      gappsWrapperArgs+=(
+        --add-flags "--enable-features=UseOzonePlatform"
+        --add-flags "--ozone-platform=wayland"
+      )
+    '';
+  }))
 
   celluloid
   haruna
 
-  qbittorrent
+  jetbrains.idea-community
 
-  _1password-gui
+  qbittorrent
 
   virt-manager
   virtiofsd
@@ -87,8 +99,9 @@ with pkgs; [
 
   kitty
 
+  gammastep
+
   wezterm
-  vlc
 
   docker
   docker-compose
@@ -96,9 +109,49 @@ with pkgs; [
   phinger-cursors
   papirus-icon-theme
   
+  # Some great programs mentioned over at https://github.com/ibraheemdev/modern-unix
+  tldr
+  cheat
+
+  bottom
+  glances
+  
+  hyperfine
+  
+  gping
+  
+  procs
+
+  curlie
+  xh
+
+  dogdns
+
+  lsd
+
+  sd
+
+  du-dust
+
+  caprine-bin
+  
+  duf
+
+  broot
+  
+  fd
+
+  ripgrep
+
+  choose
+
+  mcfly
+
   orchis-theme
 
   obsidian
+
+  playerctl
 
   cpu-x
 
@@ -109,6 +162,8 @@ with pkgs; [
 
   # See: https://nixos.wiki/wiki/GNOME and the "Known Issues" section of "https://nixos.wiki/wiki/Lutris"
   gnome.adwaita-icon-theme
+  # Added assuming it might cause the same problems as above ^
+  hicolor-icon-theme
 
   newsflash
 
@@ -122,4 +177,12 @@ with pkgs; [
   xdg-utils
 
   gptfdisk
+  
+  # Image viewers
+  gnome.eog
+  feh
+
+  # Font viewer
+  # TODO: Haven't looked at other apps yet
+  gnome.gnome-font-viewer
 ]

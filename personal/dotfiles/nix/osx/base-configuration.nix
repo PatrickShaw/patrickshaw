@@ -4,6 +4,5 @@
 
   fonts = {
     fontDir.enable = true;
-    fonts = import ../shared/font-pkgs.nix { pkgs = pkgs; };
   };
 }

@@ -1,0 +1,11 @@
+import:
+- ~/personal/dotfiles/alacritty/shared/alacritty.yml
+window:
+  opacity: 0.95
+key_bindings:
+  - { key: C, mods: Control|Alt, action: Copy }
+url:
+  modifiers: Control|Alt|Shift
+
+# Explained here: https://www.reddit.com/r/Alacritty/comments/hpcdr3/what_exactly_does_dynamic_padding_do/
+dynamic_padding: false

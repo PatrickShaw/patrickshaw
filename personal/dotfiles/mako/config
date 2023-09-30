@@ -1,0 +1,13 @@
+font=system-ui
+border-radius=20
+padding=8,0
+border-size=0
+background-color=#000000BB
+icons=1
+actions=1
+layer=overlay
+group-by=category
+icon-path=/run/current-system/sw/share/icons/Papirus/
+
+[grouped=true]
+format=(%g) <b>%s</b>\n%b\n<i>From %a</i>

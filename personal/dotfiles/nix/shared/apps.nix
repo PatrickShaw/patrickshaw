@@ -14,15 +14,21 @@ with pkgs; [
   alacritty
   #wezterm
 
+  nodePackages.nodejs
   fnm
-
   yarn
+
   rustup
-  python3
+  rust-analyzer
+  python3Full
   # Security flaw: python
   adoptopenjdk-bin
   poetry
   deno
+
+  adoptopenjdk-bin
+  gradle
+  maven
 
   bat
 
@@ -30,21 +36,14 @@ with pkgs; [
   thefuck
   zoxide
   delta
-  vscode
   git
   git-lfs
+  
   gnupg
+  pinentry
+
   neovim
   unrar
-
-  pkgs.vimPlugins."coc-nvim"
-  pkgs.vimPlugins."coc-css"
-  pkgs.vimPlugins."coc-yaml"
-  pkgs.vimPlugins."coc-python"
-  pkgs.vimPlugins."coc-git"
-  pkgs.vimPlugins."coc-rust-analyzer"
-  pkgs.vimPlugins."coc-tsserver"
-  pkgs.vimPlugins."vim-nix"
 
   pkgs.starship
 
@@ -54,12 +53,14 @@ with pkgs; [
 
   postgresql
 
-  uutils-coreutils
+  (uutils-coreutils.override {
+    prefix = "";
+  })
+
+  libnotify
 
   libiconv
   google-cloud-sdk
-
-  syncthing
 
   rWrapper
 
@@ -68,11 +69,11 @@ with pkgs; [
 
   openssl
 
+  trash-cli
+
   git-open
 
   nickel
-
-  direnv
 
   libreoffice-fresh
 

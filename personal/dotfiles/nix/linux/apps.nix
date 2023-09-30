@@ -16,6 +16,8 @@ with pkgs; [
   waybar
   ulauncher
 
+  pamixer
+
   pavucontrol
   # Prefer qpwgraph to helvum
   qpwgraph

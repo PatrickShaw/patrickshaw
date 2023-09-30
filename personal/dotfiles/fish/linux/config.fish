@@ -5,7 +5,7 @@ source (status dirname)/../shared/config.fish
 #fish_add_path $HOME/.cargo/bin
 #fish_add_path $HOME/.yarn/bin
 
-if status is-login 
+if status is-login; and not set -q SSH_TTY
     # Was only required when running Void Linux/non-systemd
     #if test -z "$XDG_RUNTIME_DIR"
     #  set runtime_dir "/tmp/"(id -u)"-xdg-runtime-dir"

@@ -21,8 +21,6 @@
     nix-direnv.url = "github:nix-community/nix-direnv";
     nix-direnv.inputs.nixpkgs.follows = "nixpkgs";
 
-    steam-devices-udev.url = "github:ValveSoftware/steam-devices";
-    steam-devices-udev.flake = false;
   };
   nixConfig = {
     extra-substituters = [
@@ -300,34 +298,10 @@
           # Note: Writing systemd units here won't work. Use systemd.user.*
         };
 
- 
-
-
-        services.udev.packages = let 
-          steam-devices-pkg = pkgs.stdenv.mkDerivation {
-            pname = "steam-devices-udev-rules";
-            version = "2023-04-13";
-
-            src = inputs.steam-devices-udev;
-
-            installPhase = ''
-              runHook preInstall
-              install -D 60-steam-input.rules $out/lib/udev/rules.d/60-steam-input.rules
-              install -D 60-steam-vr.rules $out/lib/udev/rules.d/60-steam-vr.rules
-              runHook postInstall
-            '';
-
-            meta = with lib; {
-              homepage = "https://github.com/ValveSoftware/steam-devices/tree/master";
-              description = "List of devices Steam and SteamVR will want read/write permissions on, to help downstream distributions create udev rules/etc ";
-              platforms = platforms.linux;
-              license = licenses.mit;
-              maintainers = with maintainers; [ ];
-            };
-          };
-        in [
+        # Udev rules - Includes some for Sony DS4
+        hardware.steam-hardware.enable = true;
+        services.udev.packages = [
           pkgs.android-udev-rules
-          "${steam-devices-pkg}"
         ];
         
         networking.timeServers = options.networking.timeServers.default

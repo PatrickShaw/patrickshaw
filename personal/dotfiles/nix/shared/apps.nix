@@ -32,7 +32,7 @@ with pkgs; [
 
   bat
 
-  exa
+  eza
   thefuck
   zoxide
   delta

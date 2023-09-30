@@ -252,6 +252,8 @@
           pkgs.ifuse 
 
           pkgs.nix-direnv
+
+          pkgs.libinput-gestures
         ] ++ import ./linux/apps.nix { inherit pkgs; };
 
         programs = {

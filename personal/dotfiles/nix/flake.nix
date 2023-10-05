@@ -139,6 +139,15 @@
           LIBVA_DRIVER_NAME="nvidia";
         };
       };
+      text-to-speech = { ... }: {
+        services.tts.servers = {
+          english = {
+            port = 5300;
+            model = "tts_models/en/ljspeech/tacotron2-DDC";
+            enable = true;
+          };
+        };
+      };
       vfio = { ... }: {
         systemd.tmpfiles.rules = [ "f /dev/shm/looking-glass 0660 1000 kvm -" ];
         environment.sessionVariables = {
@@ -175,6 +184,7 @@
             shared-configuration
             inputs.hyprland.nixosModules.default
             self.nixosModules.direnv
+            self.nixosModules.text-to-speech
         ];
 
         programs.hyprland.package = inputs.hyprland.packages.${pkgs.system}.default;

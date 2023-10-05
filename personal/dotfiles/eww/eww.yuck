@@ -75,10 +75,11 @@
   (
     box
       :class "icon-container"
+      :orientation "vertical"
       (image
         :class "icon ${class}"
-        (children)
-      )  
+      )
+      (children)
   )
 )
 
@@ -92,17 +93,23 @@
 )
 
 (defwidget sound []
-  (box
-    :orientation "vertical"
-    :space-evenly false
-    :height 400
-    (scale :orientation "vertical" :min 0 :max 100 		:vexpand true)
-    (clickable
-      :onclick "pavucontrol &"
-      :onrightclick "pavucontrol &"
-      (icon
-        :class "sound ${audio-level}"
-      )
+  (clickable
+    :onclick "pavucontrol &"
+    :onrightclick "pavucontrol &"
+    (icon
+      :class "sound ${audio-level}"
+    )
+  )
+)
+
+(defpoll battery-status :initial "test" :interval "60s" `scripts/battery.sh`)
+(defpoll battery-percentage :initial "test" :interval "60s" `scripts/battery_percentage.sh`)
+
+(defwidget battery []
+  (clickable
+    (icon
+      :class "battery ${battery-status}"
+      "${battery-percentage}%"
     )
   )
 )
@@ -139,6 +146,7 @@
       :orientation "vertical"
       :space-evenly false
       :valign "end"
+      (battery)
       (sound)
       (time)
     )

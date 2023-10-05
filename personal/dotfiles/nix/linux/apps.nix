@@ -187,4 +187,11 @@ with pkgs; [
   # Font viewer
   # TODO: Haven't looked at other apps yet
   gnome.gnome-font-viewer
+
+
+  # See: https://nixos.wiki/wiki/LibreOffice
+  # and see: https://wiki.archlinux.org/title/firefox
+  hunspell
+  hunspellDicts.en_AU-large
+  hunspellDicts.en_US
 ]

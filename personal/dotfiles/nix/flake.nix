@@ -356,7 +356,8 @@
         
         services.usbmuxd = {
           enable = true;
-          package = pkgs.usbmuxd2;
+          # usbmuxd2 doesn't seem to be maintained
+          # package = pkgs.usbmuxd2;
         };
 
         services.pipewire = {

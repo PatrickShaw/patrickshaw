@@ -22,4 +22,4 @@ alias back=z -
 
 zsh-defer -c 'eval "$(thefuck --alias)"'
 zsh-defer -c 'eval "$(fnm completions --shell zsh)"'
-zsh-defer -c 'eval "$(fnm env --use-on-cd)"'
+zsh-defer -c 'eval "$(fnm env --use-on-cd --corepack-enabled)"'

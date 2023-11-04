@@ -140,8 +140,9 @@
   :namespace "taskbar"
   (
     taskbar
-    (
-      box :orientation "vertical" 
+    (box
+      :orientation "vertical" 
+      :space-evenly false
       (files)
     )
     (box 

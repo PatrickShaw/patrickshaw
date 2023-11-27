@@ -262,7 +262,7 @@
           wayland-pkgs.grim
           wayland-pkgs.slurp
           wayland-pkgs.imv
-          wayland-pkgs.sway-unwrapped
+          #wayland-pkgs.sway-unwrapped
           wayland-pkgs.mako
 
           inputs.eww.packages.${pkgs.system}.eww-wayland

@@ -197,6 +197,10 @@
         programs.captive-browser.enable = true;
         programs.captive-browser.interface = "wlan0";
 
+        # See: https://superuser.com/questions/904331/how-does-btrfs-scrub-work-and-what-does-it-do
+        # Should probably go in an FS module
+        services.btrfs.autoScrub.enable = true;
+        
 
         hardware.enableRedistributableFirmware = true;
 

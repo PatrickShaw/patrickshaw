@@ -53,6 +53,9 @@ with pkgs; [
 
   postgresql
 
+  # CLI based GTK dialog renderer - Similarish in purpose to Wofi
+  yad
+
   (uutils-coreutils.override {
     prefix = "";
   })

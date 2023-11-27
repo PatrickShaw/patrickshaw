@@ -194,6 +194,10 @@
           inputs.hyprland.overlays.default
         ];
 
+        programs.captive-browser.enable = true;
+        programs.captive-browser.interface = "wlan0";
+
+
         hardware.enableRedistributableFirmware = true;
 
         nix.gc = {

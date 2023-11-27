@@ -16,7 +16,7 @@ fnm use --log-level quiet
 eval "$(zoxide init zsh)"
 eval "$(mcfly init zsh)"
 
-alias ls=exa
+alias ls=lsd
 alias cd=z
 alias back=z -
 

@@ -201,6 +201,8 @@
         # Should probably go in an FS module
         services.btrfs.autoScrub.enable = true;
         
+        # Makes sharing with Windows storage devices easier
+        boot.supportedFilesystems = [ "ntfs" ];
 
         hardware.enableRedistributableFirmware = true;
 

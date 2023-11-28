@@ -124,6 +124,7 @@
     (children)
   )
 )
+
 (defwindow sidebar
   :monitor 0
   :geometry (geometry
@@ -139,9 +140,20 @@
   :namespace "taskbar"
   (
     taskbar
-    (box :orientation "vertical" (files))
-    (box :space-evenly false
-      :vexpand true :orientation "vertical" (workspaceList :current-workspace-id current-workspace-id :workspaces workspaces))
+    (box
+      :orientation "vertical" 
+      :space-evenly false
+      (files)
+    )
+    (box 
+      :space-evenly false
+      :vexpand true 
+      :orientation "vertical"
+      (workspaceList 
+        :current-workspace-id current-workspace-id
+        :workspaces workspaces
+      )
+    )
     (box
       :orientation "vertical"
       :space-evenly false

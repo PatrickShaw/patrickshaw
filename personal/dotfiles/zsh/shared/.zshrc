@@ -16,10 +16,10 @@ fnm use --log-level quiet
 eval "$(zoxide init zsh)"
 eval "$(mcfly init zsh)"
 
-alias ls=exa
+alias ls=lsd
 alias cd=z
 alias back=z -
 
 zsh-defer -c 'eval "$(thefuck --alias)"'
 zsh-defer -c 'eval "$(fnm completions --shell zsh)"'
-zsh-defer -c 'eval "$(fnm env --use-on-cd)"'
+zsh-defer -c 'eval "$(fnm env --use-on-cd --corepack-enabled)"'

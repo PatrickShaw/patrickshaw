@@ -187,12 +187,27 @@
             self.nixosModules.text-to-speech
         ];
 
+        # For whatever reason, systemd's oom is disabled anyway so we enable our own
+        systemd.oomd.enable = false;
+        services.earlyoom.enable = true;
+
+
         programs.hyprland.package = inputs.hyprland.packages.${pkgs.system}.default;
         programs.hyprland.enable = true;
 
         nixpkgs.overlays = [
           inputs.hyprland.overlays.default
         ];
+
+        programs.captive-browser.enable = true;
+        programs.captive-browser.interface = "wlan0";
+
+        # See: https://superuser.com/questions/904331/how-does-btrfs-scrub-work-and-what-does-it-do
+        # Should probably go in an FS module
+        services.btrfs.autoScrub.enable = true;
+        
+        # Makes sharing with Windows storage devices easier
+        boot.supportedFilesystems = [ "ntfs" ];
 
         hardware.enableRedistributableFirmware = true;
 
@@ -243,6 +258,10 @@
               # Saw this declared in: https://discourse.nixos.org/t/xdg-desktop-portal-not-working-on-wayland-while-kde-is-installed/20919
               #wayland-pkgs.xdg-desktop-portal-wlr
            ];
+            configPackages = [
+              pkgs.xdg-desktop-portal-hyprland
+              pkgs.xdg-desktop-portal-gtk
+            ];
         };
 
         environment.systemPackages = [
@@ -252,7 +271,7 @@
           wayland-pkgs.grim
           wayland-pkgs.slurp
           wayland-pkgs.imv
-          wayland-pkgs.sway-unwrapped
+          #wayland-pkgs.sway-unwrapped
           wayland-pkgs.mako
 
           inputs.eww.packages.${pkgs.system}.eww-wayland

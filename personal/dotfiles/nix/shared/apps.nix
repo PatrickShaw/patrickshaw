@@ -9,8 +9,9 @@ with pkgs; [
   gnumake
 
   vscode
-  lapce
-
+  # Not ready yet
+  # lapce
+  bc
   alacritty
   #wezterm
 
@@ -24,7 +25,9 @@ with pkgs; [
   # Security flaw: python
   adoptopenjdk-bin
   poetry
-  deno
+  
+  # Just use direnv
+  # deno
 
   adoptopenjdk-bin
   gradle
@@ -32,7 +35,9 @@ with pkgs; [
 
   bat
 
-  eza
+  # Decided to go with lsd
+  # Also see comments in https://news.ycombinator.com/item?id=37416430
+  # eza
   thefuck
   zoxide
   delta
@@ -53,6 +58,9 @@ with pkgs; [
 
   postgresql
 
+  # CLI based GTK dialog renderer - Similarish in purpose to Wofi
+  yad
+
   (uutils-coreutils.override {
     prefix = "";
   })
@@ -62,7 +70,8 @@ with pkgs; [
   libiconv
   google-cloud-sdk
 
-  rWrapper
+  # Just use direnv
+  # cper
 
   android-tools
   arduino-cli
@@ -76,8 +85,6 @@ with pkgs; [
   nickel
 
   libreoffice-fresh
-
-  rust-analyzer
 
   efibootmgr
 

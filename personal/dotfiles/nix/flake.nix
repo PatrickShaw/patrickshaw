@@ -187,6 +187,11 @@
             self.nixosModules.text-to-speech
         ];
 
+        # For whatever reason, systemd's oom is disabled anyway so we enable our own
+        systemd.oomd.enable = false;
+        services.earlyoom.enable = true;
+
+
         programs.hyprland.package = inputs.hyprland.packages.${pkgs.system}.default;
         programs.hyprland.enable = true;
 

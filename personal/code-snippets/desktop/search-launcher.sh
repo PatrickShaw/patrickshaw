@@ -1,2 +1,2 @@
 #!/bin/sh
-killall .wofi-wrapped || wofi --prompt 'Search' --matching multi-contains --no-actions --show drun --insensitive --allow-images --allow-markup --style $HOME/.config/wofi/styles.css
+killall .wofi-wrapped || wofi --prompt 'Search' --normal-window --matching multi-contains --no-actions --show drun --insensitive --allow-images --allow-markup --style $HOME/.config/wofi/styles.css

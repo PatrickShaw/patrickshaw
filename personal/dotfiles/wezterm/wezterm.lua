@@ -8,7 +8,7 @@ return {
   hide_tab_bar_if_only_one_tab = true,
   enable_scroll_bar = false,
   enable_wayland = true,
-  color_scheme   = "followSystem",
+  -- color_scheme   = "followSystem",
   window_padding = {
     --Buggy: left = "5%",
     --Buggy: right = "5%",

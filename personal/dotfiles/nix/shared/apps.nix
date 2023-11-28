@@ -11,8 +11,7 @@ with pkgs; [
   vscode
   # Not ready yet
   # lapce
-  lapce
-
+  bc
   alacritty
   #wezterm
 

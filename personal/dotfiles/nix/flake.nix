@@ -258,6 +258,10 @@
               # Saw this declared in: https://discourse.nixos.org/t/xdg-desktop-portal-not-working-on-wayland-while-kde-is-installed/20919
               #wayland-pkgs.xdg-desktop-portal-wlr
            ];
+            configPackages = [
+              pkgs.xdg-desktop-portal-hyprland
+              pkgs.xdg-desktop-portal-gtk
+            ];
         };
 
         environment.systemPackages = [

@@ -201,4 +201,7 @@ with pkgs; [
   hunspell
   hunspellDicts.en_AU-large
   hunspellDicts.en_US
+
+  # Zoom was asking for it
+  glxinfo
 ]

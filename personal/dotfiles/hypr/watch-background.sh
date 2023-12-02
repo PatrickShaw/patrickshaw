@@ -12,8 +12,6 @@ activeWorkspace() {
 
   declare -A idToImg
   
-  echo switch
-
   idToImg["1"]="wyqdvp.jpg"
   idToImg["2"]="96kq3x.png"
   idToImg["3"]="k9p8l6.jpg"
@@ -25,8 +23,11 @@ activeWorkspace() {
   idToImg["9"]="39ode6.png"
   idToImg["0"]="eyw8yr.jpg"
   
-  IMG_FILENAME=$(echo ${idToImg["$ID"]})
+  INDEX=$(frawk "BEGIN { printf $ID % 10 }")
+  
+  IMG_FILENAME=$(echo ${idToImg["$INDEX"]})
   PREV_ID=$ID
+  
   swww img --transition-type=simple --transition-fps=60 --transition-step=48 $HOME/wallpapers/wallhaven/$IMG_FILENAME
 }
 

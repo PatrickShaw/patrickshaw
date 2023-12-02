@@ -7,6 +7,8 @@ with pkgs; [
 
   gcc
 
+  gnome-text-editor
+
   cliphist
 
   killall

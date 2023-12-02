@@ -179,6 +179,27 @@
         wayland-pkgs = inputs.nixpkgs-wayland.packages.${pkgs.system};
         shared-configuration = import ./shared/configuration.nix { inherit pkgs; };
         shared-aliases = import ./shared/program-aliases.nix { };
+
+        # See https://nixos.wiki/wiki/Sway
+        configure-gtk = pkgs.writeTextFile {
+          name = "configure-gtk";
+          destination = "/bin/configure-gtk";
+          executable = true;
+          text = let
+            schema = pkgs.gsettings-desktop-schemas;
+            datadir = "${schema}/share/gsettings-schemas/${schema.name}";
+          in ''
+            export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
+            gnome_schema=org.gnome.desktop.interface
+
+            gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
+            gsettings set org.gnome.desktop.interface gtk-theme 'Orchis-Green'
+            # Add for good measure. See: https://wiki.hyprland.org/FAQ/#gtk-settings-no-work--whatever
+            gsettings set org.gnome.desktop.interface cursor-theme 'phinger-cursors'
+            gsettings set org.gnome.desktop.interface cursor-blink false
+          '';
+        };
+
       in {
         imports = [
             shared-configuration
@@ -265,6 +286,8 @@
         };
 
         environment.systemPackages = [
+          configure-gtk
+
           wayland-pkgs.wl-clipboard
           wayland-pkgs.swww
           wayland-pkgs.wofi

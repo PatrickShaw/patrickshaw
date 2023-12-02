@@ -6,8 +6,14 @@ background-color=#000000BB
 icons=1
 actions=1
 layer=overlay
-group-by=category
+group-by=category,app-name
 icon-path=/run/current-system/sw/share/icons/Papirus/
 
 [grouped=true]
 format=(%g) <b>%s</b>\n%b\n<i>From %a</i>
+
+[desktop-entry="org.freedesktop.network-manager-applet"]
+default-timeout=3000
+
+[desktop-entry="Slack"]
+default-timeout=600000

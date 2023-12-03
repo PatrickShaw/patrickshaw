@@ -156,7 +156,7 @@
     };
       direnv = { pkgs, ... }: {
         nixpkgs.overlays = [
-          inputs.nix-direnv.overlay
+          inputs.nix-direnv.overlays.default
           (final: super: {
             nix-direnv = super.nix-direnv.overrideAttrs (old: old // {
               enableFlakes = true;

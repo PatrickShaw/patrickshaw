@@ -285,6 +285,7 @@
         # As per https://github.com/hyprwm/Hyprland/blob/f23455e592bca14e0abd9249de467cc71cd2850e/nix/module.nix#L88, this is turned on by Hyprland itself
         # ^ Update: But for file choosers xdg-desktop-portal-gtk is needed
         xdg.portal = {
+           xdgOpenUsePortal = true;
            enable = true;
           wlr.enable = false;
            extraPortals = [

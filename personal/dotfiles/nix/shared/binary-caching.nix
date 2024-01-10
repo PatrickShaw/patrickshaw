@@ -1,6 +1,6 @@
 {
   nix.settings = {
-    substituters = [
+    trusted-substituters = [
       "https://cache.nixos.org/"
 
       # See: https://wiki.hyprland.org/Nix/Cachix/

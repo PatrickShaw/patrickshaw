@@ -23,10 +23,10 @@
 
   };
   nixConfig = {
-    extra-substituters = [
+    extra-trusted-substituters = [
       "https://cache.nixos.org/"
 
-      # See: https://github.com/nix-community/nixpkgs-wayland#binary-cache
+      # See: https://github/home/pshaw/me/personal/dotfiles/nix/linux/apps.nix.com/nix-community/nixpkgs-wayland#binary-cache
       "https://nixpkgs-wayland.cachix.org"
 
       "https://nix-community.cachix.org"

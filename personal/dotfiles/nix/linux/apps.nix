@@ -191,6 +191,10 @@ with pkgs; [
   gnome.eog
   feh
 
+  # Epic game store
+  legendary-gl
+  heroic
+
   # Font viewer
   # TODO: Haven't looked at other apps yet
   gnome.gnome-font-viewer

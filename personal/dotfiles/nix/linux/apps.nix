@@ -42,7 +42,7 @@ with pkgs; [
   gnome.nautilus
   gnome.sushi
 
-  gamescope
+  # gamescope
   # protontricks
   # proton-caller
   winetricks

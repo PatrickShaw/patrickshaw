@@ -45,7 +45,7 @@
     nixosModules = {
       opengl = { pkgs, ... }: {
         hardware.opengl = {
-          enable = true;
+          # Already enabled by most compositors that need it: enable = true;
           driSupport = true;
           driSupport32Bit = true;
           extraPackages = [
@@ -396,7 +396,7 @@
           MCFLY_PROMPT="❯";
           MCFLY_RESULTS="15";
         };
-        hardware.opengl.enable = true;
+        # hardware.opengl.enable = true;
 
         # See: https://nixos.wiki/wiki/PipeWire
         security.rtkit.enable = true;

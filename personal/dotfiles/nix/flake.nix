@@ -221,6 +221,7 @@
         programs.hyprland.enable = true;
 
         nixpkgs.overlays = [
+          inputs.nixpkgs-wayland.overlays.default
           inputs.hyprland.overlays.default
         ];
 

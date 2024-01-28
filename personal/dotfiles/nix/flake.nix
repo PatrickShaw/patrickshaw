@@ -407,6 +407,37 @@
           # usbmuxd2 doesn't seem to be maintained
           # package = pkgs.usbmuxd2;
         };
+        # services.udev.extraRules = ''
+        #   ACTION!="add|remove", GOTO="end"
+        #   SUBSYSTEM!="usb", GOTO="end"
+
+        #   # Detect type of iPhoneOS it is
+        #     ENV{PRODUCT}=="5ac/129[1369e]/*", ENV{INTERFACE}=="255/*", ENV{dir_name}="iPod"
+        #     ENV{PRODUCT}=="5ac/12[a9][02478]/*", ENV{INTERFACE}=="255/*", ENV{dir_name}="iPhone"
+        #     ENV{PRODUCT}=="5ac/129[a]/*", ENV{INTERFACE}=="255/*", ENV{dir_name}="iPad"
+
+        #     ATTR{idVendor}=="05ac", ATTR{idProduct}=="129[1369e]", ENV{dir_name}="iPod"
+        #     ATTR{idVendor}=="05ac", ATTR{idProduct}=="12/nix/store/idc4rd6ryxg5pfkc3j5i99kn7s7yhaww-sudo-1.9.14p3/bin/sudo /nix/store/3acmz0y6v5y22kkivp798wz6yaggbyxw-util-linux-2.39.2-bin/bin/umount -l '/media/iPhone'[a9][02478]", ENV{dir_name}="iPhone"
+        #     ATTR{idVendor}=="05ac", ATTR{idProduct}=="129[a]", ENV{dir_name}="iPad"
+
+        #   # mount the device on add
+        #     ACTION=="add", ATTR{idVendor}=="05ac", ATTR{idProduct}=="12[9a][0-9a-f]", \
+        #       RUN+="${pkgs.uutils-coreutils}/bin/uutils-mkdir -m 0777 -p '/media/%E{dir_name}'", \
+        #       RUN+="${pkgs.ifuse}/bin/ifuse /media/%E{dir_name}"
+
+        #   # unmount the device on remove
+        #     ACTION=="remove", ENV{PRODUCT}=="5ac/12[a9][0-9a-f]/*", ENV{INTERFACE}=="255/*", \
+        #       RUN+="${pkgs.sudo}/bin/sudo ${pkgs.util-linux}/bin/umount -l '/media/%E{dir_name}'", \
+        #       RUN+="${pkgs.uutils-coreutils}/bin/uutils-rmdir '/media/%E{dir_name}'"
+
+        #   LABEL="end"
+
+        #   # See: https://wiki.archlinux.org/title/laptop#Hibernate_on_low_battery_level
+        #   # Suspend the system when battery level drops to 5% or lower
+        #   SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-5]", RUN+="${pkgs.systemd}/bin/systemctl hibernate"
+        # '';
+        # https://github.com/seqizz/nixos-config/blob/1eabfb0348c44e7aabca49c35d6282ac9e9fb230/modules/laptop/iphone.nix#L3
+        
 
         services.pipewire = {
           enable = true;

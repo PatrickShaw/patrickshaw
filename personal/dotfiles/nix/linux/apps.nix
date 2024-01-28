@@ -208,4 +208,7 @@ with pkgs; [
 
   # Zoom was asking for it
   glxinfo
+
+  # Required by eww, it seems
+  wmctrl
 ]

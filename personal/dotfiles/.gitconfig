@@ -1,0 +1,66 @@
+[user]
+	email = mail@patrickshaw.me
+	name = Patrick Shaw
+
+[push]
+	autoSetupRemote = true
+
+[init]
+	templatedir = ~/.git-templates
+	defaultBranch = main
+
+[commit]
+	gpgsign = false # true
+
+[core]
+    pager = delta
+	# See: https://www.git-tower.com/blog/git-performance/
+	# Actually decided to do this based on a GitHub blog post about it
+    fsmonitor = true
+	# See https://www.git-tower.com/blog/git-performance/
+    untrackedcache = true
+	# See: https://www.git-tower.com/blog/git-performance/
+	commitgraph = true
+
+[fetch]
+  # See: https://www.git-tower.com/blog/git-performance/
+  writeCommitGraph = true
+
+[feature]
+    # Optimises for lots of files
+	# See: https://www.git-tower.com/blog/git-performance/
+    manyFiles = true
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true    # use n and N to move between diff sections
+    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+    side-by-side = true
+   
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = dimmed-zebra
+	# See: https://luppeng.wordpress.com/2020/10/10/when-to-use-each-of-the-git-diff-algorithms/
+	algorithm = histogram
+
+[rerere]
+# Auto resolves conflicts if I specified how to resolve them before. Could be risky. Added in 2023-07-20. Will give it a go
+enabled = true
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+[gpg]
+	program = /run/current-system/sw/bin/gpg
+[pull]
+	rebase = false
+[trace2]
+	eventTarget = /home/pshaw/.gittrace/dump
+	configparams = custom.metacommands
+	eventBrief = true
+	maxFiles = 2000

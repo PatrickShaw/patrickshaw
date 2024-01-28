@@ -168,15 +168,29 @@
           "/share/nix-direnv"
         ];
       };
+      base = { pkgs, ...}: let 
+        shared-configuration = import ./shared/configuration.nix { inherit pkgs; };
+      in {
+        nixpkgs.config.allowUnfree = true;
+        imports = [
+          self.nixosModules.direnv
+          shared-configuration
+        ];
+        nix.gc = {
+          automatic = true;
+          options = "--delete-older-than 30d";
+        };
+        environment.systemPackages = [
+          pkgs.nix-direnv
+        ];
+      };
       core = { pkgs, lib, options, ...}: let
         wayland-pkgs = inputs.nixpkgs-wayland.packages.${pkgs.system};
-        shared-configuration = import ./shared/configuration.nix { inherit pkgs; };
         shared-aliases = import ./shared/program-aliases.nix { };
       in {
         imports = [
-            shared-configuration
             inputs.hyprland.nixosModules.default
-            self.nixosModules.direnv
+            self.nixosModules.base
         ];
 
         programs.hyprland.package = inputs.hyprland.packages.${pkgs.system}.default;
@@ -189,10 +203,8 @@
         hardware.enableRedistributableFirmware = true;
 
         nix.gc = {
-          automatic = true;
           dates = "weekly";
           persistent = true;
-          options = "--delete-older-than 30d";
         };
 
         # See: https://github.com/NixOS/nixpkgs/issues/16327
@@ -213,8 +225,6 @@
             };
           };
         };
-
-        nixpkgs.config.allowUnfree = true;
 
                 # See: https://wiki.archlinux.org/title/PipeWire#xdg-desktop-portal-wlr
         # See: https://nixos.wiki/wiki/Sway#Using_NixOS
@@ -253,8 +263,6 @@
 
           pkgs.libimobiledevice
           pkgs.ifuse 
-
-          pkgs.nix-direnv
 
           pkgs.libinput-gestures
         ] ++ import ./linux/apps.nix { inherit pkgs; };

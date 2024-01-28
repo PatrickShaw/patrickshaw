@@ -19,14 +19,12 @@ with pkgs; [
   yarn
 
   rustup
-  rust-analyzer
+  # rust-analyzer
   python3Full
   # Security flaw: python
-  adoptopenjdk-bin
   poetry
   deno
 
-  adoptopenjdk-bin
   gradle
   maven
 
@@ -74,12 +72,6 @@ with pkgs; [
   git-open
 
   nickel
-
-  libreoffice-fresh
-
-  rust-analyzer
-
-  efibootmgr
 
   go
 ]

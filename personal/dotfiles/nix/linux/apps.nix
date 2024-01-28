@@ -13,6 +13,12 @@ with pkgs; [
 
   autotiling-rs
 
+  adoptopenjdk-bin
+
+  efibootmgr
+
+  libreoffice-fresh
+
   waybar
   ulauncher
 

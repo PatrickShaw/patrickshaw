@@ -140,13 +140,13 @@
         };
       };
       text-to-speech = { ... }: {
-        services.tts.servers = {
-          english = {
-            port = 5300;
-            model = "tts_models/en/ljspeech/tacotron2-DDC";
-            enable = true;
-          };
-        };
+        # services.tts.servers = {
+        #   english = {
+        #     port = 5300;
+        #     model = "tts_models/en/ljspeech/tacotron2-DDC";
+        #     enable = true;
+        #   };
+        # };
       };
       vfio = { ... }: {
         systemd.tmpfiles.rules = [ "f /dev/shm/looking-glass 0660 1000 kvm -" ];

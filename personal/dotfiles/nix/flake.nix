@@ -285,10 +285,30 @@
               # Saw this declared in: https://discourse.nixos.org/t/xdg-desktop-portal-not-working-on-wayland-while-kde-is-installed/20919
               #wayland-pkgs.xdg-desktop-portal-wlr
            ];
-            configPackages = [
-              pkgs.xdg-desktop-portal-hyprland
-              pkgs.xdg-desktop-portal-gtk
-            ];
+            # config = {
+            #   common.default = [
+            #     # Hyprland isn't being selected ATM
+            #     "hyprland"
+            #     # See: https://github.com/flatpak/xdg-desktop-portal/issues/1111
+            #     # Turns out the ordering here won't actually do anything (for now)
+            #     "gtk"
+            #     "wlr"
+            #   ];
+            #   Hyprland = {
+            #     default = [
+            #       "hyprland"
+            #       # See: https://github.com/flatpak/xdg-desktop-portal/issues/1111
+            #       # Turns out the ordering here won't actually do anything (for now)
+            #       "gtk"
+            #       "wlr"
+            #     ];
+            #   };
+            # };
+            # configPackages = [
+            #   pkgs.xdg-desktop-portal-hyprland
+            #   pkgs.xdg-desktop-portal-gtk
+            #   # pkgs.xdg-desktop-portal-wlr
+            # ];
         };
 
         environment.systemPackages = [

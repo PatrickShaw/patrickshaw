@@ -21,14 +21,12 @@
     nix-direnv.url = "github:nix-community/nix-direnv";
     nix-direnv.inputs.nixpkgs.follows = "nixpkgs";
 
-    steam-devices-udev.url = "github:ValveSoftware/steam-devices";
-    steam-devices-udev.flake = false;
   };
   nixConfig = {
-    extra-substituters = [
+    extra-trusted-substituters = [
       "https://cache.nixos.org/"
 
-      # See: https://github.com/nix-community/nixpkgs-wayland#binary-cache
+      # See: https://github/home/pshaw/me/personal/dotfiles/nix/linux/apps.nix.com/nix-community/nixpkgs-wayland#binary-cache
       "https://nixpkgs-wayland.cachix.org"
 
       "https://nix-community.cachix.org"
@@ -47,7 +45,7 @@
     nixosModules = {
       opengl = { pkgs, ... }: {
         hardware.opengl = {
-          enable = true;
+          # Already enabled by most compositors that need it: enable = true;
           driSupport = true;
           driSupport32Bit = true;
           extraPackages = [
@@ -141,6 +139,15 @@
           LIBVA_DRIVER_NAME="nvidia";
         };
       };
+      text-to-speech = { ... }: {
+        # services.tts.servers = {
+        #   english = {
+        #     port = 5300;
+        #     model = "tts_models/en/ljspeech/tacotron2-DDC";
+        #     enable = true;
+        #   };
+        # };
+      };
       vfio = { ... }: {
         systemd.tmpfiles.rules = [ "f /dev/shm/looking-glass 0660 1000 kvm -" ];
         environment.sessionVariables = {
@@ -149,7 +156,7 @@
     };
       direnv = { pkgs, ... }: {
         nixpkgs.overlays = [
-          inputs.nix-direnv.overlay
+          inputs.nix-direnv.overlays.default
           (final: super: {
             nix-direnv = super.nix-direnv.overrideAttrs (old: old // {
               enableFlakes = true;
@@ -187,18 +194,60 @@
       core = { pkgs, lib, options, ...}: let
         wayland-pkgs = inputs.nixpkgs-wayland.packages.${pkgs.system};
         shared-aliases = import ./shared/program-aliases.nix { };
+
+        # See https://nixos.wiki/wiki/Sway
+        configure-gtk = pkgs.writeTextFile {
+          name = "configure-gtk";
+          destination = "/bin/configure-gtk";
+          executable = true;
+          text = let
+            schema = pkgs.gsettings-desktop-schemas;
+            datadir = "${schema}/share/gsettings-schemas/${schema.name}";
+          in ''
+            export XDG_DATA_DIRS=${pkgs.gnome.nautilus}/share/gsettings-schemas/${pkgs.gnome.nautilus.name}:${datadir}:$XDG_DATA_DIRS
+            gnome_schema=org.gnome.desktop.interface
+
+            gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
+            gsettings set org.gnome.desktop.interface gtk-theme 'Orchis-Green'
+            # Add for good measure. See: https://wiki.hyprland.org/FAQ/#gtk-settings-no-work--whatever
+
+            gsettings set org.gnome.desktop.interface cursor-theme 'phinger-cursors'
+            gsettings set org.gnome.desktop.interface cursor-blink false
+
+            gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+
+            gsettings set org.gnome.nautilus.preferences sort-directories-first true
+          '';
+        };
       in {
         imports = [
             inputs.hyprland.nixosModules.default
             self.nixosModules.base
+            self.nixosModules.text-to-speech
         ];
+
+        # For whatever reason, systemd's oom is disabled anyway so we enable our own
+        systemd.oomd.enable = false;
+        services.earlyoom.enable = true;
+
 
         programs.hyprland.package = inputs.hyprland.packages.${pkgs.system}.default;
         programs.hyprland.enable = true;
 
         nixpkgs.overlays = [
+          inputs.nixpkgs-wayland.overlays.default
           inputs.hyprland.overlays.default
         ];
+
+        programs.captive-browser.enable = true;
+        programs.captive-browser.interface = "wlan0";
+
+        # See: https://superuser.com/questions/904331/how-does-btrfs-scrub-work-and-what-does-it-do
+        # Should probably go in an FS module
+        services.btrfs.autoScrub.enable = true;
+        
+        # Makes sharing with Windows storage devices easier
+        boot.supportedFilesystems = [ "ntfs" ];
 
         hardware.enableRedistributableFirmware = true;
 
@@ -231,6 +280,7 @@
         # As per https://github.com/hyprwm/Hyprland/blob/f23455e592bca14e0abd9249de467cc71cd2850e/nix/module.nix#L88, this is turned on by Hyprland itself
         # ^ Update: But for file choosers xdg-desktop-portal-gtk is needed
         xdg.portal = {
+           xdgOpenUsePortal = true;
            enable = true;
           wlr.enable = false;
            extraPortals = [
@@ -245,16 +295,42 @@
               # Saw this declared in: https://discourse.nixos.org/t/xdg-desktop-portal-not-working-on-wayland-while-kde-is-installed/20919
               #wayland-pkgs.xdg-desktop-portal-wlr
            ];
+            # config = {
+            #   common.default = [
+            #     # Hyprland isn't being selected ATM
+            #     "hyprland"
+            #     # See: https://github.com/flatpak/xdg-desktop-portal/issues/1111
+            #     # Turns out the ordering here won't actually do anything (for now)
+            #     "gtk"
+            #     "wlr"
+            #   ];
+            #   Hyprland = {
+            #     default = [
+            #       "hyprland"
+            #       # See: https://github.com/flatpak/xdg-desktop-portal/issues/1111
+            #       # Turns out the ordering here won't actually do anything (for now)
+            #       "gtk"
+            #       "wlr"
+            #     ];
+            #   };
+            # };
+            # configPackages = [
+            #   pkgs.xdg-desktop-portal-hyprland
+            #   pkgs.xdg-desktop-portal-gtk
+            #   # pkgs.xdg-desktop-portal-wlr
+            # ];
         };
 
         environment.systemPackages = [
+          configure-gtk
+
           wayland-pkgs.wl-clipboard
           wayland-pkgs.swww
           wayland-pkgs.wofi
           wayland-pkgs.grim
           wayland-pkgs.slurp
           wayland-pkgs.imv
-          wayland-pkgs.sway-unwrapped
+          #wayland-pkgs.sway-unwrapped
           wayland-pkgs.mako
 
           inputs.eww.packages.${pkgs.system}.eww-wayland
@@ -308,34 +384,10 @@
           # Note: Writing systemd units here won't work. Use systemd.user.*
         };
 
- 
-
-
-        services.udev.packages = let 
-          steam-devices-pkg = pkgs.stdenv.mkDerivation {
-            pname = "steam-devices-udev-rules";
-            version = "2023-04-13";
-
-            src = inputs.steam-devices-udev;
-
-            installPhase = ''
-              runHook preInstall
-              install -D 60-steam-input.rules $out/lib/udev/rules.d/60-steam-input.rules
-              install -D 60-steam-vr.rules $out/lib/udev/rules.d/60-steam-vr.rules
-              runHook postInstall
-            '';
-
-            meta = with lib; {
-              homepage = "https://github.com/ValveSoftware/steam-devices/tree/master";
-              description = "List of devices Steam and SteamVR will want read/write permissions on, to help downstream distributions create udev rules/etc ";
-              platforms = platforms.linux;
-              license = licenses.mit;
-              maintainers = with maintainers; [ ];
-            };
-          };
-        in [
+        # Udev rules - Includes some for Sony DS4
+        hardware.steam-hardware.enable = true;
+        services.udev.packages = [
           pkgs.android-udev-rules
-          "${steam-devices-pkg}"
         ];
         
         networking.timeServers = options.networking.timeServers.default
@@ -359,7 +411,7 @@
 
 
           # For whatever reason nautilus won't respect my theme without this
-          GTK_THEME = "Orchis-Green:dark";
+          # GTK_THEME = "Orchis-Green:dark";
 
           MOZ_ENABLE_WAYLAND = "1";
 
@@ -373,15 +425,47 @@
           MCFLY_PROMPT="❯";
           MCFLY_RESULTS="15";
         };
-        hardware.opengl.enable = true;
+        # hardware.opengl.enable = true;
 
         # See: https://nixos.wiki/wiki/PipeWire
         security.rtkit.enable = true;
         
         services.usbmuxd = {
           enable = true;
-          package = pkgs.usbmuxd2;
+          # usbmuxd2 doesn't seem to be maintained
+          # package = pkgs.usbmuxd2;
         };
+        # services.udev.extraRules = ''
+        #   ACTION!="add|remove", GOTO="end"
+        #   SUBSYSTEM!="usb", GOTO="end"
+
+        #   # Detect type of iPhoneOS it is
+        #     ENV{PRODUCT}=="5ac/129[1369e]/*", ENV{INTERFACE}=="255/*", ENV{dir_name}="iPod"
+        #     ENV{PRODUCT}=="5ac/12[a9][02478]/*", ENV{INTERFACE}=="255/*", ENV{dir_name}="iPhone"
+        #     ENV{PRODUCT}=="5ac/129[a]/*", ENV{INTERFACE}=="255/*", ENV{dir_name}="iPad"
+
+        #     ATTR{idVendor}=="05ac", ATTR{idProduct}=="129[1369e]", ENV{dir_name}="iPod"
+        #     ATTR{idVendor}=="05ac", ATTR{idProduct}=="12/nix/store/idc4rd6ryxg5pfkc3j5i99kn7s7yhaww-sudo-1.9.14p3/bin/sudo /nix/store/3acmz0y6v5y22kkivp798wz6yaggbyxw-util-linux-2.39.2-bin/bin/umount -l '/media/iPhone'[a9][02478]", ENV{dir_name}="iPhone"
+        #     ATTR{idVendor}=="05ac", ATTR{idProduct}=="129[a]", ENV{dir_name}="iPad"
+
+        #   # mount the device on add
+        #     ACTION=="add", ATTR{idVendor}=="05ac", ATTR{idProduct}=="12[9a][0-9a-f]", \
+        #       RUN+="${pkgs.uutils-coreutils}/bin/uutils-mkdir -m 0777 -p '/media/%E{dir_name}'", \
+        #       RUN+="${pkgs.ifuse}/bin/ifuse /media/%E{dir_name}"
+
+        #   # unmount the device on remove
+        #     ACTION=="remove", ENV{PRODUCT}=="5ac/12[a9][0-9a-f]/*", ENV{INTERFACE}=="255/*", \
+        #       RUN+="${pkgs.sudo}/bin/sudo ${pkgs.util-linux}/bin/umount -l '/media/%E{dir_name}'", \
+        #       RUN+="${pkgs.uutils-coreutils}/bin/uutils-rmdir '/media/%E{dir_name}'"
+
+        #   LABEL="end"
+
+        #   # See: https://wiki.archlinux.org/title/laptop#Hibernate_on_low_battery_level
+        #   # Suspend the system when battery level drops to 5% or lower
+        #   SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-5]", RUN+="${pkgs.systemd}/bin/systemctl hibernate"
+        # '';
+        # https://github.com/seqizz/nixos-config/blob/1eabfb0348c44e7aabca49c35d6282ac9e9fb230/modules/laptop/iphone.nix#L3
+        
 
         services.pipewire = {
           enable = true;

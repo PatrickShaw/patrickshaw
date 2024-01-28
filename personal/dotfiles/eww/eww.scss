@@ -34,10 +34,10 @@ $vertical-default-button-padding:  grid(1);
   transition-duration: 0.1s;
 }
 .clickable:hover {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.10);
 }
 .clickable.active {
-  background-color: rgba(255, 255, 255, 0.025);
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .taskbar {
@@ -53,14 +53,61 @@ window {
 }
 
 .icon-container {
-  padding: grid(1.75)
+  padding: grid(1.75);
+  font-size: fontSize(-0.75);
+}
+
+.icon-container > *:not(:last-child) {
+  margin-bottom: grid(0.125);
 }
 
 .icon {
   background-size: 100% 100%;
 }
 
+
 .icon {
+  &.battery {
+    &.battery-symbolic {
+        background-image: -gtk-icontheme("battery-symbolic");
+    }
+    &.battery-caution-charging-symbolic {
+        background-image: -gtk-icontheme("battery-caution-charging-symbolic");
+    }
+    &.battery-caution-symbolic {
+        background-image: -gtk-icontheme("battery-caution-symbolic");
+    }
+    &.battery-empty-charging-symbolic {
+        background-image: -gtk-icontheme("battery-empty-charging-symbolic");
+    }
+    &.battery-empty-symbolic {
+        background-image: -gtk-icontheme("battery-empty-symbolic");
+    }
+    &.battery-full-charged-symbolic {
+        background-image: -gtk-icontheme("battery-full-charged-symbolic");
+    }
+    &.battery-full-charging-symbolic {
+        background-image: -gtk-icontheme("battery-full-charging-symbolic");
+    }
+    &.battery-full-symbolic {
+        background-image: -gtk-icontheme("battery-full-symbolic");
+    }
+    &.battery-good-charging-symbolic {
+        background-image: -gtk-icontheme("battery-good-charging-symbolic");
+    }
+    &.battery-good-symbolic {
+        background-image: -gtk-icontheme("battery-good-symbolic");
+    }
+    &.battery-low-charging-symbolic {
+        background-image: -gtk-icontheme("battery-low-charging-symbolic");
+    }
+    &.battery-low-symbolic {
+        background-image: -gtk-icontheme("battery-low-symbolic");
+    }
+    &.battery-missing-symbolic {
+        background-image: -gtk-icontheme("battery-missing-symbolic");
+    }
+  }
   &.sound {
     &.mute, &.zero {
       background-image: -gtk-icontheme("audio-volume-muted-symbolic");

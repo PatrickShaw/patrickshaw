@@ -75,10 +75,11 @@
   (
     box
       :class "icon-container"
+      :orientation "vertical"
       (image
         :class "icon ${class}"
-        (children)
-      )  
+      )
+      (children)
   )
 )
 
@@ -92,17 +93,23 @@
 )
 
 (defwidget sound []
-  (box
-    :orientation "vertical"
-    :space-evenly false
-    :height 400
-    (scale :orientation "vertical" :min 0 :max 100 		:vexpand true)
-    (clickable
-      :onclick "pavucontrol &"
-      :onrightclick "pavucontrol &"
-      (icon
-        :class "sound ${audio-level}"
-      )
+  (clickable
+    :onclick "pavucontrol &"
+    :onrightclick "pavucontrol &"
+    (icon
+      :class "sound ${audio-level}"
+    )
+  )
+)
+
+(defpoll battery-status :initial "test" :interval "60s" `scripts/battery.sh`)
+(defpoll battery-percentage :initial "test" :interval "60s" `scripts/battery_percentage.sh`)
+
+(defwidget battery []
+  (clickable
+    (icon
+      :class "battery ${battery-status}"
+      "${battery-percentage}%"
     )
   )
 )
@@ -117,6 +124,7 @@
     (children)
   )
 )
+
 (defwindow sidebar
   :monitor 0
   :geometry (geometry
@@ -132,13 +140,25 @@
   :namespace "taskbar"
   (
     taskbar
-    (box :orientation "vertical" (files))
-    (box :space-evenly false
-      :vexpand true :orientation "vertical" (workspaceList :current-workspace-id current-workspace-id :workspaces workspaces))
+    (box
+      :orientation "vertical" 
+      :space-evenly false
+      (files)
+    )
+    (box 
+      :space-evenly false
+      :vexpand true 
+      :orientation "vertical"
+      (workspaceList 
+        :current-workspace-id current-workspace-id
+        :workspaces workspaces
+      )
+    )
     (box
       :orientation "vertical"
       :space-evenly false
       :valign "end"
+      (battery)
       (sound)
       (time)
     )

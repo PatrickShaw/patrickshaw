@@ -1,5 +1,5 @@
 { }: {
-  ls = "eza";
+  ls = "lsd";
   # Unfortunately zoxide relies on cd in Fish so can't do: cd = "z";
   vim = "nvim";
   vi = "nvim";

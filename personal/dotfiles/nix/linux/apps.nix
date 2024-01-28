@@ -7,6 +7,8 @@ with pkgs; [
 
   gcc
 
+  gnome-text-editor
+
   cliphist
 
   killall
@@ -33,6 +35,8 @@ with pkgs; [
   # Allows tweaking of camera
   v4l-utils
 
+  ffmpeg-full
+
   swayidle
 
   brightnessctl
@@ -44,12 +48,12 @@ with pkgs; [
   gnome.nautilus
   gnome.sushi
 
-  gamescope
-  protontricks
-  proton-caller
+  # gamescope
+  # protontricks
+  # proton-caller
   winetricks
 
-  river
+  # river
 
   p7zip
   unzip
@@ -61,7 +65,7 @@ with pkgs; [
   # For lsusb
   usbutils
 
-  jack2
+  # jack2
   #helvum
 
   # For lspci
@@ -93,7 +97,8 @@ with pkgs; [
   }))
 
   celluloid
-  haruna
+  # Haven't needed anything other than celluloid
+  # haruna
 
   jetbrains.idea-community
 
@@ -141,7 +146,8 @@ with pkgs; [
 
   du-dust
 
-  caprine-bin
+  # I find it doesn't work that well, at least for my setup
+  # caprine-bin
   
   duf
 
@@ -179,7 +185,8 @@ with pkgs; [
   jaq
   socat
   
-  handlr
+  # Haven't used this at all
+  # handlr
 
   # Has xdg-open in it. I assume a few apps depend on this globally
   xdg-utils
@@ -190,7 +197,24 @@ with pkgs; [
   gnome.eog
   feh
 
+  # Epic game store
+  legendary-gl
+  heroic
+
   # Font viewer
   # TODO: Haven't looked at other apps yet
   gnome.gnome-font-viewer
+
+
+  # See: https://nixos.wiki/wiki/LibreOffice
+  # and see: https://wiki.archlinux.org/title/firefox
+  hunspell
+  hunspellDicts.en_AU-large
+  hunspellDicts.en_US
+
+  # Zoom was asking for it
+  glxinfo
+
+  # Required by eww, it seems
+  wmctrl
 ]

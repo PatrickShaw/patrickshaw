@@ -173,6 +173,14 @@ local entry_filter = function(entry, ctx)
 end
 
 
+require'lsp_signature'.setup({
+  -- Configure based on your preference
+  bind = true, -- This is mandatory, otherwise border config won't get registered.
+  handler_opts = {
+    border = "rounded" -- Double, single, rounded, solid, shadow, none
+  },
+})
+
 cmp.setup({
   snippet = {
     -- REQUIRED - you must specify a snippet engine

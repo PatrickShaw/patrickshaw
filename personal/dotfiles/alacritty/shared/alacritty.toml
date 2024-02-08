@@ -1,0 +1,21 @@
+import = ["/home/pshaw/personal/dotfiles/alacritty/shared/theme.toml"]
+
+[cursor]
+style = "Beam"
+
+[font]
+size = 11
+
+[font.normal]
+family = "JetBrains Mono"
+
+[scrolling]
+history = 40000
+multiplier = 10
+
+[selection]
+semantic_escape_chars = ",│`|:=\"' ()[]{}<>-"
+
+[window.padding]
+x = 12
+y = 12

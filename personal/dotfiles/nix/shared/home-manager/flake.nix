@@ -104,6 +104,8 @@
                       cmp-path
                       cmp-nvim-lsp
                       cmp-nvim-lsp-document-symbol
+                      # Needed for getting parameters to show in functions
+                      lsp_signature-nvim
                       cmp-nvim-lsp-signature-help
                       cmp-buffer
                       cmp-rg

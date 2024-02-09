@@ -161,6 +161,26 @@ vim.g.ident_blankline = {
 local cmp = require'cmp'
 local lspkind = require('lspkind')
 
+local entry_filter = function(entry, ctx)
+  local length = #entry:get_completion_item().label
+
+  -- Example filter: only include entries with a label length less than 10 characters
+  if length > 3 then
+    return true
+  else
+    return false
+  end
+end
+
+
+require'lsp_signature'.setup({
+  -- Configure based on your preference
+  bind = true, -- This is mandatory, otherwise border config won't get registered.
+  handler_opts = {
+    border = "rounded" -- Double, single, rounded, solid, shadow, none
+  },
+})
+
 cmp.setup({
   snippet = {
     -- REQUIRED - you must specify a snippet engine
@@ -197,13 +217,16 @@ cmp.setup({
     { name = 'nvim_lsp_signature_help' },
     { name = 'nvim_lsp_document_symbol'},
     { name = 'treesitter' },
-    { name = 'buffer' },
-    { name = 'rg', 
+    { name = 'buffer', entry_filter = entry_filter },
+    { name = 'rg',
               option = {
-                additional_arguments = "--max-depth 4 --one-file-system",
+                additional_arguments = "--max-depth 2 --one-file-system",
               }
-                    , keyword_length = 1 },
-    { name = 'vsnip' }, -- For vsnip users.
+                    , keyword_length = 5 },
+    {
+      name = 'vsnip',
+      -- Only want snippets for new lines
+      keyword_pattern = [[^\s*]] }, -- For vsnip users.
     { name = 'path' },
     { name = 'git' },
   })

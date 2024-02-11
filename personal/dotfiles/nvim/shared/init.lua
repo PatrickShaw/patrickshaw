@@ -172,7 +172,6 @@ local entry_filter = function(entry, ctx)
   end
 end
 
-
 require'lsp_signature'.setup({
   -- Configure based on your preference
   bind = true, -- This is mandatory, otherwise border config won't get registered.

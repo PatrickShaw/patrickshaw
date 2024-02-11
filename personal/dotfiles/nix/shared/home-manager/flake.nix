@@ -47,6 +47,13 @@
           git-zsh-fast-syntax-highlighting;
       };
     in {
+      darwinModules.default = {pkgs, ...}: {
+        imports = [self.nixosModules.default];
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+        };
+      };
       nixosModules.default = {pkgs, ... }: {
         config = {
           environment.systemPackages = [

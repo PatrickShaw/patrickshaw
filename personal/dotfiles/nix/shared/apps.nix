@@ -120,7 +120,5 @@ with pkgs; [
 
   nickel
 
-  libreoffice-fresh
-
   go
 ]

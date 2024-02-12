@@ -20,16 +20,14 @@ with pkgs; [
   yarn
 
   rustup
-  rust-analyzer
+  # rust-analyzer
   python3Full
   # Security flaw: python
-  adoptopenjdk-bin
   poetry
   
   # Just use direnv
   # deno
 
-  adoptopenjdk-bin
   gradle
   maven
 
@@ -58,8 +56,46 @@ with pkgs; [
 
   postgresql
 
-  # CLI based GTK dialog renderer - Similarish in purpose to Wofi
-  yad
+
+  # Some great programs mentioned over at https://github.com/ibraheemdev/modern-unix
+  tldr
+  cheat
+
+  bottom
+  glances
+  
+  hyperfine
+  
+  gping
+  
+  procs
+
+  curlie
+  xh
+
+  dogdns
+
+  lsd
+
+  sd
+
+  du-dust
+
+  duf
+
+  broot
+  
+  fd
+
+  ripgrep
+
+  choose
+
+  mcfly
+
+  # For managing workspaces
+  jaq
+  socat
 
   (uutils-coreutils.override {
     prefix = "";
@@ -83,10 +119,6 @@ with pkgs; [
   git-open
 
   nickel
-
-  libreoffice-fresh
-
-  efibootmgr
 
   go
 ]

@@ -15,6 +15,15 @@ with pkgs; [
 
   autotiling-rs
 
+  # CLI based GTK dialog renderer - Similarish in purpose to Wofi
+  yad
+
+  adoptopenjdk-bin
+
+  efibootmgr
+
+  libreoffice-fresh
+
   waybar
   ulauncher
 
@@ -42,7 +51,7 @@ with pkgs; [
   gnome.nautilus
   gnome.sushi
 
-  gamescope
+  # gamescope
   # protontricks
   # proton-caller
   winetricks
@@ -115,45 +124,9 @@ with pkgs; [
 
   phinger-cursors
   papirus-icon-theme
-  
-  # Some great programs mentioned over at https://github.com/ibraheemdev/modern-unix
-  tldr
-  cheat
-
-  bottom
-  glances
-  
-  hyperfine
-  
-  gping
-  
-  procs
-
-  curlie
-  xh
-
-  dogdns
-
-  lsd
-
-  sd
-
-  du-dust
 
   # I find it doesn't work that well, at least for my setup
   # caprine-bin
-  
-  duf
-
-  broot
-  
-  fd
-
-  ripgrep
-
-  choose
-
-  mcfly
 
   orchis-theme
 
@@ -174,10 +147,6 @@ with pkgs; [
   hicolor-icon-theme
 
   newsflash
-
-  # For managing workspaces
-  jaq
-  socat
   
   # Haven't used this at all
   # handlr
@@ -191,6 +160,10 @@ with pkgs; [
   gnome.eog
   feh
 
+  # Epic game store
+  legendary-gl
+  heroic
+
   # Font viewer
   # TODO: Haven't looked at other apps yet
   gnome.gnome-font-viewer
@@ -202,6 +175,11 @@ with pkgs; [
   hunspellDicts.en_AU-large
   hunspellDicts.en_US
 
+  efibootmgr
+
   # Zoom was asking for it
   glxinfo
+
+  # Required by eww, it seems
+  wmctrl
 ]

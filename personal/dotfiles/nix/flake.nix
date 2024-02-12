@@ -192,11 +192,13 @@
             export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
             gnome_schema=org.gnome.desktop.interface
 
+
             gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
             gsettings set org.gnome.desktop.interface gtk-theme 'Orchis-Green'
             # Add for good measure. See: https://wiki.hyprland.org/FAQ/#gtk-settings-no-work--whatever
             gsettings set org.gnome.desktop.interface cursor-theme 'phinger-cursors'
             gsettings set org.gnome.desktop.interface cursor-blink false
+            gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
           '';
         };
       in {
@@ -404,10 +406,10 @@
 
         services.pipewire = {
           enable = true;
-          alsa.enable = false;
-          alsa.support32Bit = false;
-          #alsa.enable = true;
-          #alsa.support32Bit = true;
+          # alsa.enable = false;
+          # alsa.support32Bit = false;
+          alsa.enable = true;
+          alsa.support32Bit = true;
           pulse.enable = true;
           jack.enable = true;
           wireplumber.enable = true;

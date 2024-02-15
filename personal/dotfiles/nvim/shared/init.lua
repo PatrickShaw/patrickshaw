@@ -39,6 +39,11 @@ vim.api.nvim_set_keymap('n', '<M-Right>', 'e', {noremap = true})
 vim.api.nvim_set_keymap('i', '<M-Right>', '<Esc>ei<Right>', {noremap = true})
 vim.api.nvim_set_keymap('c', '<M-Right>', '<Right>', {noremap = true})
 
+vim.api.nvim_set_keymap('n', '<C-s>', ':w<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<C-s>', '<Esc>:w<CR>i', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<C-s>', '<Esc>:w<CR>gv', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('c', '<C-s>', '<C-c>:w<CR>', { noremap = true, silent = true })
+
 vim.cmd.colorscheme "catppuccin-mocha"
 vim.cmd [[
   hi Normal guibg=NONE ctermbg=NONE

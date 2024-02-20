@@ -21,6 +21,9 @@
     nix-direnv.url = "github:nix-community/nix-direnv";
     nix-direnv.inputs.nixpkgs.follows = "nixpkgs";
 
+
+    nix-gaming.url = "github:fufexan/nix-gaming";
+    nix-gaming.inputs.nixpkgs.follows = "nixpkgs";
   };
   nixConfig = {
     extra-trusted-substituters = [
@@ -229,6 +232,8 @@
             inputs.hyprland.nixosModules.default
             self.nixosModules.base
             self.nixosModules.text-to-speech
+            inputs.nix-gaming.nixosModules.pipewireLowLatency
+            inputs.nix-gaming.nixosModules.steamCompat
         ];
 
         # For whatever reason, systemd's oom is disabled anyway so we enable our own
@@ -391,6 +396,15 @@
 
         # Udev rules - Includes some for Sony DS4
         hardware.steam-hardware.enable = true;
+        programs.steam = {
+          enable = true;
+          extraCompatPackages = [
+            # add the packages that you would like to have in Steam's extra compatibility packages list
+            # pkgs.luxtorpeda
+            inputs.nix-gaming.packages.${pkgs.system}.proton-ge
+            # etc.
+          ];
+        };
         services.udev.packages = [
           pkgs.android-udev-rules
         ];

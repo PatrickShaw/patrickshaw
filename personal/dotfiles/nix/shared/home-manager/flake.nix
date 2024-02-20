@@ -145,6 +145,9 @@
 
                       # Search and replace
                       ssr-nvim
+
+                      # Auto restore pending changes
+                      auto-session
                     ]);
                     nvimPackageLinks = (builtins.listToAttrs (
                       map (item: {

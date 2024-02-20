@@ -217,14 +217,10 @@
 
             gsettings set org.gnome.desktop.interface cursor-theme 'phinger-cursors'
             gsettings set org.gnome.desktop.interface cursor-blink false
-<<<<<<< HEAD
-            gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-=======
 
             gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 
             gsettings set org.gnome.nautilus.preferences sort-directories-first true
->>>>>>> a5c650cacd2a0f53f5e1cda56b0e539eb79fe6f0
           '';
         };
       in {

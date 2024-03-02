@@ -76,7 +76,7 @@ with pkgs; [
   # For lsusb
   usbutils
 
-  steam
+  # steam
   # Steam was trying to use this
   xdg-user-dirs
   lutris

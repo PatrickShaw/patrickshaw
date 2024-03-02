@@ -2,5 +2,7 @@
 
 with pkgs; [
   iterm2
-  rectangle
+  # This one's app doesn't seem to ever appear
+  # Using brew instead
+  # rectangle
 ]

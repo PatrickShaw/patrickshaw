@@ -182,4 +182,6 @@ with pkgs; [
 
   # Required by eww, it seems
   wmctrl
+
+  wl-clip-persist
 ]

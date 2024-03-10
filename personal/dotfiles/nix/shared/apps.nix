@@ -121,4 +121,9 @@ with pkgs; [
   nickel
 
   go
+
+  # Can be used to configure mice who's software isn't available on Linux
+  libratbag
+  # And this is the UI for it
+  piper
 ]

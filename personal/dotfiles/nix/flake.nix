@@ -8,11 +8,11 @@
     hyprland.url = "github:hyprwm/Hyprland";
     hyprland.inputs.nixpkgs.follows = "nixpkgs";
     
-    rust-overlay.url = "github:oxalica/rust-overlay";
+    # rust-overlay.url = "github:oxalica/rust-overlay";
 
-    eww.url = "github:elkowar/eww";
+    eww.url = "github:ralismark/eww/tray-3";
     eww.inputs.nixpkgs.follows = "nixpkgs";
-    eww.inputs.rust-overlay.follows = "rust-overlay";
+    # eww.inputs.rust-overlay.follows = "rust-overlay";
 
     # helix.url = "github:helix-editor/helix";
     # helix.inputs.nixpkgs.follows = "nixpkgs";
@@ -212,7 +212,7 @@
 
 
             gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
-            gsettings set org.gnome.desktop.interface gtk-theme 'Orchis-Green'
+            gsettings set org.gnome.desktop.interface gtk-theme 'Orchis-Green:dark'
             # Add for good measure. See: https://wiki.hyprland.org/FAQ/#gtk-settings-no-work--whatever
 
             gsettings set org.gnome.desktop.interface cursor-theme 'phinger-cursors'
@@ -290,6 +290,8 @@
            enable = true;
           wlr.enable = false;
            extraPortals = [
+              # pkgs.xdg-desktop-portal-hyprland
+
               # 2023-04-26: Commented out because of the following
               # See: https://wiki.hyprland.org/Useful-Utilities/Hyprland-desktop-portal/
               # "It’s recommended to uninstall any other portal implementations to avoid conflicts with the -hyprland or -wlr ones. -kde and -gnome are known to cause issues."
@@ -301,31 +303,32 @@
               # Saw this declared in: https://discourse.nixos.org/t/xdg-desktop-portal-not-working-on-wayland-while-kde-is-installed/20919
               #wayland-pkgs.xdg-desktop-portal-wlr
            ];
-            # config = {
-            #   common.default = [
-            #     # Hyprland isn't being selected ATM
-            #     "hyprland"
-            #     # See: https://github.com/flatpak/xdg-desktop-portal/issues/1111
-            #     # Turns out the ordering here won't actually do anything (for now)
-            #     "gtk"
-            #     "wlr"
-            #   ];
-            #   Hyprland = {
-            #     default = [
-            #       "hyprland"
-            #       # See: https://github.com/flatpak/xdg-desktop-portal/issues/1111
-            #       # Turns out the ordering here won't actually do anything (for now)
-            #       "gtk"
-            #       "wlr"
-            #     ];
-            #   };
-            # };
-            # configPackages = [
-            #   pkgs.xdg-desktop-portal-hyprland
-            #   pkgs.xdg-desktop-portal-gtk
-            #   # pkgs.xdg-desktop-portal-wlr
-            # ];
+            config = {
+              common.default = [
+                # Hyprland isn't being selected ATM
+                "hyprland"
+                # See: https://github.com/flatpak/xdg-desktop-portal/issues/1111
+                # Turns out the ordering here won't actually do anything (for now)
+                "gtk"
+                # "wlr"
+              ];
+              Hyprland = {
+                default = [
+                  "hyprland"
+                  # See: https://github.com/flatpak/xdg-desktop-portal/issues/1111
+                  # Turns out the ordering here won't actually do anything (for now)
+                  "gtk"
+                  # "wlr"
+                ];
+              };
+            };
+            configPackages = [
+              pkgs.xdg-desktop-portal-hyprland
+              pkgs.xdg-desktop-portal-gtk
+              # pkgs.xdg-desktop-portal-wlr
+            ];
         };
+        
 
         environment.systemPackages = [
           configure-gtk

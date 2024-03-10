@@ -14,7 +14,7 @@
 }
 
 $horizontal-default-button-padding: grid(1.5);
-$vertical-default-button-padding:  grid(1);
+$vertical-default-button-padding: grid(1);
 @function buttonPadding($level) {
   $factor: proportionFactor($level);
   $vertical: $vertical-default-button-padding * $factor;
@@ -33,11 +33,27 @@ $vertical-default-button-padding:  grid(1);
   transition-property: background-color;
   transition-duration: 0.1s;
 }
-.clickable:hover {
-  background-color: rgba(255, 255, 255, 0.10);
+.clickable:hover,
+.systray > menuitem:hover,
+.systray > menuitem menuitem:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
-.clickable.active {
+.clickable.active,
+.systray > menuitem:active,
+.systray > menuitem menuitem:active {
   background-color: rgba(255, 255, 255, 0.05);
+}
+
+.systray > menuitem {
+  padding: grid(1) 0px;
+}
+.systray > menuitem menuitem {
+  padding: grid(1) grid(2);
+}
+.systray > menuitem window {
+  // Blur doesn't seem to be working on the systray menu items ATM
+  background-color: rgba(0, 0, 0, 0.95);
+  border-radius: 0 20px 20px 0;
 }
 
 .taskbar {
@@ -65,51 +81,51 @@ window {
   background-size: 100% 100%;
 }
 
-
 .icon {
   &.battery {
     &.battery-symbolic {
-        background-image: -gtk-icontheme("battery-symbolic");
+      background-image: -gtk-icontheme("battery-symbolic");
     }
     &.battery-caution-charging-symbolic {
-        background-image: -gtk-icontheme("battery-caution-charging-symbolic");
+      background-image: -gtk-icontheme("battery-caution-charging-symbolic");
     }
     &.battery-caution-symbolic {
-        background-image: -gtk-icontheme("battery-caution-symbolic");
+      background-image: -gtk-icontheme("battery-caution-symbolic");
     }
     &.battery-empty-charging-symbolic {
-        background-image: -gtk-icontheme("battery-empty-charging-symbolic");
+      background-image: -gtk-icontheme("battery-empty-charging-symbolic");
     }
     &.battery-empty-symbolic {
-        background-image: -gtk-icontheme("battery-empty-symbolic");
+      background-image: -gtk-icontheme("battery-empty-symbolic");
     }
     &.battery-full-charged-symbolic {
-        background-image: -gtk-icontheme("battery-full-charged-symbolic");
+      background-image: -gtk-icontheme("battery-full-charged-symbolic");
     }
     &.battery-full-charging-symbolic {
-        background-image: -gtk-icontheme("battery-full-charging-symbolic");
+      background-image: -gtk-icontheme("battery-full-charging-symbolic");
     }
     &.battery-full-symbolic {
-        background-image: -gtk-icontheme("battery-full-symbolic");
+      background-image: -gtk-icontheme("battery-full-symbolic");
     }
     &.battery-good-charging-symbolic {
-        background-image: -gtk-icontheme("battery-good-charging-symbolic");
+      background-image: -gtk-icontheme("battery-good-charging-symbolic");
     }
     &.battery-good-symbolic {
-        background-image: -gtk-icontheme("battery-good-symbolic");
+      background-image: -gtk-icontheme("battery-good-symbolic");
     }
     &.battery-low-charging-symbolic {
-        background-image: -gtk-icontheme("battery-low-charging-symbolic");
+      background-image: -gtk-icontheme("battery-low-charging-symbolic");
     }
     &.battery-low-symbolic {
-        background-image: -gtk-icontheme("battery-low-symbolic");
+      background-image: -gtk-icontheme("battery-low-symbolic");
     }
     &.battery-missing-symbolic {
-        background-image: -gtk-icontheme("battery-missing-symbolic");
+      background-image: -gtk-icontheme("battery-missing-symbolic");
     }
   }
   &.sound {
-    &.mute, &.zero {
+    &.mute,
+    &.zero {
       background-image: -gtk-icontheme("audio-volume-muted-symbolic");
     }
     &.low {

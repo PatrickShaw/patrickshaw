@@ -153,12 +153,18 @@
         :current-workspace-id current-workspace-id
         :workspaces workspaces
       )
+      (systray
+        :orientation "vertical"
+        :pack-direction "down"
+        :icon-size 24
+        :class "systray"
+      )
     )
     (box
       :orientation "vertical"
       :space-evenly false
       :valign "end"
-      (battery)
+      ; (battery)
       (sound)
       (time)
     )

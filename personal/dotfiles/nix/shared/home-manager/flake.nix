@@ -63,6 +63,13 @@
           ];
           home-manager = {
             users.pshaw = { config, lib, ... }: {
+
+                services.darkman = {
+                  enable = true;
+                  settings = {
+                    usegeoclue = true;
+                  };
+                };
                 home = {
                   file = let
                     getLastPartOfPath = path:

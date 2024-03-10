@@ -148,11 +148,35 @@ with pkgs; [
 
   newsflash
   
-  # Haven't used this at all
-  # handlr
+  handlr
+  (stdenv.mkDerivation {
+    pname = "handler-xdg-open-shim";
+    version = "1.0";
+
+    # src = ./.; 
+
+    buildInputs = [ handlr ];
+
+    dontUnpack = true;
+
+    installPhase = ''
+      mkdir -p $out/bin
+      touch $out/bin/xdg-open
+      chmod 755 $out/bin/xdg-open
+      echo '#!/bin/sh' >> $out/bin/xdg-open
+      echo 'handlr open "$@"' >> $out/bin/xdg-open
+    '';
+
+    # meta = {
+    #   description = "A simple wrapper for handlr using xdg-open";
+    #   license = stdenv.lib.licenses.mit;
+    # };
+  })
 
   # Has xdg-open in it. I assume a few apps depend on this globally
-  xdg-utils
+  # BUT have a look at https://wiki.archlinux.org/title/Default_applications#xdg-open - Apparently this is a different xdg-open implementation
+  # Went with handlr instead which provides a way of shimming it
+  # xdg-utils
 
   gptfdisk
   

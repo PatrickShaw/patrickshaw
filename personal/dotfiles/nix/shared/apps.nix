@@ -8,7 +8,6 @@ with pkgs; [
   cmake
   gnumake
 
-  vscode
   # Not ready yet
   # lapce
   bc

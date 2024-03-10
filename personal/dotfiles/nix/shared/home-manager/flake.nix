@@ -26,6 +26,10 @@
       url = "github:dracula/dircolors";
       flake = false;
     };
+
+    vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
   };
   
   outputs = {
@@ -37,7 +41,8 @@
       git-rainbow-delimiters-nvim,
       dracula-dircolors,
       utils,
-  }:
+      ...
+  }@inputs:
     let
       zsh-config = import ./zsh-initExtra.nix {
         inherit
@@ -60,8 +65,37 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.pshaw = { config, lib, ... }: {
+            users.pshaw = { config, lib, ... }: let
+              vscode-extensions = inputs.vscode-extensions.extensions.${pkgs.system};
+            in {
+              programs.vscode = {
+                enable = true;
+                extensions = with vscode-extensions.vscode-marketplace; [
+                  catppuccin.catppuccin-vsc
+                  vscode-icons-team.vscode-icons
+                  dbaeumer.vscode-eslint
+                  kubukoz.nickel-syntax
+                  denoland.vscode-deno
+                  vscode-icons-team.vscode-icons
+                  esbenp.prettier-vscode
+                  bbenoist.nix
+                  thenuprojectcontributors.vscode-nushell-lang
+                  eww-yuck.yuck
+                  arcanis.vscode-zipfs
+                  stylelint.vscode-stylelint
+                  rust-lang.rust-analyzer
+                  mkhl.direnv
+                  ms-azuretools.vscode-docker
+                  tamasfe.even-better-toml
+                  oderwat.indent-rainbow
+                  eamodio.gitlens
+                  redhat.vscode-yaml
 
+                  streetsidesoftware.code-spell-checker
+                  streetsidesoftware.code-spell-checker-australian-english
+                  streetsidesoftware.code-spell-checker-australian-english
+                ];
+              };
                 services.darkman = {
                   enable = true;
                   settings = {

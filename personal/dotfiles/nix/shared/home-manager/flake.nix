@@ -49,10 +49,6 @@
     in {
       darwinModules.default = {pkgs, ...}: {
         imports = [self.nixosModules.default];
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-        };
       };
       nixosModules.default = {pkgs, ... }: {
         config = {
@@ -62,6 +58,8 @@
             pkgs.tree-sitter
           ];
           home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
             users.pshaw = { config, lib, ... }: {
 
                 services.darkman = {

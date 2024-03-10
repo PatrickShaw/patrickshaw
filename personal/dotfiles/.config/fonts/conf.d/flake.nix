@@ -15,9 +15,7 @@
           install -Dm644 -t $out/share/fonts/truetype/ $src
         '';
       };
-    in {
-      fonts = {
-        packages = [
+      fontList = [
           brootIcons
           # too big: pkgs.nerdfonts
 
@@ -43,10 +41,15 @@
           pkgs.cascadia-code
           pkgs.jetbrains-mono
         ];
-
+    in {
+      fonts = {
+        fontDir.enable = true;
+      } // (if pkgs.stdenv.isDarwin then {
+        fonts = fontList;
+      } else {
         enableDefaultPackages = true;
 
-        fontDir.enable = true;
+        packages = fontList;
 
         fontconfig = {
           enable = true;
@@ -59,7 +62,7 @@
             emoji = [ "Twitter Color Emoji" ];
           };
         };
-      };
+      });
     };
   };
 }

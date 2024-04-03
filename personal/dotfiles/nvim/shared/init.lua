@@ -118,7 +118,7 @@ require'nvim-treesitter.configs'.setup({
   highlight={enable=true},
 })
 
-vim.o.smartcase = true
+vim.o.smartcase = false
 
 local rainbow_delimiters = require 'rainbow-delimiters'
 vim.g.nvim_autopairs = {}

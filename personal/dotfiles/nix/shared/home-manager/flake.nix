@@ -97,7 +97,7 @@
                 ];
               };
                 services.darkman = {
-                  enable = true;
+                  enable = !pkgs.stdenv.isDarwin;
                   settings = {
                     usegeoclue = true;
                   };

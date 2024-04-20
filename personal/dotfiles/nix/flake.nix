@@ -229,7 +229,8 @@
             self.nixosModules.base
             self.nixosModules.text-to-speech
             inputs.nix-gaming.nixosModules.pipewireLowLatency
-            inputs.nix-gaming.nixosModules.steamCompat
+            # Merged to upstream (see: https://github.com/NixOS/nixpkgs/pull/293564), and so the following is no longer needed.
+            # inputs.nix-gaming.nixosModules.steamCompat
         ];
 
         # For whatever reason, systemd's oom is disabled anyway so we enable our own

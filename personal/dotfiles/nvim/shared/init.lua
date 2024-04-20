@@ -71,10 +71,6 @@ lspconfig.rust_analyzer.setup {
 lspconfig.lua_ls.setup {
   capabilities = capabilities,
 }
-lspconfig.rnix.setup({
-  cmd = { "rnix-lsp", "--stdio" },
-  capabilities = capabilities,
-})
 
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions

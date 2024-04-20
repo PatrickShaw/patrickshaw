@@ -58,7 +58,6 @@
       nixosModules.default = {pkgs, ... }: {
         config = {
           environment.systemPackages = [
-            pkgs.rnix-lsp
             pkgs.lua-language-server
             pkgs.tree-sitter
           ];

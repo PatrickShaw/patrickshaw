@@ -102,6 +102,8 @@ in
 
     "/etc/nixos"
 
+    "/etc/nix"
+
     "/home"
 
     "/etc/shadow"

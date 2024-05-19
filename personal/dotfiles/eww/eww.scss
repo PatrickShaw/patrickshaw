@@ -39,18 +39,18 @@ $vertical-default-button-padding: grid(1);
   background-color: rgba(255, 255, 255, 0.1);
 }
 .clickable.active,
-.systray > menuitem:active,
-.systray > menuitem menuitem:active {
+.systray > widget:active,
+.systray > widget image:active {
   background-color: rgba(255, 255, 255, 0.05);
 }
 
-.systray > menuitem {
+.systray > widget {
   padding: grid(1) 0px;
 }
-.systray > menuitem menuitem {
+.systray > widget image {
   padding: grid(1) grid(2);
 }
-.systray > menuitem window {
+.systray > widget window {
   // Blur doesn't seem to be working on the systray menu items ATM
   background-color: rgba(0, 0, 0, 0.95);
   border-radius: 0 20px 20px 0;

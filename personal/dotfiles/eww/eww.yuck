@@ -154,7 +154,7 @@
         :workspaces workspaces
       )
       (systray
-        :pack-direction "down"
+        :orientation "vertical"
         :icon-size 24
         :class "systray"
       )

@@ -451,6 +451,8 @@
           # GTK_THEME = "Orchis-Green:dark";
 
           MOZ_ENABLE_WAYLAND = "1";
+          # I haven't tested this but supposedly improves touchscreen support. See https://nixos.wiki/wiki/Firefox
+          MOZ_USE_XINPUT2 = "1";
 
           # See https://discourse.nixos.org/t/how-to-reload-mime-database-after-update-gtk-application-crashes-on-icon-load/14152/3
           # Appears to make final pickers work properly (although chooses one I wouldn't expect)

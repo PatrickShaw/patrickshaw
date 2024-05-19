@@ -284,10 +284,8 @@
         # See: https://github.com/NixOS/nixpkgs/issues/16327
         # Also: https://github.com/NixOS/nixpkgs/issues/197188#issuecomment-1320990068
         services.gnome.at-spi2-core.enable = true;
-        services.xserver = {
-          enable = false;
+        services.libinput = {
           
-          libinput = {
             enable = true;
 
             mouse = {
@@ -297,7 +295,7 @@
             touchpad = {
               accelProfile = "adaptive";
             };
-          };
+          
         };
 
                 # See: https://wiki.archlinux.org/title/PipeWire#xdg-desktop-portal-wlr

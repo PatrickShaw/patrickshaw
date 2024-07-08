@@ -20,7 +20,10 @@ if status is-login; and not set -q SSH_TTY
 
     #dbus-run-session sway --unsupported-gpu
     #dbus-run-session river
-    Hyprland
+    # So, it turns out that WLR_RENDERER does NOT support vulkan and for whatever reason, the WLR_RENDERER=vulkan flags were previously being ignored
+    # See: https://github.com/hyprwm/Hyprland/issues/1396
+    # See: https://www.reddit.com/r/swaywm/comments/17j1icw/about_wlr_renderervulkan_screen_flickering/
+    WLR_RENDERER=gles2 nice -n -5 Hyprland
 
     # All handled by Nix
     #dbus-launch pipewire &

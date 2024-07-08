@@ -308,7 +308,7 @@
         # Also: https://github.com/NixOS/nixpkgs/issues/197188#issuecomment-1320990068
         services.gnome.at-spi2-core.enable = true;
         services.libinput = {
-          
+           
             enable = true;
 
             mouse = {
@@ -544,8 +544,12 @@
             self.nixosModules.core
         ];
 
-        virtualisation.docker.enable = true;
-        virtualisation.docker.storageDriver = "btrfs";
+        nixpkgs.overlays = [
+          # inputs.nice-overlays.overlays.default
+        ];
+
+        #virtualisation.docker.enable = true;
+        #virtualisation.docker.storageDriver = "btrfs";
       };
     };
   };

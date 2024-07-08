@@ -206,6 +206,31 @@
           pkgs.nix-direnv
         ];
       };
+      barebones = { lib, ... }:  {
+        i18n.defaultLocale = "en_AU.UTF-8";
+        
+        hardware.enableRedistributableFirmware = true;
+        # Bootloader/EFI
+        boot.loader.systemd-boot.enable = true;
+        boot.loader.efi.canTouchEfiVariables = true;
+        boot.loader.timeout = lib.mkDefault 2;
+
+        # Time
+        services.chrony.enable = true;
+        services.timesyncd.enable = false;
+        environment.etc = {
+          # This is to make systemd past boots of journals actually log out when listed
+          # See https://www.reddit.com/r/NixOS/comments/kgziex/journald_not_keeping_past_boot_logs/
+          machine-id.text = "152099709ccc4cc79fec46efcb18d2a1";
+
+          # Note: Writing systemd units here won't work. Use systemd.user.*
+        };
+
+        
+        # For whatever reason, systemd's oom is disabled anyway so we enable our own
+        systemd.oomd.enable = false;
+        services.earlyoom.enable = true;
+      };
       core = { pkgs, lib, options, ...}: let
         wayland-pkgs = inputs.nixpkgs-wayland.packages.${pkgs.system};
         shared-aliases = import ./shared/program-aliases.nix { };
@@ -239,6 +264,7 @@
         };
       in {
         imports = [
+            self.nixosModules.barebones
             # inputs.hyprland.nixosModules.default
             self.nixosModules.base
             self.nixosModules.text-to-speech
@@ -276,7 +302,6 @@
         # Makes sharing with Windows storage devices easier
         boot.supportedFilesystems = [ "ntfs" ];
 
-        hardware.enableRedistributableFirmware = true;
 
         nix.gc = {
           dates = "weekly";
@@ -390,27 +415,10 @@
             shellAliases = shared-aliases;
           };
         };
-        i18n.defaultLocale = "en_AU.UTF-8";
-
-        # Bootloader/EFI
-        boot.loader.systemd-boot.enable = true;
-        boot.loader.efi.canTouchEfiVariables = true;
-        boot.loader.timeout = lib.mkDefault 2;
-
-
-        services.chrony.enable = true;
-        services.timesyncd.enable = false;
 
         # For automounting disks
         services.udisks2.enable = true;
 
-        environment.etc = {
-          # This is to make systemd past boots of journals actually log out when listed
-          # See https://www.reddit.com/r/NixOS/comments/kgziex/journald_not_keeping_past_boot_logs/
-          machine-id.text = "152099709ccc4cc79fec46efcb18d2a1";
-
-          # Note: Writing systemd units here won't work. Use systemd.user.*
-        };
 
         # Udev rules - Includes some for Sony DS4
         hardware.steam-hardware.enable = true;

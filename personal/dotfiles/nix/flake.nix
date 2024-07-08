@@ -220,8 +220,10 @@
             datadir = "${schema}/share/gsettings-schemas/${schema.name}";
           in ''
             export XDG_DATA_DIRS=${pkgs.gnome.nautilus}/share/gsettings-schemas/${pkgs.gnome.nautilus.name}:${datadir}:$XDG_DATA_DIRS
-            gnome_schema=org.gnome.desktop.interface
 
+            export PATH="${lib.makeBinPath [pkgs.glib]}:$PATH"
+            
+            gnome_schema=org.gnome.desktop.interface
 
             gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
             gsettings set org.gnome.desktop.interface gtk-theme 'Orchis-Green:dark'

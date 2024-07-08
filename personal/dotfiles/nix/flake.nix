@@ -274,10 +274,6 @@
             # inputs.nix-gaming.nixosModules.steamCompat
         ];
 
-        # For whatever reason, systemd's oom is disabled anyway so we enable our own
-        systemd.oomd.enable = false;
-        services.earlyoom.enable = true;
-
 
         # programs.hyprland.package = inputs.hyprland.packages.${pkgs.system}.default;
         programs.hyprland = {
@@ -292,8 +288,8 @@
           # inputs.hyprland.overlays.default
         ];
 
-        programs.captive-browser.enable = true;
-        programs.captive-browser.interface = "wlan0";
+        #programs.captive-browser.enable = true;
+        #programs.captive-browser.interface = "wlan0";
 
         # See: https://superuser.com/questions/904331/how-does-btrfs-scrub-work-and-what-does-it-do
         # Should probably go in an FS module

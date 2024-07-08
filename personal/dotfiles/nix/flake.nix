@@ -390,6 +390,7 @@
 
           # inputs.helix.packages.${pkgs.system}.default
 
+          # For iOS devices
           pkgs.libimobiledevice
           pkgs.ifuse 
 
@@ -397,6 +398,9 @@
         ] ++ import ./linux/apps.nix { inherit pkgs; };
 
         programs = {
+          firefox = {
+            enable = true;
+          };
           git = {
             enable = true;
             lfs.enable = true;

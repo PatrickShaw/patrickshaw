@@ -87,6 +87,7 @@ with pkgs; [
   # See: https://nixos.wiki/wiki/Wine
   #wineWowPackages.stable
   wineWowPackages.waylandFull
+  samba # Fixes ntlm_auth wine errors. See https://github.com/NixOS/nixpkgs/issues/126801#issuecomment-930431829
 
   spotify
   (signal-desktop.overrideAttrs (old: {

@@ -1,12 +1,23 @@
-# See: https://stackoverflow.com/questions/444951/zsh-stop-backward-kill-word-on-directory-delimiter
-autoload -U select-word-style
-select-word-style bash
-
 path+=($HOME/.cargo/bin)
 
 export PATH
 source $(dirname $0)/powerlevel10k/index.sh
 #eval "$(starship init zsh)"
+
+# See: https://stackoverflow.com/questions/444951/zsh-stop-backward-kill-word-on-directory-delimiter
+# autoload -U select-word-style
+x-bash-backward-kill-word(){
+    WORDCHARS='' zle backward-kill-word
+
+}
+zle -N x-bash-backward-kill-word
+bindkey '^W' x-bash-backward-kill-word
+
+x-backward-kill-word(){
+    WORDCHARS='*?_-[]~\!#$%^(){}<>|`@#$%^*()+:?' zle backward-kill-word
+}
+zle -N x-backward-kill-word 
+bindkey '\e^?' x-backward-kill-word
 
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
 

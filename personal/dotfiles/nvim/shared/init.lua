@@ -5,6 +5,16 @@ vim.opt.expandtab = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.autoindent = true
+
+-- TODO: Confirm if it works
+-- Auto choose the swapfile when editing in nvim
+vim.api.nvim_create_autocmd("VimEnter", {
+  pattern = "*",
+  command = "silent! recover"
+})
+
+-- Re-read file changes https://neovim.io/doc/user/options.html#'autoread'
+vim.o.autoread = true
 vim.api.nvim_set_keymap('v', '<S-Up>', '<Up>', { noremap = true; })
 vim.api.nvim_set_keymap('v', '<S-Down>', '<Down>', { noremap = true })
 vim.api.nvim_set_keymap('v', '<S-Left>', '<Left>', { noremap = true })
@@ -50,6 +60,12 @@ vim.cmd [[
   hi NonText guibg=NONE ctermbg=NONE
   hi LineNr guibg=NONE ctermbg=NONE
 ]]
+-- TODO: Confirm if it works
+-- Auto restore changes made in nvim
+require("auto-session").setup {
+  auto_session_enable_last_session = true,
+  auto_restore_enabled = true,
+}
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 

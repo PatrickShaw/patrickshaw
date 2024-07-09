@@ -1,6 +1,19 @@
+# Took some settings from:
+# https://www.youtube.com/watch?v=aolI_Rz0ZqY
+# Some notes: git maintenance start is great
+# 
+
 [user]
 	email = mail@patrickshaw.me
 	name = Patrick Shaw
+
+[column]
+  # Puts branches in columns
+	ui = auto
+
+[branch]
+  # Last comitted at the bottom of list
+  sort = committerdate
 
 [push]
 	autoSetupRemote = true
@@ -15,15 +28,20 @@
 [core]
     pager = delta
 	# See: https://www.git-tower.com/blog/git-performance/
+	# See: https://www.youtube.com/watch?v=aolI_Rz0ZqY
 	# Actually decided to do this based on a GitHub blog post about it
     fsmonitor = true
 	# See https://www.git-tower.com/blog/git-performance/
+	# See: https://www.youtube.com/watch?v=aolI_Rz0ZqY
     untrackedcache = true
 	# See: https://www.git-tower.com/blog/git-performance/
+	# See: https://www.youtube.com/watch?v=aolI_Rz0ZqY
 	commitgraph = true
+		excludesfile = /Users/pshaw/.gitignore
 
 [fetch]
   # See: https://www.git-tower.com/blog/git-performance/
+	# Explained here: https://www.youtube.com/watch?v=aolI_Rz0ZqY
   writeCommitGraph = true
 
 [feature]

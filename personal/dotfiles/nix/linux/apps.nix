@@ -63,11 +63,6 @@ with pkgs; [
   gzip
   gnome.file-roller
 
-  # For lspci
-  pciutils
-  # For lsusb
-  usbutils
-
   # jack2
   #helvum
 

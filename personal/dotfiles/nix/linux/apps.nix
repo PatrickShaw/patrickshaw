@@ -1,7 +1,6 @@
 { pkgs }:
 with pkgs; [
-  google-chrome
-  firefox
+  # google-chrome
 
   pkgs.gnome.gnome-clocks
 
@@ -18,7 +17,6 @@ with pkgs; [
   # CLI based GTK dialog renderer - Similarish in purpose to Wofi
   yad
 
-  adoptopenjdk-bin
 
   efibootmgr
 
@@ -36,9 +34,13 @@ with pkgs; [
   # Camera app
   gnome.cheese
   # Allows tweaking of camera
-  v4l-utils
+  # v4l-utils
 
-  ffmpeg-full
+  # If you ever need specific dependencies, you can add them manually. Smaller than resorting to ffmpeg-full
+  ffmpeg
+
+  # This is great for figuring out which apps take up a lot of space
+  nix-tree
 
   swayidle
 
@@ -85,21 +87,22 @@ with pkgs; [
   samba # Fixes ntlm_auth wine errors. See https://github.com/NixOS/nixpkgs/issues/126801#issuecomment-930431829
 
   spotify
-  (signal-desktop.overrideAttrs (old: {
+  #(signal-desktop.overrideAttrs (old: {
     # See https://github.com/NixOS/nixpkgs/issues/222043#issuecomment-1589411268
-    preFixup = old.preFixup + ''
-      gappsWrapperArgs+=(
-        --add-flags "--enable-features=UseOzonePlatform"
-        --add-flags "--ozone-platform=wayland"
-      )
-    '';
-  }))
+  #  preFixup = old.preFixup + ''
+  #    gappsWrapperArgs+=(
+  #      --add-flags "--enable-features=UseOzonePlatform"
+  #      --add-flags "--ozone-platform=wayland"
+  #    )
+  #  '';
+  #}))
 
   celluloid
-  # Haven't needed anything other than celluloid
+  # Haven't needed anything other than celluloid and mpv
   # haruna
 
-  jetbrains.idea-community
+  # Haven't used this in a while and it's very big so commented out for now
+  # jetbrains.idea-community
 
   qbittorrent
 
@@ -107,7 +110,8 @@ with pkgs; [
   virtiofsd
   OVMFFull
 
-  vlc
+  # There's a lot of much better alternatives, so removed this classic
+  # vlc
 
   kitty
 
@@ -115,8 +119,8 @@ with pkgs; [
 
   wezterm
 
-  docker
-  docker-compose
+  #docker
+  #docker-compose
 
   phinger-cursors
   papirus-icon-theme
@@ -181,8 +185,8 @@ with pkgs; [
   feh
 
   # Epic game store
-  legendary-gl
-  heroic
+  # legendary-gl
+  # heroic
 
   # Font viewer
   # TODO: Haven't looked at other apps yet

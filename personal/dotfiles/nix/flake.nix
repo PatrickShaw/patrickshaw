@@ -58,10 +58,7 @@
   {
     nixosModules = {
       opengl = { pkgs, ... }: {
-        hardware.opengl = {
-          # Already enabled by most compositors that need it: enable = true;
-          driSupport = true;
-          driSupport32Bit = true;
+        hardware.graphics = {
           extraPackages = [
             # See https://nixos.wiki/wiki/Accelerated_Video_Playback
             pkgs.vaapiVdpau
@@ -71,7 +68,7 @@
       };
       intel-integrated-graphics = { pkgs, ... }: {
         imports = [self.nixosModules.opengl];
-        hardware.opengl = {
+        hardware.graphics = {
           extraPackages = [
             # See https://nixos.wiki/wiki/Accelerated_Video_Playback
             pkgs.intel-media-driver
@@ -95,7 +92,7 @@
           WLR_RENDERER = "vulkan";
         };
 
-        hardware.opengl = {
+        hardware.graphics = {
           extraPackages = [
             # See: https://nixos.wiki/wiki/Accelerated_Video_Playback
             pkgs.nvidia-vaapi-driver

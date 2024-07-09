@@ -33,6 +33,7 @@ activeWorkspace() {
 }
 
 activeWorkspace
-socat -u UNIX-CONNECT:/tmp/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | while read -r line; do
+# see: https://wiki.hyprland.org/Configuring/Expanding-functionality/
+socat -u UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | while read -r line; do
 	activeWorkspace
 done

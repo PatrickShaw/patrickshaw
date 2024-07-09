@@ -214,4 +214,8 @@ with pkgs; [
   libratbag
   # And this is the UI for it
   piper
+
+  # Don't remember why exactly I added these but I imagine they're for getting XDG-open to work properly
+  shared-mime-info
+  desktop-file-utils
 ]

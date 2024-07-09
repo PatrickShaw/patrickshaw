@@ -27,9 +27,16 @@
       flake = false;
     };
 
-    vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
+    
+    #vscode-extensions.url = "git+ssh://git@github.com:nix-community/nix-vscode-extensions.git"; #"github:nix-community/nix-vscode-extensions/master";
+    vscode-extensions-2 = {
+      url = "github:nix-community/nix-vscode-extensions";
+      #url = "https://github.com/nix-community/nix-vscode-extensions/archive/refs/heads/master.zip";
+      #url = "path:/home/pshaw/code/me/public/personal/dotfiles/nix/shared/home-manager/masters.zip";
+
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   
   outputs = {
@@ -58,7 +65,6 @@
       nixosModules.default = {pkgs, ... }: {
         config = {
           environment.systemPackages = [
-            pkgs.rnix-lsp
             pkgs.lua-language-server
             pkgs.tree-sitter
           ];
@@ -66,7 +72,7 @@
             useGlobalPkgs = true;
             useUserPackages = true;
             users.pshaw = { config, lib, ... }: let
-              vscode-extensions = inputs.vscode-extensions.extensions.${pkgs.system};
+              vscode-extensions = inputs.vscode-extensions-2.extensions.${pkgs.system};
             in {
               programs.vscode = {
                 enable = true;

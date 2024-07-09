@@ -215,7 +215,7 @@ set $my_cursor_theme phinger-cursors
 
 #font pango:$my_font Regular 10
 
-bindsym $mod+space exec ulauncher
+bindsym $mod+space exec "~/.config/sway/desktop/search-launcher.sh"
 
 bindsym Print exec "~/.config/sway/screen-to-clipboard.fish"
 
@@ -234,7 +234,7 @@ bindsym Mod1+tab workspace next_on_output
 bindsym Mod1+Shift+tab workspace prev_on_output
 
 #seat seat0 xcursor_theme $my_cursor_theme 32
-#exec_always {
+#exec_always {Q
 #    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
 #    gsettings set org.gnome.desktop.interface cursor-theme $my_cursor_theme
 #    gsettings set org.gnome.desktop.interface font-name $my_font

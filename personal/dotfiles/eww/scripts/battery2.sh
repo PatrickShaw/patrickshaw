@@ -8,8 +8,10 @@ function runExecute
   echo "{ \"icon\": \"$ICON\", \"percentage\": $PERCENTAGE }"
 end
 
-runExecute
-upower --monitor-detail $(upower -e | grep battery) | while read -r line
-	runExecute
+if type -q upower
+  runExecute
+  upower --monitor-detail $(upower -e | grep battery) | while read -r line
+    runExecute
+  end
 end
 

@@ -3,15 +3,17 @@
     nixpkgs = { url = "github:nixos/nixpkgs/nixos-unstable"; };
 
     nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
-    nixpkgs-wayland.inputs.nixpkgs.follows = "nixpkgs";
+    # nixpkgs-wayland.inputs.nixpkgs.follows = "nixpkgs";
 
-    hyprland.url = "github:hyprwm/Hyprland";
-    hyprland.inputs.nixpkgs.follows = "nixpkgs";
+    # For whatever reason, using Hyprland, even with the cache declared and the binary cache declared and no nixpkgs.follows, everything in Hyprland was being rebuild. It _might_ be because I used Hyprland's overlay but from what i can see, it looks like upstream NixOS seems to be fairly up to date with Hyprland's actual flake so meh, i'm not gonna investigate further
+    # hyprland.url = "github:hyprwm/Hyprland";
+    # Taking too long to rebuild whatever Hyprland's version of wlroots wants I think
+    # hyprland.inputs.nixpkgs.follows = "nixpkgs";
     
     # rust-overlay.url = "github:oxalica/rust-overlay";
 
-    eww.url = "github:ralismark/eww/tray-3";
-    eww.inputs.nixpkgs.follows = "nixpkgs";
+    # eww.url = "github:ralismark/eww/tray-3";
+    # eww.inputs.nixpkgs.follows = "nixpkgs";
     # eww.inputs.rust-overlay.follows = "rust-overlay";
 
     # helix.url = "github:helix-editor/helix";
@@ -23,24 +25,33 @@
 
 
     nix-gaming.url = "github:fufexan/nix-gaming";
-    nix-gaming.inputs.nixpkgs.follows = "nixpkgs";
+    # nix-gaming.inputs.nixpkgs.follows = "nixpkgs";
+
+    # nice-overlays.url = "./linux/nice-overlays";
   };
   nixConfig = {
-    extra-trusted-substituters = [
-      "https://cache.nixos.org/"
+    extra-substituters = [
+      "https://cache.nixos.org?priority=1"
 
-      # See: https://github/home/pshaw/me/personal/dotfiles/nix/linux/apps.nix.com/nix-community/nixpkgs-wayland#binary-cache
+      "https://nix-gaming.cachix.org"
+
+      # See: https://wiki.hyprland.org/Nix/Cachix/
+      # "https://hyprland.cachix.org"
+
+      # See: https://github.com/nix-community/nixpkgs-wayland#binary-cache
       "https://nixpkgs-wayland.cachix.org"
 
       "https://nix-community.cachix.org"
 
-      # See: https://wiki.hyprland.org/Nix/Cachix/
-      "https://hyprland.cachix.org"
+      # "https://helix.cachix.org"
     ];
     extra-trusted-public-keys = [
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
+      # "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
+      # "helix.cachix.org-1:ejp9KQpR1FBI2onstMQ34yogDm4OgU2ru6lIwPvuCVs="
     ];
   };
   outputs = { self, ... }@inputs: 
@@ -91,6 +102,7 @@
           ];
         };
       };
+      binary-cache = import ./shared/binary-caching.nix;
       nvidia-a1000 = { ... }: {
         imports = [self.nixosModules.nvidia];
         hardware.nvidia = {
@@ -194,6 +206,31 @@
           pkgs.nix-direnv
         ];
       };
+      barebones = { lib, ... }:  {
+        i18n.defaultLocale = "en_AU.UTF-8";
+        
+        hardware.enableRedistributableFirmware = true;
+        # Bootloader/EFI
+        boot.loader.systemd-boot.enable = true;
+        boot.loader.efi.canTouchEfiVariables = true;
+        boot.loader.timeout = lib.mkDefault 2;
+
+        # Time
+        services.chrony.enable = true;
+        services.timesyncd.enable = false;
+        environment.etc = {
+          # This is to make systemd past boots of journals actually log out when listed
+          # See https://www.reddit.com/r/NixOS/comments/kgziex/journald_not_keeping_past_boot_logs/
+          machine-id.text = "152099709ccc4cc79fec46efcb18d2a1";
+
+          # Note: Writing systemd units here won't work. Use systemd.user.*
+        };
+
+        
+        # For whatever reason, systemd's oom is disabled anyway so we enable our own
+        systemd.oomd.enable = false;
+        services.earlyoom.enable = true;
+      };
       core = { pkgs, lib, options, ...}: let
         wayland-pkgs = inputs.nixpkgs-wayland.packages.${pkgs.system};
         shared-aliases = import ./shared/program-aliases.nix { };
@@ -208,8 +245,10 @@
             datadir = "${schema}/share/gsettings-schemas/${schema.name}";
           in ''
             export XDG_DATA_DIRS=${pkgs.gnome.nautilus}/share/gsettings-schemas/${pkgs.gnome.nautilus.name}:${datadir}:$XDG_DATA_DIRS
-            gnome_schema=org.gnome.desktop.interface
 
+            export PATH="${lib.makeBinPath [pkgs.glib]}:$PATH"
+            
+            gnome_schema=org.gnome.desktop.interface
 
             gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
             gsettings set org.gnome.desktop.interface gtk-theme 'Orchis-Green:dark'
@@ -225,28 +264,32 @@
         };
       in {
         imports = [
-            inputs.hyprland.nixosModules.default
+            self.nixosModules.barebones
+            # inputs.hyprland.nixosModules.default
             self.nixosModules.base
             self.nixosModules.text-to-speech
+            ./shared/binary-caching.nix
             inputs.nix-gaming.nixosModules.pipewireLowLatency
-            inputs.nix-gaming.nixosModules.steamCompat
+            # Merged to upstream (see: https://github.com/NixOS/nixpkgs/pull/293564), and so the following is no longer needed.
+            # inputs.nix-gaming.nixosModules.steamCompat
         ];
 
-        # For whatever reason, systemd's oom is disabled anyway so we enable our own
-        systemd.oomd.enable = false;
-        services.earlyoom.enable = true;
 
-
-        programs.hyprland.package = inputs.hyprland.packages.${pkgs.system}.default;
-        programs.hyprland.enable = true;
+        # programs.hyprland.package = inputs.hyprland.packages.${pkgs.system}.default;
+        programs.hyprland = {
+          enable = true;
+          xwayland = { 
+            enable = true;
+          };
+        };
 
         nixpkgs.overlays = [
-          inputs.nixpkgs-wayland.overlays.default
-          inputs.hyprland.overlays.default
+          # inputs.nixpkgs-wayland.overlays.default
+          # inputs.hyprland.overlays.default
         ];
 
-        programs.captive-browser.enable = true;
-        programs.captive-browser.interface = "wlan0";
+        #programs.captive-browser.enable = true;
+        #programs.captive-browser.interface = "wlan0";
 
         # See: https://superuser.com/questions/904331/how-does-btrfs-scrub-work-and-what-does-it-do
         # Should probably go in an FS module
@@ -255,7 +298,6 @@
         # Makes sharing with Windows storage devices easier
         boot.supportedFilesystems = [ "ntfs" ];
 
-        hardware.enableRedistributableFirmware = true;
 
         nix.gc = {
           dates = "weekly";
@@ -265,10 +307,8 @@
         # See: https://github.com/NixOS/nixpkgs/issues/16327
         # Also: https://github.com/NixOS/nixpkgs/issues/197188#issuecomment-1320990068
         services.gnome.at-spi2-core.enable = true;
-        services.xserver = {
-          enable = false;
-          
-          libinput = {
+        services.libinput = {
+           
             enable = true;
 
             mouse = {
@@ -278,7 +318,7 @@
             touchpad = {
               accelProfile = "adaptive";
             };
-          };
+          
         };
 
                 # See: https://wiki.archlinux.org/title/PipeWire#xdg-desktop-portal-wlr
@@ -342,10 +382,11 @@
           #wayland-pkgs.sway-unwrapped
           wayland-pkgs.mako
 
-          inputs.eww.packages.${pkgs.system}.eww-wayland
+          wayland-pkgs.eww
 
           # inputs.helix.packages.${pkgs.system}.default
 
+          # For iOS devices
           pkgs.libimobiledevice
           pkgs.ifuse 
 
@@ -353,6 +394,9 @@
         ] ++ import ./linux/apps.nix { inherit pkgs; };
 
         programs = {
+          firefox = {
+            enable = true;
+          };
           git = {
             enable = true;
             lfs.enable = true;
@@ -371,27 +415,10 @@
             shellAliases = shared-aliases;
           };
         };
-        i18n.defaultLocale = "en_AU.UTF-8";
-
-        # Bootloader/EFI
-        boot.loader.systemd-boot.enable = true;
-        boot.loader.efi.canTouchEfiVariables = true;
-        boot.loader.timeout = lib.mkDefault 2;
-
-
-        services.chrony.enable = true;
-        services.timesyncd.enable = false;
 
         # For automounting disks
         services.udisks2.enable = true;
 
-        environment.etc = {
-          # This is to make systemd past boots of journals actually log out when listed
-          # See https://www.reddit.com/r/NixOS/comments/kgziex/journald_not_keeping_past_boot_logs/
-          machine-id.text = "152099709ccc4cc79fec46efcb18d2a1";
-
-          # Note: Writing systemd units here won't work. Use systemd.user.*
-        };
 
         # Udev rules - Includes some for Sony DS4
         hardware.steam-hardware.enable = true;
@@ -400,7 +427,9 @@
           extraCompatPackages = [
             # add the packages that you would like to have in Steam's extra compatibility packages list
             # pkgs.luxtorpeda
-            inputs.nix-gaming.packages.${pkgs.system}.proton-ge
+            pkgs.proton-ge-bin
+            # The following is no longer needed. See: https://github.com/NixOS/nixpkgs/pull/296009
+            # inputs.nix-gaming.packages.${pkgs.system}.proton-ge
             # etc.
           ];
         };
@@ -432,6 +461,8 @@
           # GTK_THEME = "Orchis-Green:dark";
 
           MOZ_ENABLE_WAYLAND = "1";
+          # I haven't tested this but supposedly improves touchscreen support. See https://nixos.wiki/wiki/Firefox
+          MOZ_USE_XINPUT2 = "1";
 
           # See https://discourse.nixos.org/t/how-to-reload-mime-database-after-update-gtk-application-crashes-on-icon-load/14152/3
           # Appears to make final pickers work properly (although chooses one I wouldn't expect)
@@ -513,8 +544,12 @@
             self.nixosModules.core
         ];
 
-        virtualisation.docker.enable = true;
-        virtualisation.docker.storageDriver = "btrfs";
+        nixpkgs.overlays = [
+          # inputs.nice-overlays.overlays.default
+        ];
+
+        #virtualisation.docker.enable = true;
+        #virtualisation.docker.storageDriver = "btrfs";
       };
     };
   };

@@ -1,10 +1,12 @@
 import = ["/home/pshaw/personal/dotfiles/alacritty/shared/alacritty.toml"]
 
-[[keyboard.bindings]]
-action = "Copy"
-key = "C"
-mods = "Control|Alt"
-
+[keyboard]
+bindings = [
+  { action = "Copy", key= "C", "mods"="Control|Alt"},
+  # Changes were made for MacOS. Not sure if they're good for Linux
+  { action = "SemanticRight", key="ArrowRight", "mods"="Control|Alt"},
+  { action = "SemanticLeft", key="ArrowLeft", "mods"="Control|Alt"},
+]
 
 [[hints.enabled]]
 command = "xdg-open" # On Linux/BSD
@@ -21,3 +23,5 @@ regex = "(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https://|http://|news:
 [window]
 opacity = 0.95
 dynamic_padding = false
+# Changes were made for MacOS. Not sure if they're good for Linux
+option_as_alt="Both"

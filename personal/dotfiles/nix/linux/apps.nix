@@ -79,7 +79,7 @@ with pkgs; [
   # steam
   # Steam was trying to use this
   xdg-user-dirs
-  lutris
+  #lutris
 
   baobab
   cpu-x

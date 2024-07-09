@@ -43,13 +43,12 @@
         ];
     in {
       fonts = {
-        fontDir.enable = true;
-      } // (if pkgs.stdenv.isDarwin then {
-        fonts = fontList;
-      } else {
-        enableDefaultPackages = true;
-
         packages = fontList;
+      } // (if pkgs.stdenv.isDarwin then {
+      } else {
+        fontDir.enable = true;
+
+        enableDefaultPackages = true;
 
         fontconfig = {
           enable = true;

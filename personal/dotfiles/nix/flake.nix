@@ -190,7 +190,6 @@
       base = { pkgs, ...}: let 
         shared-configuration = import ./shared/configuration.nix { inherit pkgs; };
       in {
-        nixpkgs.config.allowUnfree = true;
         imports = [
           self.nixosModules.direnv
           shared-configuration
@@ -230,6 +229,8 @@
         # For whatever reason, systemd's oom is disabled anyway so we enable our own
         systemd.oomd.enable = false;
         services.earlyoom.enable = true;
+        
+        nixpkgs.config.allowUnfree = lib.mkDefault true;
       };
       core = { pkgs, lib, options, ...}: let
         wayland-pkgs = inputs.nixpkgs-wayland.packages.${pkgs.system};

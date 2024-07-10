@@ -32,7 +32,7 @@ with pkgs; [
   qpwgraph
 
   # Camera app
-  gnome.cheese
+  cheese
   # Allows tweaking of camera
   # v4l-utils
 

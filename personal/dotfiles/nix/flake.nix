@@ -207,6 +207,9 @@
         ];
       };
       barebones = { lib, ... }:  {
+        # Be careful: If you do not add these flags to scripts that when running nix commands, these commands will fail for those who don't enable these flags via configurations
+        nix.settings.experimental-features = [ "flakes" "nix-command" ];
+
         i18n.defaultLocale = "en_AU.UTF-8";
         
         hardware.enableRedistributableFirmware = true;

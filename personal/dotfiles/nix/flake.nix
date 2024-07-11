@@ -437,6 +437,8 @@
         services.udev.packages = [
           pkgs.android-udev-rules
         ];
+        # Should make DS4 controllers writeable
+        hardware.steam-hardware.enable = true;
         
         networking.timeServers = options.networking.timeServers.default
           ++ [ "time.cloudflare.com" ];

@@ -203,7 +203,9 @@
         ];
       };
       barebones = { lib, pkgs, ... }:  {
-        EDITOR = "nvim";
+        environment.variables = {
+          EDITOR = "nvim";
+        };
         environment.systemPackages = [
           pkgs.lm_sensors
           pkgs.neovim # TODO: Find a minmal set of nvim packages

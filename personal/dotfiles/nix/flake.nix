@@ -202,12 +202,12 @@
           pkgs.nix-direnv
         ];
       };
-      barebones = { lib, ... }:  {
+      barebones = { lib, pkgs, ... }:  {
         EDITOR = "nvim";
         environment.systemPackages = [
-          lm_sensors
-          neovim # TODO: Find a minmal set of nvim packages
-          git
+          pkgs.lm_sensors
+          pkgs.neovim # TODO: Find a minmal set of nvim packages
+          pkgs.git
         ];
 
         # Be careful: If you do not add these flags to scripts that when running nix commands, these commands will fail for those who don't enable these flags via configurations

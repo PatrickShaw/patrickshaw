@@ -111,5 +111,8 @@ in
     "/home"
 
     "/etc/shadow"
+
+    # Makes a bunch of measurements which it seems to read upon reboot. Probably worth it for battery useage purposes?
+    "/var/cache/powertop"
   ]);
 }

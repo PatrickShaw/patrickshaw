@@ -26,7 +26,10 @@
     "/boot" = {
       device = boot.device;
       fsType = "vfat";
-      options = [ "defaults" "discard" ];
+      options = [ "defaults" "discard" 
+      # See https://discourse.nixos.org/t/security-warning-when-installing-nixos-23-11/37636
+      "umask=0077" 
+      ];
     };
 
     "/nix/store" = {

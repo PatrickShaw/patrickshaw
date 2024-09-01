@@ -50,8 +50,8 @@ with pkgs; [
 
   looking-glass-client
 
-  gnome.nautilus
-  gnome.sushi
+  nautilus
+  sushi
 
   # gamescope
   # protontricks
@@ -63,7 +63,7 @@ with pkgs; [
   p7zip
   unzip
   gzip
-  gnome.file-roller
+  file-roller
 
   # jack2
   #helvum
@@ -142,7 +142,7 @@ with pkgs; [
   ddcui
 
   # See: https://nixos.wiki/wiki/GNOME and the "Known Issues" section of "https://nixos.wiki/wiki/Lutris"
-  gnome.adwaita-icon-theme
+  adwaita-icon-theme
   # Added assuming it might cause the same problems as above ^
   hicolor-icon-theme
 
@@ -181,7 +181,7 @@ with pkgs; [
   gptfdisk
   
   # Image viewers
-  gnome.eog
+  eog
   feh
 
   # Epic game store
@@ -190,7 +190,7 @@ with pkgs; [
 
   # Font viewer
   # TODO: Haven't looked at other apps yet
-  gnome.gnome-font-viewer
+  gnome-font-viewer
 
 
   # See: https://nixos.wiki/wiki/LibreOffice

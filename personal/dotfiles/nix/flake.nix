@@ -202,7 +202,16 @@
           pkgs.nix-direnv
         ];
       };
-      barebones = { lib, ... }:  {
+      barebones = { lib, pkgs, ... }:  {
+        environment.variables = {
+          EDITOR = "nvim";
+        };
+        environment.systemPackages = [
+          pkgs.lm_sensors
+          pkgs.neovim # TODO: Find a minmal set of nvim packages
+          pkgs.git
+        ];
+
         # Be careful: If you do not add these flags to scripts that when running nix commands, these commands will fail for those who don't enable these flags via configurations
         nix.settings.experimental-features = [ "flakes" "nix-command" ];
 
@@ -245,7 +254,7 @@
             schema = pkgs.gsettings-desktop-schemas;
             datadir = "${schema}/share/gsettings-schemas/${schema.name}";
           in ''
-            export XDG_DATA_DIRS=${pkgs.gnome.nautilus}/share/gsettings-schemas/${pkgs.gnome.nautilus.name}:${datadir}:$XDG_DATA_DIRS
+            export XDG_DATA_DIRS=${pkgs.gnome.nautilus}/share/gsettings-schemas/${pkgs.nautilus.name}:${datadir}:$XDG_DATA_DIRS
 
             export PATH="${lib.makeBinPath [pkgs.glib]}:$PATH"
             

@@ -241,6 +241,44 @@
         
         nixpkgs.config.allowUnfree = lib.mkDefault true;
       };
+      
+      gnome = { pkgs, ... }: {
+        imports = [
+          self.nixosModules.pipewire
+        ];
+        hardware.pulseaudio.enable = false;
+        services.xserver.enable = true;
+        services.xserver.displayManager.gdm.enable = true;
+        services.xserver.desktopManager.gnome.enable = true;
+        services.xserver.displayManager.gdm.wayland = true;
+
+        xdg.portal = {
+          enable = true;
+          wlr.enable = true;
+           extraPortals = [
+              # pkgs.xdg-desktop-portal-gtk
+              # Saw this declared in: https://discourse.nixos.org/t/xdg-desktop-portal-not-working-on-wayland-while-kde-is-installed/20919
+              #wayland-pkgs.xdg-desktop-portal-wlr
+           ];
+        };
+      };
+
+      pipewire = {
+        services.pipewire = {
+          enable = true;
+          alsa.enable = false;
+          alsa.support32Bit = false;
+          #alsa.enable = true;
+          #alsa.support32Bit = true;
+          pulse.enable = true;
+          jack.enable = true;
+          wireplumber.enable = true;
+
+          # Copied from: https://forum.level1techs.com/t/nixos-vfio-pcie-passthrough/130916/4
+          socketActivation = true;
+        };
+      };
+
       core = { pkgs, lib, options, ...}: let
         wayland-pkgs = inputs.nixpkgs-wayland.packages.${pkgs.system};
         shared-aliases = import ./shared/program-aliases.nix { };
@@ -379,7 +417,6 @@
             ];
         };
         
-
         environment.systemPackages = [
           configure-gtk
 
@@ -443,6 +480,7 @@
             # etc.
           ];
         };
+
         services.udev.packages = [
           pkgs.android-udev-rules
         ];

@@ -2,7 +2,7 @@
 with pkgs; [
   # google-chrome
 
-  pkgs.gnome.gnome-clocks
+  pkgs.gnome-clocks
 
   gcc
 

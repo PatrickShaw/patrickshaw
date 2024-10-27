@@ -302,7 +302,7 @@
             gsettings set org.gnome.desktop.interface gtk-theme 'Orchis-Green:dark'
             # Add for good measure. See: https://wiki.hyprland.org/FAQ/#gtk-settings-no-work--whatever
 
-            gsettings set org.gnome.desktop.interface cursor-theme 'phinger-cursors'
+            gsettings set org.gnome.desktop.interface cursor-theme 'phinger-cursors-dark'
             gsettings set org.gnome.desktop.interface cursor-blink false
 
             gsettings set org.gnome.desktop.interface color-scheme prefer-dark
@@ -493,7 +493,7 @@
         '';
         environment.sessionVariables = {
           # See: https://wiki.archlinux.org/title/Cursor_themes
-          XCURSOR_THEME = "phinger-cursors";
+          XCURSOR_THEME = "phinger-cursors-dark";
           XCURSOR_SIZE = "24";
 
           # Enable if you want to unbind and rebind secondary GPU cards easily 

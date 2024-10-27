@@ -1,12 +1,13 @@
-{ boot, home, nixStore }:
+{ boot, root, nixStore }:
 
 {
   fileSystems = {
     "/" = {
-      device = "none";
+      device = root.device;
       fsType = "btrfs";
       options = [
         "defaults"
+        "subvol=persist-root"
         "rw"
         "relatime"
         "discard=async"
@@ -26,7 +27,10 @@
     "/boot" = {
       device = boot.device;
       fsType = "vfat";
-      options = [ "defaults" "discard" ];
+      options = [ "defaults" "discard" 
+      # See https://discourse.nixos.org/t/security-warning-when-installing-nixos-23-11/37636
+      "umask=0077" 
+      ];
     };
 
     "/nix/store" = {
@@ -34,28 +38,15 @@
       fsType = "btrfs";
       options = [
         "defaults"
+        "subvol=nix-store"
         "rw"
         "noatime"
-        "discard=async"
-        "compress=zstd:6"
-        "ssd"
-        "space_cache=v2"
-      ];
-      neededForBoot = true;
-    };
-
-    "/home" = {
-      device = home.device;
-      fsType = "btrfs";
-      options = [
-        "defaults"
-        "rw"
-        "relatime"
         "discard=async"
         "compress=zstd:1"
         "ssd"
         "space_cache=v2"
       ];
+      neededForBoot = true;
     };
   };
 }

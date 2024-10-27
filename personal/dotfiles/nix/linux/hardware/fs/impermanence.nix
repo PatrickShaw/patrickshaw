@@ -20,7 +20,11 @@ in
     "/boot" = {
       device = boot.device;
       fsType = "vfat";
-      options = [ "defaults" "discard" ];
+      options = [ "defaults" "discard"
+        # See https://discourse.nixos.org/t/security-warning-when-installing-nixos-23-11/37636
+        "umask=0077" 
+      ];
+      
     };
 
     "/persist" = {
@@ -107,5 +111,8 @@ in
     "/home"
 
     "/etc/shadow"
+
+    # Makes a bunch of measurements which it seems to read upon reboot. Probably worth it for battery useage purposes?
+    "/var/cache/powertop"
   ]);
 }

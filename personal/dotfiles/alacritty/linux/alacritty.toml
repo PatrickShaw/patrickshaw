@@ -1,4 +1,3 @@
-import = ["/home/pshaw/personal/dotfiles/alacritty/shared/alacritty.toml"]
 
 [keyboard]
 bindings = [
@@ -25,3 +24,6 @@ opacity = 0.95
 dynamic_padding = false
 # Changes were made for MacOS. Not sure if they're good for Linux
 option_as_alt="Both"
+
+[general]
+import = ["/home/pshaw/personal/dotfiles/alacritty/shared/alacritty.toml"]

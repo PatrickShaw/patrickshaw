@@ -254,7 +254,7 @@
             schema = pkgs.gsettings-desktop-schemas;
             datadir = "${schema}/share/gsettings-schemas/${schema.name}";
           in ''
-            export XDG_DATA_DIRS=${pkgs.gnome.nautilus}/share/gsettings-schemas/${pkgs.nautilus.name}:${datadir}:$XDG_DATA_DIRS
+            export XDG_DATA_DIRS=${pkgs.nautilus}/share/gsettings-schemas/${pkgs.nautilus.name}:${datadir}:$XDG_DATA_DIRS
 
             export PATH="${lib.makeBinPath [pkgs.glib]}:$PATH"
             

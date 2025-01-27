@@ -67,6 +67,7 @@
 
 [rerere]
 # Auto resolves conflicts if I specified how to resolve them before. Could be risky. Added in 2023-07-20. Will give it a go
+# 2025-01-27 I don't think I've ran into any issues recently with bugs in my merging history. Not anymore than usual anyway. Keeping this
 enabled = true
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f

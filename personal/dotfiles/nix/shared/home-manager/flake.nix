@@ -20,6 +20,11 @@
       url = "github:zdharma-continuum/fast-syntax-highlighting";
       flake = false;
     };
+    # Uncommented for the following reason "If you install Powerlevel10k, you don't need to install gitstatus." See https://github.com/romkatv/gitstatus
+    # gitstatus-repo = {
+    #   url = "github:romkatv/gitstatus";
+    #   flake = false;
+    # };
     utils.url = "github:numtide/flake-utils";
     
     dracula-dircolors = {

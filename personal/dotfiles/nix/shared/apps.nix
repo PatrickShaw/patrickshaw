@@ -96,9 +96,7 @@ with pkgs; [
   jaq
   socat
 
-  (uutils-coreutils.override {
-    prefix = "";
-  })
+  uutils-coreutils-noprefix
 
   libnotify
 

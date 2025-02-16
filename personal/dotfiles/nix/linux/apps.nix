@@ -218,4 +218,7 @@ with pkgs; [
   # Don't remember why exactly I added these but I imagine they're for getting XDG-open to work properly
   shared-mime-info
   desktop-file-utils
+
+  # Layer on top of Docker/Podman/OCI to run Linux distros in containers
+  distrobox
 ]

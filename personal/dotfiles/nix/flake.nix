@@ -307,7 +307,7 @@
 
             gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 
-            gsettings set org.gnome.nautilus.preferences sort-directories-first true
+            # gsettings set org.gnome.nautilus.preferences sort-directories-first true
           '';
         };
       in {

@@ -62,10 +62,10 @@ vim.cmd [[
 ]]
 -- TODO: Confirm if it works
 -- Auto restore changes made in nvim
-require("auto-session").setup {
-  auto_session_enable_last_session = true,
-  auto_restore_enabled = true,
-}
+-- require("auto-session").setup {
+--   auto_session_enable_last_session = true,
+--   auto_restore_enabled = true,
+-- }
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
@@ -74,7 +74,7 @@ local lspconfig = require('lspconfig')
 lspconfig.pyright.setup {
   capabilities = capabilities,
 }
-lspconfig.tsserver.setup {
+lspconfig.ts_ls.setup {
   capabilities = capabilities,
 }
 lspconfig.rust_analyzer.setup {

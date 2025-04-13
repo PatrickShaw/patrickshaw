@@ -81,7 +81,7 @@
             in {
               programs.vscode = {
                 enable = true;
-                extensions = with vscode-extensions.vscode-marketplace; [
+                profiles.default.extensions = with vscode-extensions.vscode-marketplace; [
                   catppuccin.catppuccin-vsc
                   vscode-icons-team.vscode-icons
                   dbaeumer.vscode-eslint

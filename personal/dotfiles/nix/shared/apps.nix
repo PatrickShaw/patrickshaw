@@ -42,7 +42,6 @@ with pkgs; [
   git-lfs
   
   gnupg
-  pinentry
 
   neovim
   unrar
@@ -101,7 +100,8 @@ with pkgs; [
   libnotify
 
   libiconv
-  google-cloud-sdk
+  # Too large to be worth installing everywhere
+  # google-cloud-sdk
 
   # Just use direnv
   # cper

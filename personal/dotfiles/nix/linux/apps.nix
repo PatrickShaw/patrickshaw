@@ -221,4 +221,6 @@ with pkgs; [
 
   # Layer on top of Docker/Podman/OCI to run Linux distros in containers
   distrobox
+
+  pinentry
 ]

@@ -95,7 +95,10 @@
                   arcanis.vscode-zipfs
                   stylelint.vscode-stylelint
                   rust-lang.rust-analyzer
-                  mkhl.direnv
+
+                  # Found this one to be buggy:
+                  # mkhl.direnv
+
                   ms-azuretools.vscode-docker
                   tamasfe.even-better-toml
                   oderwat.indent-rainbow

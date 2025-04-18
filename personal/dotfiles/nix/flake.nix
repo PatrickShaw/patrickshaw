@@ -467,8 +467,6 @@
         services.udisks2.enable = true;
 
 
-        # Udev rules - Includes some for Sony DS4
-        hardware.steam-hardware.enable = true;
         programs.steam = {
           enable = true;
           extraCompatPackages = [

@@ -107,7 +107,6 @@
 
                   streetsidesoftware.code-spell-checker
                   streetsidesoftware.code-spell-checker-australian-english
-                  streetsidesoftware.code-spell-checker-australian-english
                 ];
               };
                 services.darkman = {

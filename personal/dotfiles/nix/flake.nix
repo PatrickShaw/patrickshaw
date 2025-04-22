@@ -98,6 +98,30 @@
             pkgs.nvidia-vaapi-driver
           ];
         };
+
+        environment.systemPackages =[
+          # https://github.com/NixOS/nixpkgs/issues/384739
+          pkgs.lact
+        ];
+
+        nixpkgs.overlays = [
+          (final: prev: {
+            lact = prev.lact.overrideAttrs (oldAttrs: {
+              nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [ final.autoAddDriverRunpath ];
+            });
+          })
+        ];
+
+        # See https://github.com/paschoal/dotfiles/blob/master/hardware/radeon/default.nix
+        systemd.services.lact = {
+          description = "AMDGPU Control Daemon";
+          after = ["multi-user.target"];
+          wantedBy = ["multi-user.target"];
+          serviceConfig = {
+            ExecStart = "${pkgs.lact}/bin/lact daemon";
+          };
+          enable = true;
+        };
       };
       binary-cache = import ./shared/binary-caching.nix;
       nvidia-a1000 = { ... }: {
@@ -167,19 +191,7 @@
       };
     };
       direnv = { pkgs, ... }: {
-        nixpkgs.overlays = [
-          inputs.nix-direnv.overlays.default
-          (final: super: {
-            nix-direnv = super.nix-direnv.overrideAttrs (old: old // {
-              enableFlakes = true;
-            });
-          })
-        ];
-
         environment.systemPackages = [
-          # (inputs.nix-direnv.packages.${pkgs.system}.default.override {
-          #   enableFlakes = true;
-          # })
           pkgs.direnv
         ];
 

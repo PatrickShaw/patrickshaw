@@ -336,12 +336,6 @@
 
 
         # programs.hyprland.package = inputs.hyprland.packages.${pkgs.system}.default;
-        programs.hyprland = {
-          enable = true;
-          xwayland = { 
-            enable = true;
-          };
-        };
 
         nixpkgs.overlays = [
           # inputs.nixpkgs-wayland.overlays.default

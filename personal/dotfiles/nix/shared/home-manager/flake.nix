@@ -237,10 +237,15 @@
                 };
                 programs.zsh = {
                     enable = true;
-                    initContent = ''
+                    initContent = lib.mkOrder 500 ''
                       ${zsh-config}
                     '';
-                };
+                }  // (
+                if pkgs.stdenv.isDarwin then {
+                  # See: https://github.com/nix-darwin/nix-darwin/issues/554#issuecomment-1289736477
+                  completionInit = "autoload -U compinit && compinit -u";
+                } else {}
+              );
             };
           };
         };

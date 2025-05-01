@@ -239,7 +239,7 @@
                 };
                 programs.zsh = {
                     enable = true;
-                    initExtra = ''
+                    initContent = ''
                       ${zsh-config}
                     '';
                 };

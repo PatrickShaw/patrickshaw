@@ -114,5 +114,11 @@ in
 
     # Makes a bunch of measurements which it seems to read upon reboot. Probably worth it for battery useage purposes?
     "/var/cache/powertop"
+
+    # I think dhcpcd has trouble on restart so keeping this here?
+    "/var/lib/dhcpcd"
+    "/var/db/dhcpcd"
+
+    "/etc/adjtime"
   ]);
 }

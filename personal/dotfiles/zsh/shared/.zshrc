@@ -1,3 +1,5 @@
+autoload -U compinit
+
 path+=($HOME/.cargo/bin)
 
 export PATH
@@ -34,3 +36,6 @@ alias back=z -
 zsh-defer -c 'eval "$(thefuck --alias)"'
 zsh-defer -c 'eval "$(fnm completions --shell zsh)"'
 zsh-defer -c 'eval "$(fnm env --use-on-cd --corepack-enabled)"'
+# TODO: Look harder into a better fix
+# Not a fan of the -u. See: https://discourse.nixos.org/t/how-to-add-stuff-to-run-current-system-sw-nix-store-isnt-safe/1331/6
+zsh-defer -c 'compinit -u'

@@ -6,4 +6,7 @@
     TERMINAL = "wezterm";
     BROWSER = "firefox";
   };
+  
+  # Prefer to run this myself
+  programs.zsh.enableGlobalCompInit = false;
 }

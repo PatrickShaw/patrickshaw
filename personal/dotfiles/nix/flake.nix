@@ -264,24 +264,27 @@
         services.xserver.desktopManager.gnome.enable = true;
         services.xserver.displayManager.gdm.wayland = true;
 
-        xdg.portal = {
-          enable = true;
-          wlr.enable = true;
-           extraPortals = [
+        # Auto rotate
+        # See https://wiki.nixos.org/wiki/GNOME
+        hardware.sensor.iio.enable = true;
+
+        # Assuming this is on by default
+        #xdg.portal = {
+        #  enable = true;
+        #  wlr.enable = true;
+        #   extraPortals = [
               # pkgs.xdg-desktop-portal-gtk
               # Saw this declared in: https://discourse.nixos.org/t/xdg-desktop-portal-not-working-on-wayland-while-kde-is-installed/20919
               #wayland-pkgs.xdg-desktop-portal-wlr
-           ];
-        };
+        #   ];
+        #};
       };
 
-      pipewire = {
+      pipewire = { lib, ... }: {
         services.pipewire = {
           enable = true;
-          alsa.enable = false;
-          alsa.support32Bit = false;
-          #alsa.enable = true;
-          #alsa.support32Bit = true;
+          alsa.enable = lib.mkDefault false;
+          alsa.support32Bit = lib.mkDefault false;
           pulse.enable = true;
           jack.enable = true;
           wireplumber.enable = true;
@@ -336,12 +339,6 @@
 
 
         # programs.hyprland.package = inputs.hyprland.packages.${pkgs.system}.default;
-        programs.hyprland = {
-          enable = true;
-          xwayland = { 
-            enable = true;
-          };
-        };
 
         nixpkgs.overlays = [
           # inputs.nixpkgs-wayland.overlays.default

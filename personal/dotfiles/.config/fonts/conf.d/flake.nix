@@ -17,6 +17,8 @@
       };
       fontList = [
           brootIcons
+          pkgs.powerline-symbols
+          pkgs.nerd-fonts.symbols-only
           # too big: pkgs.nerdfonts
 
           # See: https://dribbble.com/stories/2021/04/26/web-design-data-fonts

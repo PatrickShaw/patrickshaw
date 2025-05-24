@@ -42,6 +42,9 @@
           pkgs.meslo-lgs-nf
           pkgs.cascadia-code
           pkgs.jetbrains-mono
+          # Can't be bothered setting up complex fallbacks just for MacOS ATM so this is what i'm using. Also can use this as a fallback for software with non-system integrated font logic
+          pkgs.nerd-fonts.jetbrains-mono
+
         ];
     in {
       fonts = {

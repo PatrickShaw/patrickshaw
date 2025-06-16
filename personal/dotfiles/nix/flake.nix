@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs = { url = "github:nixos/nixpkgs/nixos-unstable"; };
 
-    nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
+    # nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
     # nixpkgs-wayland.inputs.nixpkgs.follows = "nixpkgs";
 
     # For whatever reason, using Hyprland, even with the cache declared and the binary cache declared and no nixpkgs.follows, everything in Hyprland was being rebuild. It _might_ be because I used Hyprland's overlay but from what i can see, it looks like upstream NixOS seems to be fairly up to date with Hyprland's actual flake so meh, i'm not gonna investigate further
@@ -20,8 +20,6 @@
     # helix.inputs.nixpkgs.follows = "nixpkgs";
     # helix.inputs.rust-overlay.follows = "rust-overlay";
 
-    nix-direnv.url = "github:nix-community/nix-direnv";
-    nix-direnv.inputs.nixpkgs.follows = "nixpkgs";
 
 
     nix-gaming.url = "github:fufexan/nix-gaming";
@@ -39,7 +37,7 @@
       # "https://hyprland.cachix.org"
 
       # See: https://github.com/nix-community/nixpkgs-wayland#binary-cache
-      "https://nixpkgs-wayland.cachix.org"
+      # "https://nixpkgs-wayland.cachix.org"
 
       "https://nix-community.cachix.org"
 
@@ -50,7 +48,7 @@
       "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
       # "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
+      # "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
       # "helix.cachix.org-1:ejp9KQpR1FBI2onstMQ34yogDm4OgU2ru6lIwPvuCVs="
     ];
   };
@@ -100,16 +98,7 @@
         };
 
         environment.systemPackages =[
-          # https://github.com/NixOS/nixpkgs/issues/384739
           pkgs.lact
-        ];
-
-        nixpkgs.overlays = [
-          (final: prev: {
-            lact = prev.lact.overrideAttrs (oldAttrs: {
-              nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [ final.autoAddDriverRunpath ];
-            });
-          })
         ];
 
         # See https://github.com/paschoal/dotfiles/blob/master/hardware/radeon/default.nix
@@ -295,7 +284,6 @@
       };
 
       core = { pkgs, lib, options, ...}: let
-        wayland-pkgs = inputs.nixpkgs-wayland.packages.${pkgs.system};
         shared-aliases = import ./shared/program-aliases.nix { };
 
         # See https://nixos.wiki/wiki/Sway
@@ -429,16 +417,17 @@
         environment.systemPackages = [
           configure-gtk
 
-          wayland-pkgs.wl-clipboard
-          wayland-pkgs.swww
-          wayland-pkgs.wofi
-          wayland-pkgs.grim
-          wayland-pkgs.slurp
-          wayland-pkgs.imv
+          # Note: Tried nixpkgs-wayland but found it to be more unstable since it uses non-released versions
+          pkgs.wl-clipboard
+          pkgs.swww
+          pkgs.wofi
+          pkgs.grim
+          pkgs.slurp
+          pkgs.imv
           #wayland-pkgs.sway-unwrapped
-          wayland-pkgs.mako
+          pkgs.mako
 
-          wayland-pkgs.eww
+          pkgs.eww
 
           # inputs.helix.packages.${pkgs.system}.default
 

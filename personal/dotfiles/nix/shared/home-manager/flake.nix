@@ -105,6 +105,9 @@
 
                   streetsidesoftware.code-spell-checker
                   streetsidesoftware.code-spell-checker-australian-english
+
+                  # Contains OLED ayu
+                  Binary-Ink.dark-modern-oled-theme-set
                 ];
               };
                 services.darkman = {
@@ -239,7 +242,7 @@
                     enable = true;
                     initContent = lib.mkMerge [
                        (lib.mkOrder 500 ''
-                      ${zsh-config}
+                        ${zsh-config}
                       '')
                     ];
                 }  // (

@@ -33,7 +33,7 @@ alias ls=lsd
 alias cd=z
 alias back=z -
 
-zsh-defer -c 'eval "$(thefuck --alias)"'
+eval "$(pay-respects zsh --alias)"
 zsh-defer -c 'eval "$(fnm completions --shell zsh)"'
 zsh-defer -c 'eval "$(fnm env --use-on-cd --corepack-enabled)"'
 # TODO: Look harder into a better fix

@@ -1,0 +1,2 @@
+[general]
+import = ["/home/pshaw/personal/dotfiles/alacritty/shared/alacritty.toml"]

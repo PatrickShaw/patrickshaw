@@ -107,7 +107,7 @@
                   streetsidesoftware.code-spell-checker-australian-english
 
                   # Contains OLED ayu
-                  Binary-Ink.dark-modern-oled-theme-set
+                  binary-ink.dark-modern-oled-theme-set
                 ];
               };
                 services.darkman = {

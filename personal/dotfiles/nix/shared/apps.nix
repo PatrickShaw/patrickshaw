@@ -35,7 +35,7 @@ with pkgs; [
   # Decided to go with lsd
   # Also see comments in https://news.ycombinator.com/item?id=37416430
   # eza
-  thefuck
+  pay-respects
   zoxide
   delta
   git

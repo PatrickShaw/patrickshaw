@@ -64,9 +64,7 @@
           git-zsh-fast-syntax-highlighting;
       };
     in {
-      darwinModules.default = {pkgs, ...}: {
-        imports = [self.nixosModules.default];
-      };
+      darwinModules.default = self.nixosModules.default;
       nixosModules.default = {pkgs, ... }: {
         config = {
           environment.systemPackages = [
@@ -107,6 +105,9 @@
 
                   streetsidesoftware.code-spell-checker
                   streetsidesoftware.code-spell-checker-australian-english
+
+                  # Contains OLED ayu
+                  binary-ink.dark-modern-oled-theme-set
                 ];
               };
                 services.darkman = {
@@ -239,10 +240,22 @@
                 };
                 programs.zsh = {
                     enable = true;
-                    initExtra = ''
-                      ${zsh-config}
-                    '';
-                };
+                    initContent = lib.mkMerge [
+                       (lib.mkOrder 500 ''
+                        ${zsh-config}
+                      '')
+                    ];
+                }  // (
+                # if pkgs.stdenv.isDarwin then 
+                {
+                  # See: https://github.com/nix-darwin/nix-darwin/issues/554#issuecomment-1289736477
+                  # completionInit = "autoload -U compinit && compinit -u";
+
+                  # See: https://gemini.google.com/app/8cd64085d98f0bb4
+                  completionInit = "";
+                } 
+                # else {}
+              );
             };
           };
         };

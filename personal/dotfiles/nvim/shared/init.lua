@@ -8,10 +8,11 @@ vim.opt.autoindent = true
 
 -- TODO: Confirm if it works
 -- Auto choose the swapfile when editing in nvim
-vim.api.nvim_create_autocmd("VimEnter", {
-  pattern = "*",
-  command = "silent! recover"
-})
+-- Update 2025-05-02: Didn't work, at least, when using nvim for working with git commits
+-- vim.api.nvim_create_autocmd("VimEnter", {
+--   pattern = "*",
+--   command = "silent! recover"
+-- })
 
 -- Re-read file changes https://neovim.io/doc/user/options.html#'autoread'
 vim.o.autoread = true

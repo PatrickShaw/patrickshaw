@@ -17,6 +17,8 @@
       };
       fontList = [
           brootIcons
+          pkgs.powerline-symbols
+          pkgs.nerd-fonts.symbols-only
           # too big: pkgs.nerdfonts
 
           # See: https://dribbble.com/stories/2021/04/26/web-design-data-fonts
@@ -40,6 +42,9 @@
           pkgs.meslo-lgs-nf
           pkgs.cascadia-code
           pkgs.jetbrains-mono
+          # Can't be bothered setting up complex fallbacks just for MacOS ATM so this is what i'm using. Also can use this as a fallback for software with non-system integrated font logic
+          pkgs.nerd-fonts.jetbrains-mono
+
         ];
     in {
       fonts = {

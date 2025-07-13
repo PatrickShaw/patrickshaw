@@ -77,6 +77,7 @@
             users.pshaw = { config, lib, ... }: let
               vscode-extensions = inputs.vscode-extensions-2.extensions.${pkgs.system};
             in {
+              programs.pay-respects.enable = true;
               programs.vscode = {
                 enable = true;
                 profiles.default.extensions = with vscode-extensions.vscode-marketplace; [

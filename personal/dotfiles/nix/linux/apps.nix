@@ -223,4 +223,7 @@ with pkgs; [
   distrobox
 
   pinentry
+
+  # A lot of scripts want this
+  lsof 
 ]

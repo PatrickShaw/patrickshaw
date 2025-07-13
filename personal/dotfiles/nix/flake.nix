@@ -226,6 +226,7 @@
 
         # Time
         services.chrony.enable = true;
+        services.chrony.enableNTS = true;
         services.timesyncd.enable = false;
         environment.etc = {
           # This is to make systemd past boots of journals actually log out when listed

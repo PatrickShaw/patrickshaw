@@ -482,8 +482,14 @@
           pkgs.android-udev-rules
         ];
         
-        networking.timeServers = options.networking.timeServers.default
-          ++ [ "time.cloudflare.com" ];
+        networking.timeServers = 
+        # Defaults don't seem to support NTS
+        # options.networking.timeServers.default
+          # ++ 
+          [ 
+            "time.cloudflare.com"
+            "nts.netnod.se" # This ones a lot slower but prefer to have it for the sake of redundancy
+           ];
 
         systemd.services.libvirtd-config.script = lib.mkAfter ''
           #rm /var/lib/libvirt/qemu/networks/autostart/default.xml

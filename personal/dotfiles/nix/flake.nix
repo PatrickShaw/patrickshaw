@@ -228,6 +228,15 @@
         services.chrony.enable = true;
         services.chrony.enableNTS = true;
         services.timesyncd.enable = false;
+        networking.timeServers = 
+        # Defaults don't seem to support NTS
+        # options.networking.timeServers.default
+          # ++ 
+          [ 
+            "time.cloudflare.com"
+            "nts.netnod.se" # This ones a lot slower but prefer to have it for the sake of redundancy
+          ];
+
         environment.etc = {
           # This is to make systemd past boots of journals actually log out when listed
           # See https://www.reddit.com/r/NixOS/comments/kgziex/journald_not_keeping_past_boot_logs/
@@ -481,15 +490,6 @@
         services.udev.packages = [
           pkgs.android-udev-rules
         ];
-        
-        networking.timeServers = 
-        # Defaults don't seem to support NTS
-        # options.networking.timeServers.default
-          # ++ 
-          [ 
-            "time.cloudflare.com"
-            "nts.netnod.se" # This ones a lot slower but prefer to have it for the sake of redundancy
-           ];
 
         systemd.services.libvirtd-config.script = lib.mkAfter ''
           #rm /var/lib/libvirt/qemu/networks/autostart/default.xml

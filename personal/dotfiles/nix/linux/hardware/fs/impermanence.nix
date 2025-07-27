@@ -114,5 +114,14 @@ in
 
     # Makes a bunch of measurements which it seems to read upon reboot. Probably worth it for battery useage purposes?
     "/var/cache/powertop"
+
+    # Keeps track of time
+    "/var/lib/chrony"
+
+    # Worth storing in case whatever network your on doesn't like you forgetting your IP
+    "/var/lib/dhcpcd"
+
+
+    "/var/lib/systemd/coredump"
   ]);
 }

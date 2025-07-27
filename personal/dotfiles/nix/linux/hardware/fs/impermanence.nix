@@ -118,10 +118,14 @@ in
     # Keeps track of time
     "/var/lib/chrony"
 
-    # Worth storing in case whatever network your on doesn't like you forgetting your IP
-    "/var/lib/dhcpcd"
-
 
     "/var/lib/systemd/coredump"
+
+    # I think dhcpcd has trouble on restart so keeping this here?
+    # Worth storing in case whatever network your on doesn't like you forgetting your IP
+    "/var/lib/dhcpcd"
+    "/var/db/dhcpcd"
+
+    "/etc/adjtime"
   ]);
 }

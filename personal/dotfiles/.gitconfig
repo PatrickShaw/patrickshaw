@@ -43,6 +43,7 @@
   # See: https://www.git-tower.com/blog/git-performance/
 	# Explained here: https://www.youtube.com/watch?v=aolI_Rz0ZqY
   writeCommitGraph = true
+prune = true
 
 [feature]
     # Optimises for lots of files
@@ -78,6 +79,16 @@ enabled = true
 	program = /run/current-system/sw/bin/gpg
 [pull]
 	rebase = false
+
+[alias]
+c = "commit -m"
+f = "!$HOME/personal/code-snippets/git/fetch-important.sh"
+
+# Fetch all
+fa = "fetch"
+
+rbo = "!git f && git rebase -i origin/main"
+
 [trace2]
 	eventTarget = /home/pshaw/.gittrace/dump
 	configparams = custom.metacommands

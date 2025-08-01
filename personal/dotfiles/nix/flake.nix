@@ -195,10 +195,6 @@
           self.nixosModules.direnv
           shared-configuration
         ];
-        nix.gc = {
-          automatic = true;
-          options = "--delete-older-than 30d";
-        };
         environment.systemPackages = [
           pkgs.nix-direnv
         ];
@@ -206,6 +202,10 @@
       barebones = { lib, pkgs, ... }:  {
         environment.variables = {
           EDITOR = "nvim";
+        };
+        nix.gc = {
+          automatic = lib.mkDefault true;
+          options = lib.mkDefault "--delete-older-than 30d";
         };
         environment.systemPackages = [
           pkgs.lm_sensors

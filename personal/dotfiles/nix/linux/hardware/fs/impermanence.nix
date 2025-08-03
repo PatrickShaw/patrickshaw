@@ -84,8 +84,6 @@ in
       neededForBoot = true;
     };
   } // (persist-directories [
-    # Where fprint fingerprint data lives
-    "/var/lib/fprint"
 
     "/root"
 
@@ -93,13 +91,6 @@ in
     "/etc/NetworkManager/system-connections"
     # Where wpa_supplicant stores WiFi info
     "/etc/wpa_supplicant"
-    # Where iwd stores WiFi info
-    "/var/lib/iwd"
-
-    "/var/lib/bluetooth"
-
-    # This is where waydroid stores its files such as images and configs - If you use waydroid, that is
-    "/var/lib/waydroid"
 
     # Without this you'd have to keep approving each newly generated SSH on each boot if you enable SSHing into the machine
     "/etc/ssh"
@@ -115,15 +106,13 @@ in
     # Makes a bunch of measurements which it seems to read upon reboot. Probably worth it for battery useage purposes?
     "/var/cache/powertop"
 
-    # Keeps track of time
-    "/var/lib/chrony"
+    "/var/lib"
 
-
-    "/var/lib/systemd/coredump"
+    # FHS explicitly says tmp files to be preserved for reboot so will do
+    "/var/tmp"
 
     # I think dhcpcd has trouble on restart so keeping this here?
     # Worth storing in case whatever network your on doesn't like you forgetting your IP
-    "/var/lib/dhcpcd"
     "/var/db/dhcpcd"
 
     "/etc/adjtime"

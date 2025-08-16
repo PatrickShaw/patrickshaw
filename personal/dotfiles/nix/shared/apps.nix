@@ -1,6 +1,5 @@
 { pkgs, ... }:
-
-with pkgs; [
+with pkgs; (import ./barebones-apps.nix { inherit pkgs; }) ++ [
   discord
 
   # Node canvas doesn't work without Mac's default GCC
@@ -30,15 +29,9 @@ with pkgs; [
   gradle
   maven
 
-  bat
-
   # Decided to go with lsd
   # Also see comments in https://news.ycombinator.com/item?id=37416430
   # eza
-  zoxide
-  delta
-  git
-  git-lfs
   
   gnupg
 
@@ -72,8 +65,6 @@ with pkgs; [
 
   dogdns
 
-  lsd
-
   sd
 
   du-dust
@@ -81,10 +72,6 @@ with pkgs; [
   duf
 
   broot
-  
-  fd
-
-  ripgrep
 
   choose
 
@@ -93,8 +80,6 @@ with pkgs; [
   # For managing workspaces
   jaq
   socat
-
-  uutils-coreutils-noprefix
 
   libnotify
 

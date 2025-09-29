@@ -561,7 +561,9 @@
 
         services.gvfs.enable = true;
 
-        services.openssh.enable = true;
+        services.openssh = {
+          enable = true;
+        };
         
         # Should start a service based on https://github.com/NixOS/nixpkgs/blob/27bd67e55fe09f9d68c77ff151c3e44c4f81f7de/nixos/modules/programs/nm-applet.nix#L26
         programs.nm-applet.enable = true;

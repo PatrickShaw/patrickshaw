@@ -1,0 +1,27 @@
+---
+description: Coding practices to be applied to all code
+alwaysApply: true
+---
+
+## Quick rules
+- Favour immutability: Keep state as encapsulated as possible
+- Encapsulated state: Where mutable state is unavoidable, ensure it is strictly encapsulated and its scope is minimized.
+- Contextual comments: Use comments to explain *why* a particular piece of code exists, especially
+for complex logic or business rules. Do not use comments to explain *what* the
+code does if the code itself is clear.
+- D.R.Y rule of threes: If you have repeated a sequence of code three or more
+times, consider refactoring to remove the duplication.
+- No magic numbers: Numbers with semantic meaning attached to them should always
+be assigned to and used as a variable (E.g. `MAX_RETRIES = 3`)
+- Avoid micro-optimizations: Focus on understandable, readable code first and
+foremost.
+- No boat anchors/YAGNI: Avoid defensive programming and "just in case" code paths
+- Fail fast: Where appropriate, avoid silencing errors by swallowing or falling
+back on defaults. Instead, be explicit about the code conveys that "this is
+an error" and handle it as such at a scope that can handle the error best.
+- Single Responsibility: Each function, class, or module should have one, and
+only one, reason to change.
+- Explicit Dependencies: Avoid hidden dependencies like globals or singletons. Instead, make dependencies explicit by passing them as arguments or through dependency injection.
+- Incorporate SOLID principles into code (Single Responsibility Principle,
+Open/Closed Principle, Liskov Substitution Principle, Interface Segregation
+Principle, and Dependency Inversion Principle)

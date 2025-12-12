@@ -67,16 +67,16 @@
       darwinModules.default = self.nixosModules.default;
       nixosModules.default = {pkgs, ... }: {
         config = {
-          environment.systemPackages = [
-            pkgs.lua-language-server
-            pkgs.tree-sitter
-          ];
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
             users.pshaw = { config, lib, ... }: let
               vscode-extensions = inputs.vscode-extensions-2.extensions.${pkgs.system};
             in {
+              home.packages = [
+                pkgs.lua-language-server
+                pkgs.tree-sitter
+              ];
               programs.pay-respects.enable = true;
               programs.nix-index.enable = true;
               programs.vscode = {

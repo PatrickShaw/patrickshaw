@@ -37,7 +37,7 @@
 	# See: https://www.git-tower.com/blog/git-performance/
 	# See: https://www.youtube.com/watch?v=aolI_Rz0ZqY
 	commitgraph = true
-		excludesfile = /Users/pshaw/.gitignore
+excludesfile = /Users/pshaw/.gitignore_global
 
 [fetch]
   # See: https://www.git-tower.com/blog/git-performance/
@@ -87,7 +87,10 @@ f = "!$HOME/personal/code-snippets/git/fetch-important.sh"
 # Fetch all
 fa = "fetch"
 
+# Rebase origin
 rbo = "!git f && git rebase -i origin/main"
+
+cull-storage = "!git pull --depth=1 --rebase && git reflog expire --expire=now --all && git gc --prune=now"
 
 [trace2]
 	eventTarget = /home/pshaw/.gittrace/dump

@@ -37,7 +37,7 @@
 	# See: https://www.git-tower.com/blog/git-performance/
 	# See: https://www.youtube.com/watch?v=aolI_Rz0ZqY
 	commitgraph = true
-excludesfile = /Users/pshaw/.gitignore_global
+	excludesfile = ~/.gitignore_global
 
 [fetch]
   # See: https://www.git-tower.com/blog/git-performance/
@@ -93,7 +93,7 @@ rbo = "!git f && git rebase -i origin/main"
 cull-storage = "!git pull --depth=1 --rebase && git reflog expire --expire=now --all && git gc --prune=now"
 
 [trace2]
-	eventTarget = /home/pshaw/.gittrace/dump
+	eventTarget = ~/.gittrace/dump
 	configparams = custom.metacommands
 	eventBrief = true
 	maxFiles = 2000

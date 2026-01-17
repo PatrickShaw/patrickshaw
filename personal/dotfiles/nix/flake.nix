@@ -58,9 +58,9 @@
       nvidia = { config, pkgs, ... }: {
         imports = [self.nixosModules.opengl];
         services.xserver.videoDrivers = [ "nvidia" ];
-        hardware.nvidia = {
-          package = config.boot.kernelPackages.nvidiaPackages.stable;
-        };
+        # hardware.nvidia = {
+        #   package = config.boot.kernelPackages.nvidiaPackages.stable;
+        # };
 
         environment.sessionVariables = {
           # What I currently use as my wlroots backend ATM
@@ -117,7 +117,7 @@
           # __VK_LAYER_NV_optimus="NVIDIA_only";
         };
       };
-      nvidia-gtx1060 = { ... }: {
+      nvidia-gtx1060 = { config, ... }: {
         boot.kernelModules = [
           "nvidia"
           "nvidia_modeset"
@@ -129,16 +129,19 @@
           open = false; 
           # See KMS doco in Arch. Meant to enable newer rendering methods, etc
           modesetting.enable = true;
+          package = config.boot.kernelPackages.nvidiaPackages.production;
         };
         environment.sessionVariables = {
           # Won't render hardware cursors
-          WLR_NO_HARDWARE_CURSORS="1";
+          # WLR_NO_HARDWARE_CURSORS="1";
           
           # See: https://wiki.hyprland.org/Configuring/Environment-variables/
           # See: https://github.com/hyprwm/Hyprland/issues/1878
-          GBM_BACKEND="nvidia";
+          # GBM_BACKEND="nvidia";
           __GLX_VENDOR_LIBRARY_NAME="nvidia";
           LIBVA_DRIVER_NAME="nvidia";
+          
+
         };
       };
       text-to-speech = { ... }: {
@@ -394,7 +397,7 @@
               };
             };
             configPackages = [
-              pkgs.xdg-desktop-portal-hyprland
+              # pkgs.xdg-desktop-portal-hyprland
               pkgs.xdg-desktop-portal-gtk
               # pkgs.xdg-desktop-portal-wlr
             ];

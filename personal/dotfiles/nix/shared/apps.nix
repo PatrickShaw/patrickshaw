@@ -19,9 +19,9 @@ with pkgs; (import ./barebones-apps.nix { inherit pkgs; }) ++ [
 
   rustup
   # rust-analyzer
-  python3Full
-  # Security flaw: python
+  python3
   poetry
+  uv
   
   # Just use direnv
   # deno

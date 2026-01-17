@@ -14,7 +14,7 @@ date_time_format: %y/%m/%d
 verbs: [
   {
     key: enter
-    execution: /home/pshaw/.config/broot/temp.sh {file}
+    execution: ~/.config/broot/temp.sh {file}
     leave_broot: false
     apply_to: file
   }

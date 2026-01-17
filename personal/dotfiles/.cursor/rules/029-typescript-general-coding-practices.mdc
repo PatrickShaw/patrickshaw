@@ -1,0 +1,29 @@
+---
+description: Coding practices to be applied to all TypeScript tests
+globs: *.{ts,tsx}
+alwaysApply: true
+---
+
+## Quick rules
+- Prefer `const` over `let`
+- Prefer named exports over default exports
+- Minimize the use of `throw` and `try-catch`. If an error needs to be
+propagated out of a method opt for returning. If a particular error needs to be
+caught, catch that specific error and throw the rest. 
+- Avoid truthy evaluation of `undefined` and/or null. Opt for `myVariable ===
+undefined` and `myVariable === null` instead.
+- Use `??` instead of `||` where possible
+- You can use `null as unknown as <TypeBeingTested> satisfies <TypeItNeedsToAbideBy>` as a means of writing a
+"test" to ensure one type satisfies the requirements of another.
+- Prefer `as unknown` to `as any` 
+- Prefer `/** */` or `/* */` to multiple `//`s when a comment spans more than 1
+line
+- Prefer using `type` over `interface`
+- Prefer `satisfies` over `as`
+- When an argument's type definition is very complex but the method only uses a
+small subset of fields on that type, use `Pick<MyType, ...>` in the argument
+type definition to only include the fields the method uses.
+- Prefer `| undefined` over `?:` in argument types unless the intention is to
+optimize for developer convenience and worrying about accidentally omitting a
+parameter is not a risk.
+- Preference `globalThis` over `window` or `global`

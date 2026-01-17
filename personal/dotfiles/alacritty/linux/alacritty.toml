@@ -26,4 +26,4 @@ dynamic_padding = false
 option_as_alt="Both"
 
 [general]
-import = ["/home/pshaw/personal/dotfiles/alacritty/shared/alacritty.toml"]
+import = ["~/personal/dotfiles/alacritty/shared/alacritty.toml"]

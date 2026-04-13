@@ -29,7 +29,7 @@ activeWorkspace() {
   IMG_FILENAME=$(echo ${idToImg["$INDEX"]})
   PREV_ID=$ID
   
-  swww img --transition-type=simple --transition-fps=60 --transition-step=48 $HOME/wallpapers/wallhaven/$IMG_FILENAME &
+  awww img --transition-type=simple --transition-fps=60 --transition-step=48 $HOME/wallpapers/wallhaven/$IMG_FILENAME &
 }
 
 activeWorkspace

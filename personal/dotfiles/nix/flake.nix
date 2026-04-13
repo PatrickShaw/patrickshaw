@@ -232,7 +232,23 @@
         
         nixpkgs.config.allowUnfree = lib.mkDefault true;
       };
-      
+      cosmic = { pkgs, ... }: {
+        imports = [
+          self.nixosModules.pipewire
+        ];
+
+        services.displayManager = {
+          cosmic-greeter.enable = true;
+          autoLogin = {
+            enable = true;
+            user = "pshaw";
+          };
+        };
+        services.desktopManager.cosmic = {
+          enable = true;
+        };
+        services.system76-scheduler.enable = true;
+      };
       gnome = { pkgs, ... }: {
         imports = [
           self.nixosModules.pipewire
@@ -407,7 +423,7 @@
 
           # Note: Tried nixpkgs-wayland but found it to be more unstable since it uses non-released versions
           pkgs.wl-clipboard
-          pkgs.swww
+          pkgs.awww
           pkgs.wofi
           pkgs.grim
           pkgs.slurp

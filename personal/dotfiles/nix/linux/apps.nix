@@ -46,7 +46,8 @@ with pkgs; [
 
   brightnessctl
 
-  frawk
+  # Broken ATM:
+  #frawk
 
   looking-glass-client
 
@@ -83,7 +84,7 @@ with pkgs; [
 
   # See: https://nixos.wiki/wiki/Wine
   #wineWowPackages.stable
-  wineWowPackages.waylandFull
+  wineWow64Packages.waylandFull
   samba # Fixes ntlm_auth wine errors. See https://github.com/NixOS/nixpkgs/issues/126801#issuecomment-930431829
 
   spotify
@@ -224,6 +225,7 @@ with pkgs; [
   # Layer on top of Docker/Podman/OCI to run Linux distros in containers
   distrobox
 
+  pinentry-all
   # A lot of scripts want this
   lsof 
 ]

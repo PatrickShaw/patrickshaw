@@ -202,7 +202,9 @@ with pkgs; [
   efibootmgr
 
   # Zoom was asking for it
-  glxinfo
+  # glxinfo
+  # Apparently the folowing replaces glxinfo?
+  mesa-demos
 
   # Required by eww, it seems
   wmctrl
@@ -221,8 +223,6 @@ with pkgs; [
 
   # Layer on top of Docker/Podman/OCI to run Linux distros in containers
   distrobox
-
-  pinentry
 
   # A lot of scripts want this
   lsof 

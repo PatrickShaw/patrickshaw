@@ -33,11 +33,11 @@
           # Georgia replacement
           pkgs.gelasio
           pkgs.font-awesome
-          pkgs.vistafonts
+          pkgs.vista-fonts
 
           pkgs.inter
           pkgs.noto-fonts
-          pkgs.noto-fonts-emoji
+          pkgs.noto-fonts-color-emoji
           pkgs.twemoji-color-font
           pkgs.meslo-lgs-nf
           pkgs.cascadia-code

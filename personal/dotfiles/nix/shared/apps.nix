@@ -63,11 +63,12 @@ with pkgs; (import ./barebones-apps.nix { inherit pkgs; }) ++ [
   curlie
   xh
 
-  dogdns
+  # dogdns replacement:
+  doggo
 
   sd
 
-  du-dust
+  dust
 
   duf
 

@@ -36,7 +36,7 @@
         hardware.graphics = {
           extraPackages = [
             # See https://nixos.wiki/wiki/Accelerated_Video_Playback
-            pkgs.vaapiVdpau
+            pkgs.libva-vdpau-driver
             pkgs.libvdpau-va-gl
           ];
         };
@@ -238,10 +238,9 @@
           self.nixosModules.pipewire
         ];
         services.pulseaudio.enable = false;
-        services.xserver.enable = true;
-        services.xserver.displayManager.gdm.enable = true;
-        services.xserver.desktopManager.gnome.enable = true;
-        services.xserver.displayManager.gdm.wayland = true;
+        services.displayManager.gdm.enable = true;
+        services.desktopManager.gnome.enable = true;
+        services.displayManager.gdm.wayland = true;
 
         # Auto rotate
         # See https://wiki.nixos.org/wiki/GNOME
@@ -467,7 +466,8 @@
         };
 
         services.udev.packages = [
-          pkgs.android-udev-rules
+          # Apparently no longer needed:
+          # pkgs.android-udev-rules
         ];
 
         systemd.services.libvirtd-config.script = lib.mkAfter ''

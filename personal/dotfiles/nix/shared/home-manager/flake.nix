@@ -65,13 +65,13 @@
       };
     in {
       darwinModules.default = self.nixosModules.default;
-      nixosModules.default = {pkgs, ... }: {
+      nixosModules.default = { pkgs, ... }: {
         config = {
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
             users.pshaw = { config, lib, ... }: let
-              vscode-extensions = inputs.vscode-extensions-2.extensions.${pkgs.system};
+              vscode-extensions = inputs.vscode-extensions-2.extensions.${pkgs.stdenv.hostPlatform.system};
             in {
               home.packages = [
                 pkgs.lua-language-server

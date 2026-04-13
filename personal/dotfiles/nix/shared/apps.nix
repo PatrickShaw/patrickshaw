@@ -13,7 +13,7 @@ with pkgs; (import ./barebones-apps.nix { inherit pkgs; }) ++ [
   alacritty
   #wezterm
 
-  nodePackages.nodejs
+  nodejs
   fnm
   yarn
 

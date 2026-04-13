@@ -9,5 +9,6 @@
     "width": 979,
     "height": 1055
   },
-  "chromiumSwitches": {}
+  "chromiumSwitches": {},
+  "offloadAdmControls": true
 }

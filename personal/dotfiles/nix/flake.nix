@@ -203,6 +203,7 @@
         boot.loader.systemd-boot.enable = lib.mkDefault true;
         boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
         boot.loader.timeout = lib.mkDefault 2;
+        system.nixos-init.enable = true;
 
         # Time
         services.chrony.enable = true;

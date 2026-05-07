@@ -79,6 +79,14 @@
               ];
               programs.pay-respects.enable = true;
               programs.nix-index.enable = true;
+
+              xdg.userDirs = {
+                enable = true;
+                createDirectories = true;
+                # To get with the times (26.05 state file default)
+                setSessionVariables = false;
+              };
+
               programs.vscode = {
                 enable = true;
                 profiles.default.extensions = with vscode-extensions.vscode-marketplace; [

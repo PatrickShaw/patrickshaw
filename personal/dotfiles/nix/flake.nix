@@ -280,7 +280,9 @@
         #   ];
         #};
       };
-
+      laptop = { ... }: {
+        hardware.sensor.iio.enable = true;
+      };
       pipewire = { lib, ... }: {
         services.pipewire = {
           enable = true;

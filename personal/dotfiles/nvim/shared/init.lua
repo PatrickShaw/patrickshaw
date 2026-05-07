@@ -70,24 +70,27 @@ vim.cmd [[
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
--- Language servers
-local lspconfig = require('lspconfig')
-lspconfig.pyright.setup {
+vim.lsp.config('pyright', {
   capabilities = capabilities,
-}
-lspconfig.ts_ls.setup {
+})
+
+vim.lsp.config('ts_ls', {
   capabilities = capabilities,
-}
-lspconfig.rust_analyzer.setup {
-  -- Server-specific settings. See `:help lspconfig-setup`
+})
+
+vim.lsp.config('rust_analyzer', {
+  capabilities = capabilities,
   settings = {
     ['rust-analyzer'] = {},
   },
+})
+
+vim.lsp.config('lua_ls', {
   capabilities = capabilities,
-}
-lspconfig.lua_ls.setup {
-  capabilities = capabilities,
-}
+})
+
+-- 2. Actually start/enable the servers
+vim.lsp.enable({ 'pyright', 'ts_ls', 'rust_analyzer', 'lua_ls' })
 
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -127,9 +130,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-require'nvim-treesitter.configs'.setup({
-  highlight={enable=true},
-})
+-- require'nvim-treesitter.configs'.setup({
+--   highlight={enable=true},
+-- })
 
 vim.o.smartcase = false
 
@@ -233,7 +236,7 @@ cmp.setup({
     { name = 'nvim_lsp' },
     { name = 'nvim_lsp_signature_help' },
     { name = 'nvim_lsp_document_symbol'},
-    { name = 'treesitter' },
+    -- { name = 'treesitter' },
     { name = 'buffer', entry_filter = entry_filter },
     { name = 'rg',
               option = {

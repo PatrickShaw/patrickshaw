@@ -103,4 +103,8 @@ with pkgs; (import ./barebones-apps.nix { inherit pkgs; }) ++ [
   nickel
 
   go
+
+
+  # Fairly generic CoW deduper
+  pkgs.fclones
 ]

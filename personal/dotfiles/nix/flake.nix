@@ -159,24 +159,11 @@
         LIBVIRT_DEFAULT_URI = [ "qemu:///system" ];
       };
     };
-      direnv = { pkgs, ... }: {
-        environment.systemPackages = [
-          pkgs.direnv
-        ];
-
-        environment.pathsToLink = [
-          "/share/nix-direnv"
-        ];
-      };
       base = { pkgs, ...}: let 
         shared-configuration = import ./shared/configuration.nix { inherit pkgs; };
       in {
         imports = [
-          self.nixosModules.direnv
           shared-configuration
-        ];
-        environment.systemPackages = [
-          pkgs.nix-direnv
         ];
       };
       barebones = { lib, pkgs, ... }:  {

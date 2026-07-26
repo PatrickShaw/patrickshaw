@@ -32,7 +32,7 @@
   outputs = { self, ... }@inputs: 
   {
     nixosModules = {
-      opengl = { pkgs, ... }: {
+      graphics = { pkgs, ... }: {
         hardware.graphics = {
           extraPackages = [
             # See https://nixos.wiki/wiki/Accelerated_Video_Playback
@@ -42,7 +42,7 @@
         };
       };
       intel-integrated-graphics = { pkgs, ... }: {
-        imports = [self.nixosModules.opengl];
+        imports = [self.nixosModules.graphics];
         hardware.graphics = {
           extraPackages = [
             # See https://nixos.wiki/wiki/Accelerated_Video_Playback
@@ -56,7 +56,7 @@
         };
       };
       nvidia = { config, pkgs, ... }: {
-        imports = [self.nixosModules.opengl];
+        imports = [self.nixosModules.graphics];
         services.xserver.videoDrivers = [ "nvidia" ];
         # hardware.nvidia = {
         #   package = config.boot.kernelPackages.nvidiaPackages.stable;
@@ -166,7 +166,14 @@
           shared-configuration
         ];
       };
+      modern-init = { ... }: {
+        system.nixos-init.enable = true; 
+        services.userborn.enable = true;
+        boot.initrd.systemd.enable = true;
+        system.etc.overlay.enable = true;
+      };
       barebones = { lib, pkgs, ... }:  {
+        imports = [self.nixosModules.modern-init];
         environment.variables = {
           EDITOR = "nvim";
         };
@@ -507,7 +514,6 @@
           MCFLY_PROMPT="❯";
           MCFLY_RESULTS="15";
         };
-        # hardware.opengl.enable = true;
 
         # See: https://nixos.wiki/wiki/PipeWire
         security.rtkit.enable = true;

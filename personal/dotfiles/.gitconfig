@@ -43,7 +43,8 @@
   # See: https://www.git-tower.com/blog/git-performance/
 	# Explained here: https://www.youtube.com/watch?v=aolI_Rz0ZqY
   writeCommitGraph = true
-prune = true
+	prune = true
+	pruneTags = true
 
 [feature]
     # Optimises for lots of files
@@ -59,12 +60,14 @@ prune = true
     side-by-side = true
    
 [merge]
-    conflictstyle = diff3
+		# Giving zdiff3 a go over diff3
+    conflictstyle = zdiff3
 
 [diff]
     colorMoved = dimmed-zebra
 	# See: https://luppeng.wordpress.com/2020/10/10/when-to-use-each-of-the-git-diff-algorithms/
 	algorithm = histogram
+	renames = copies
 
 [rerere]
 # Auto resolves conflicts if I specified how to resolve them before. Could be risky. Added in 2023-07-20. Will give it a go
@@ -79,6 +82,9 @@ enabled = true
 	program = /run/current-system/sw/bin/gpg
 [pull]
 	rebase = false
+
+[rebase]
+	autoStash = true
 
 [alias]
 c = "commit -m"

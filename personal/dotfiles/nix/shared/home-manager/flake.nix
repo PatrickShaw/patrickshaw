@@ -67,6 +67,12 @@
       darwinModules.default = self.nixosModules.default;
       nixosModules.default = { pkgs, ... }: {
         config = {
+          # See https://github.com/rawkode/rawkode/blob/347f608b443cc9e24baf6f73b7829dedb66c3e6e/nix/modules/config/system/location.nix#L25
+          services.geoclue2.appConfig.darkman = {
+            desktopID = "nl.whynothugo.darkman";
+            isAllowed = true;
+            isSystem = false;
+          };
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;

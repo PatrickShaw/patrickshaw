@@ -113,7 +113,7 @@
                   # Contains OLED ayu
                   binary-ink.dark-modern-oled-theme-set
                 ];
-            in {
+            in lib.recursiveUpdate {
                 programs.direnv = {
                   enable = true;
                   enableBashIntegration = true;

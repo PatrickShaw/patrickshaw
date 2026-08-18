@@ -124,12 +124,10 @@
                     enable = true;
                   };
                 };
-              } //{
+              } {
               home.packages = [
                 pkgs.lua-language-server
                 pkgs.tree-sitter
-                pkgs.nix-direnv
-                pkgs.direnv
               ];
               programs.pay-respects.enable = true;
               programs.nix-index.enable = true;

@@ -245,11 +245,6 @@
                     ".dircolors" = {
                       source = "${dracula-dircolors}/.dircolors";
                     };
-                    ".config/direnv/direnvrc".source = pkgs.writeTextFile {
-                      name = "direnvrc";
-                      text = "source /run/current-system/sw/share/nix-direnv/direnvrc";
-                      executable = true;
-                    };
 
                     ".config/nvim/lua/personal.lua".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/personal/dotfiles/nvim/shared/init.lua";
                     ".config/nvim/init.lua".text = initPackageLuaText + ''

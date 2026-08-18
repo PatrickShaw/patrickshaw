@@ -43,8 +43,11 @@
   # See: https://www.git-tower.com/blog/git-performance/
 	# Explained here: https://www.youtube.com/watch?v=aolI_Rz0ZqY
   writeCommitGraph = true
-	prune = true
-	pruneTags = true
+
+	# Unfortunately this gets in the way more than its convenient with massive monorepos - Even thought that's why I enabled it in the first place. Too many lock conflicts end up happening
+	# prune = true
+	# pruneTags = true
+	# quiet = true
 
 [feature]
     # Optimises for lots of files

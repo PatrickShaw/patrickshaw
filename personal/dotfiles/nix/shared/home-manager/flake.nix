@@ -77,7 +77,6 @@
                   catppuccin.catppuccin-vsc
                   vscode-icons-team.vscode-icons
                   kubukoz.nickel-syntax
-                  vscode-icons-team.vscode-icons
 
                   # === JS
                   dbaeumer.vscode-eslint

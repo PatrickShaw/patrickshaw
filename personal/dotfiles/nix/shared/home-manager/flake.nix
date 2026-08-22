@@ -25,7 +25,10 @@
     #   url = "github:romkatv/gitstatus";
     #   flake = false;
     # };
-    utils.url = "github:numtide/flake-utils";
+    # flake-parts replaces the (previously unused) numtide/flake-utils input.
+    # See: https://flake.parts
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
     # Ships a prebuilt nix-index database, so `nix-locate` / `programs.nix-index`
     # works immediately instead of needing a slow local index build.
     nix-index-database = {
@@ -52,13 +55,13 @@
   
   outputs = {
       self,
+      flake-parts,
       git-zsh-powerlevel10k,
       git-zsh-defer,
       git-zsh-autosuggestions,
       git-zsh-fast-syntax-highlighting,
       git-rainbow-delimiters-nvim,
       dracula-dircolors,
-      utils,
       ...
   }@inputs:
     let
@@ -69,9 +72,11 @@
           git-zsh-autosuggestions
           git-zsh-fast-syntax-highlighting;
       };
-    in {
-      darwinModules.default = self.nixosModules.default;
-      nixosModules.default = { pkgs, ... }: {
+    in flake-parts.lib.mkFlake { inherit inputs; } {
+    systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
+
+    flake = let
+      sharedModule = { pkgs, ... }: {
         config = {
           home-manager = {
             useGlobalPkgs = true;
@@ -321,6 +326,10 @@
             };
           };
         };
+      };
+    in {
+      nixosModules.default = sharedModule;
+      darwinModules.default = sharedModule;
       };
     };
 }

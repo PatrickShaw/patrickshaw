@@ -34,7 +34,7 @@ in {
       lib.mapAttrsToList (name: value: "alias ${name}=${lib.escapeShellArg value}") shared-aliases
     )
   );
-  
+
   # Prefer to run this myself
   programs.zsh.enableGlobalCompInit = false;
   # We do this ourselves in the shared .zshrc

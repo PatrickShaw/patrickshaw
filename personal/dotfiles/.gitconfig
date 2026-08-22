@@ -6,6 +6,9 @@
 [user]
 	email = mail@patrickshaw.me
 	name = Patrick Shaw
+	# SSH signing key. `ssh-keygen -Y sign` is used under the hood, so this is just
+	# the public key path — no separate signing subkey to manage.
+	# signingkey = ~/.ssh/id_ed25519.pub
 
 [column]
   # Puts branches in columns
@@ -32,7 +35,9 @@
 	defaultBranch = main
 
 [commit]
-	gpgsign = false # true
+	# Signing is SSH-based now (see [gpg] below) rather than GPG, which removes the
+	# agent/pinentry/expiry hassle that got this turned off in the first place.
+	gpgsign = true
 
 [core]
     pager = delta
@@ -103,12 +108,25 @@ enabled = true
 	required = true
 	clean = git-lfs clean -- %f
 [gpg]
-	program = /run/current-system/sw/bin/gpg
+	# git 2.34+ can sign with SSH keys instead of GPG
+	# format = ssh
+	# Kept for the rollback path (`git config --global gpg.format openpgp`)
+	# program = /run/current-system/sw/bin/gpg
+
+[gpg "ssh"]
+	# Only needed to *verify* signatures (`git log --show-signature`); signing works
+	# without it. Format is one `<email> <keytype> <key>` line per signer, e.g.
+	#   mail@patrickshaw.me ssh-ed25519 AAAAC3Nza...
+	allowedSignersFile = ~/.ssh/allowed_signers
 [pull]
 	rebase = false
 
 [rebase]
 	autoStash = true
+	# Rewrites any other local branches that pointed at the commits being rebased,
+	# so stacked branches stop drifting out of sync. Added in git 2.38.
+	# See: https://andrewlock.net/working-with-stacked-branches-in-git-is-easier-with-update-refs/
+	updateRefs = true
 
 [alias]
 c = "commit -m"

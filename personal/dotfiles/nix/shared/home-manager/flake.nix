@@ -92,7 +92,8 @@
                   # === JS
                   dbaeumer.vscode-eslint
                   stylelint.vscode-stylelint
-                  oxc.oxc-vscode
+                  # Fails to build
+                  # oxc.oxc-vscode
                   biomejs.biome
                   esbenp.prettier-vscode
 
@@ -145,6 +146,41 @@
                 pkgs.lua-language-server
                 pkgs.tree-sitter
               ];
+
+              # ActivityWatch stays entirely local. The Linux package is a
+              # wrapper around aw-server-rust, aw-qt, and the window/AFK
+              # watchers. macOS uses the official app bundle installed by the
+              # declarative Homebrew cask in private/nix/darwin/flake.nix.
+              systemd.user.services.activitywatch = lib.mkIf (!pkgs.stdenv.isDarwin) {
+                Unit = {
+                  Description = "ActivityWatch local workflow telemetry";
+                  After = [ "graphical-session.target" ];
+                };
+                Service = {
+                  ExecStart = "${pkgs.activitywatch}/bin/aw-qt";
+                  Restart = "on-failure";
+                  RestartSec = 5;
+                };
+                Install.WantedBy = [ "graphical-session.target" ];
+              };
+
+              launchd.agents.activitywatch = lib.mkIf pkgs.stdenv.isDarwin {
+                enable = true;
+                config = {
+                  # Launch by bundle name rather than relying on the app's
+                  # internal executable layout.
+                  ProgramArguments = [
+                    "/usr/bin/open"
+                    "-a"
+                    "ActivityWatch"
+                  ];
+                  RunAtLoad = true;
+                  KeepAlive = false;
+                  ProcessType = "Interactive";
+                  StandardOutPath = "${config.home.homeDirectory}/Library/Logs/activitywatch.log";
+                  StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/activitywatch.error.log";
+                };
+              };
               programs.pay-respects.enable = true;
               programs.nix-index.enable = true;
               programs.vscode = {
@@ -313,7 +349,7 @@
                       '')
                     ];
                 } (
-                # if pkgs.stdenv.isDarwin then 
+                # if pkgs.stdenv.isDarwin then
                 {
                   # See: https://github.com/nix-darwin/nix-darwin/issues/554#issuecomment-1289736477
                   # completionInit = "autoload -U compinit && compinit -u";
@@ -330,6 +366,6 @@
     in {
       nixosModules.default = sharedModule;
       darwinModules.default = sharedModule;
-      };
     };
+  };
 }

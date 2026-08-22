@@ -22,7 +22,7 @@ with pkgs; (import ./barebones-apps.nix { inherit pkgs; }) ++ [
   rustup
   # rust-analyzer
   python3
-  poetry
+  # poetry
   uv
   
   # Just use direnv
@@ -50,8 +50,8 @@ with pkgs; (import ./barebones-apps.nix { inherit pkgs; }) ++ [
 
 
   # Some great programs mentioned over at https://github.com/ibraheemdev/modern-unix
-  # Replaced tldr with tealdeer - Faster
-  # tldr
+  # tealdeer is the Rust tldr client — same `tldr <cmd>` interface as the reference
+  # client but with a local cache, so it's near-instant
   tealdeer
   cheat
 
@@ -82,8 +82,9 @@ with pkgs; (import ./barebones-apps.nix { inherit pkgs; }) ++ [
 
   choose
 
+  # Shell history search. Was mcfly — swap the two lines below to go back
+  # (and flip the init lines in zsh/shared/.zshrc + fish/shared/config.fish).
   atuin
-  # Using atuin now
   # mcfly
 
   # For managing workspaces
@@ -107,13 +108,15 @@ with pkgs; (import ./barebones-apps.nix { inherit pkgs; }) ++ [
   trash-cli
 
   git-open
-  # Fancy AST differ
+  # Syntax-aware diffs. Wired up as `git dft` / `git difftool -t difftastic`
+  # in dotfiles/.gitconfig, so it stays opt-in alongside delta
   difftastic
-
-  # Fancy Git alternative that's still compatible with Git itself
+  # Jujutsu — git-compatible VCS. Colocates with existing git repos via
+  # `jj git init --colocate`, so it can be trialled without converting anything
   jujutsu
 
-  # It's like you're crappy custom Nix switching scripts but someone did it in a less crap way
+  # Nicer wrapper around nixos-rebuild/darwin-rebuild with a build-output diff.
+  # The hand-written rebuild scripts still work — this is additive
   nh
 
   nickel

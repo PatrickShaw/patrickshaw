@@ -78,7 +78,9 @@ with pkgs; (import ./barebones-apps.nix { inherit pkgs; }) ++ [
 
   choose
 
-  mcfly
+  atuin
+  # Using atuin now
+  # mcfly
 
   # For managing workspaces
   jaq

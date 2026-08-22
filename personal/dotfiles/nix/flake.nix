@@ -159,11 +159,9 @@
         LIBVIRT_DEFAULT_URI = [ "qemu:///system" ];
       };
     };
-      base = { pkgs, ...}: let 
-        shared-configuration = import ./shared/configuration.nix { inherit pkgs; };
-      in {
+      base = { ... }: {
         imports = [
-          shared-configuration
+          ./shared/configuration.nix
         ];
       };
       modern-init = { ... }: {
@@ -283,8 +281,6 @@
       };
 
       core = { pkgs, lib, options, ...}: let
-        shared-aliases = import ./shared/program-aliases.nix { };
-
         # See https://nixos.wiki/wiki/Sway
         configure-gtk = pkgs.writeTextFile {
           name = "configure-gtk";
@@ -449,13 +445,9 @@
           };
           zsh = {
             enable = true;
-            shellAliases = shared-aliases;
-            # We do this ourselves
-            enableCompletion = false;
           };
           fish = {
             enable = true;
-            shellAliases = shared-aliases;
           };
         };
 

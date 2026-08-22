@@ -1,4 +1,9 @@
-{ pkgs, ... }: {
+# Settings that should apply everywhere (NixOS + nix-darwin).
+# Anything platform specific belongs in ../linux or ../osx instead.
+{ pkgs, ... }: let
+  inherit (pkgs) lib;
+  shared-aliases = import ./program-aliases.nix { };
+in {
   environment.shells = [ pkgs.fish pkgs.zsh ];
   environment.systemPackages = import ./apps.nix { pkgs = pkgs; };
   environment.variables = {
@@ -18,6 +23,17 @@
     MCFLY_RESULTS = "15";
   };
 
+  # Applies to every shell (zsh + fish) on both platforms
+  environment.shellAliases = shared-aliases;
+
+  # nix-darwin's zsh module (unlike NixOS') doesn't apply environment.shellAliases to /etc/zshrc,
+  # so replicate what the NixOS module does. No-op on Linux.
+  # See https://github.com/nix-darwin/nix-darwin/issues/886
+  programs.zsh.interactiveShellInit = lib.optionalString pkgs.stdenv.hostPlatform.isDarwin (
+    lib.concatStringsSep "\n" (
+      lib.mapAttrsToList (name: value: "alias ${name}=${lib.escapeShellArg value}") shared-aliases
+    )
+  );
   
   # Prefer to run this myself
   programs.zsh.enableGlobalCompInit = false;

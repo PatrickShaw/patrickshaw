@@ -1,7 +1,4 @@
-{ config, pkgs, programs, users, environment, ... }:
-let
-  sharedAliases = import ../shared/program-aliases.nix { };
-in {
+{ config, pkgs, programs, users, environment, ... }: {
   programs.zsh.enable = true;
   imports = [
     ../shared/binary-caching.nix

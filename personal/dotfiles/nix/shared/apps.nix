@@ -50,7 +50,9 @@ with pkgs; (import ./barebones-apps.nix { inherit pkgs; }) ++ [
 
 
   # Some great programs mentioned over at https://github.com/ibraheemdev/modern-unix
-  tldr
+  # Replaced tldr with tealdeer - Faster
+  # tldr
+  tealdeer
   cheat
 
   bottom

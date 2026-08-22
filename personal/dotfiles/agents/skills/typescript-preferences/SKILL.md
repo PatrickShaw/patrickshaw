@@ -1,10 +1,12 @@
 ---
-description: Coding practices to be applied to all TypeScript tests
-globs: *.{ts,tsx}
-alwaysApply: true
+name: typescript-preferences
+description: My personal TypeScript coding preferences. Load before writing, reviewing, refactoring, or advising on TypeScript or TSX code.
 ---
 
-## Quick rules
+# TypeScript preferences
+
+Apply these preferences when working with TypeScript or TSX. Do not assume conventions when none are explicitly listed in repositories.
+
 - Prefer `const` over `let`
 - Prefer named exports over default exports
 - Minimize the use of `throw` and `try-catch`. If an error needs to be
@@ -27,3 +29,4 @@ type definition to only include the fields the method uses.
 optimize for developer convenience and worrying about accidentally omitting a
 parameter is not a risk.
 - Preference `globalThis` over `window` or `global`
+

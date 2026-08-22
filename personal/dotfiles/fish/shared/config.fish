@@ -8,8 +8,11 @@ if status is-interactive
   set -gx STARSHIP_CONFIG "$HOME/.config/starship/starship.toml"
   starship init fish | source
 
+  # See: https://fishshell.com/docs/current/cmds/bind.html
+  bind ctrl-w backward-kill-word
+
   set -gx LS_COLORS (dircolors -c $HOME/.dircolors)
-  
+
   zoxide init fish | source
 
   pay-respects fish --alias | source

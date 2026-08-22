@@ -16,44 +16,133 @@ vim.opt.autoindent = true
 
 -- Re-read file changes https://neovim.io/doc/user/options.html#'autoread'
 vim.o.autoread = true
-vim.api.nvim_set_keymap('v', '<S-Up>', '<Up>', { noremap = true; })
-vim.api.nvim_set_keymap('v', '<S-Down>', '<Down>', { noremap = true })
-vim.api.nvim_set_keymap('v', '<S-Left>', '<Left>', { noremap = true })
-vim.api.nvim_set_keymap('v', '<S-Right>', '<Right>', { noremap = true })
-vim.api.nvim_set_keymap('i', '<S-Up>', '<esc>v<Up>', { noremap = true })
-vim.api.nvim_set_keymap('i', '<S-Down>', '<esc>v<Down>', { noremap = true })
-vim.api.nvim_set_keymap('i', '<S-Left>', '<esc>v<Left>', { noremap = true })
-vim.api.nvim_set_keymap('i', '<S-Right>', '<esc>v<Right>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<S-Up>', '<esc>v<Up>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<S-Down>', '<esc>v<Down>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<S-Left>', '<esc>v<Left>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<S-Right>', '<esc>v<Right>', { noremap = true })
-vim.api.nvim_set_keymap('v', '<S-Tab>', '>', { noremap = true })
 
-vim.api.nvim_set_keymap('n', '<S-Right>', '<esc>v<Right>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<S-Right>', '<esc>v<Right>', { noremap = true })
+-- ---------------------------------------------------------------------------
+-- GUI-editor compatibility layer
+--
+-- Goal: the keys muscle memory reaches for in VSCode do the obvious thing here,
+-- without giving up any Vim motion or operator. Where a Vim binding is
+-- displaced, the replacement for it is noted inline.
+--
+-- Deliberately terminal-first: nothing below *requires* Cmd, because a terminal
+-- can't reliably deliver Cmd to the running program. The <D-...> mappings at the
+-- bottom are a bonus for GUI clients and are inert in a terminal.
+--
+-- Note on modes: 'x' is Visual only (not Select), which is what we want, since
+-- 'keymodel' below is configured to start Visual mode rather than Select mode.
+-- ---------------------------------------------------------------------------
 
--- Alt+Left Arrow for skipping backward
-vim.api.nvim_set_keymap('v', '<BS>', 'd', {noremap = true})
-vim.api.nvim_set_keymap('n', '<A-BS>', 'xdb', {noremap = true})
-vim.api.nvim_set_keymap('n', '<BS>', 'x', {noremap = true})
-vim.api.nvim_set_keymap('i', '<A-BS>', '<Esc><Right>dbi', {noremap = true})
+-- Shift+<arrow> starts/extends a selection and an unshifted arrow collapses it.
+-- 'keymodel' is Vim's built-in support for exactly this, so it replaces the 13
+-- hand-written <S-arrow> mappings that used to live here. Leaving 'selectmode'
+-- empty means these start *Visual* mode, so every operator still works on the
+-- selection (Select mode would have made a printable key replace it instead).
+-- See `:help 'keymodel'`
+vim.opt.keymodel = { 'startsel', 'stopsel' }
 
-vim.api.nvim_set_keymap('v', '<M-Left>', 'b', {noremap = true})
-vim.api.nvim_set_keymap('n', '<M-Left>', 'b', {noremap = true})
-vim.api.nvim_set_keymap('i', '<M-Left>', '<Esc>bi', {noremap = true})
-vim.api.nvim_set_keymap('c', '<M-Left>', '<Left>', {noremap = true})
+-- Yank/delete/put use the system clipboard, like every other editor.
+-- Trade-off: d/x/c now also overwrite the system clipboard, because they've
+-- always written to the unnamed register. Use "_d etc. where that's unwanted.
+vim.opt.clipboard = 'unnamedplus'
 
--- Alt+Right Arrow for skipping forward
-vim.api.nvim_set_keymap('v', '<M-Right>', 'e', {noremap = true})
-vim.api.nvim_set_keymap('n', '<M-Right>', 'e', {noremap = true})
-vim.api.nvim_set_keymap('i', '<M-Right>', '<Esc>ei<Right>', {noremap = true})
-vim.api.nvim_set_keymap('c', '<M-Right>', '<Right>', {noremap = true})
+-- Undo history survives closing a file (stored under ~/.local/state/nvim/undo)
+vim.opt.undofile = true
 
-vim.api.nvim_set_keymap('n', '<C-s>', ':w<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('i', '<C-s>', '<Esc>:w<CR>i', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', '<C-s>', '<Esc>:w<CR>gv', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('c', '<C-s>', '<C-c>:w<CR>', { noremap = true, silent = true })
+-- 'backspace' is already indent,eol,start by default in Neovim, so Insert-mode
+-- backspace deletes through indent, line breaks and the insert start point
+-- without any help. Only the other modes need mapping.
+vim.keymap.set('n', '<BS>', 'X')   -- delete the char *before* the cursor (was `x`, which deleted the one under it)
+vim.keymap.set('x', '<BS>', '"_d') -- delete the selection without touching the clipboard
+vim.keymap.set('n', '<M-BS>', '"_db')
+vim.keymap.set('i', '<M-BS>', '<C-w>') -- native "delete word before cursor"
+
+-- Word-wise motion. Alt/Option+arrow is the macOS binding; Ctrl+arrow is the
+-- Linux/Windows one, and both are mapped so the same key works everywhere.
+-- vim-wordmotion makes these camelCase-aware, like VSCode's word jumping.
+for lhs, motion in pairs({ ['Left'] = 'b', ['Right'] = 'w' }) do
+  for _, mod in ipairs({ 'M', 'C' }) do
+    local key = ('<%s-%s>'):format(mod, lhs)
+    vim.keymap.set({ 'n', 'x' }, key, motion)
+    -- <C-o> runs one Normal-mode command and drops straight back into Insert
+    vim.keymap.set('i', key, '<C-o>' .. motion)
+    -- The command line has its own built-in word motions
+    vim.keymap.set('c', key, ('<C-%s>'):format(lhs))
+  end
+end
+
+-- Word-wise selection. 'keymodel' handles plain Shift+arrow but not these, so
+-- they stay explicit. Selection uses e/b (which end *on* the word) rather than
+-- w, which would spill onto the first character of the following word.
+for lhs, motion in pairs({ ['Left'] = 'b', ['Right'] = 'e' }) do
+  for _, mod in ipairs({ 'M-S', 'C-S' }) do
+    local key = ('<%s-%s>'):format(mod, lhs)
+    vim.keymap.set('n', key, 'v' .. motion)
+    vim.keymap.set('x', key, motion)
+    vim.keymap.set('i', key, '<Esc>v' .. motion)
+  end
+end
+
+-- Undo / redo.
+-- Displaces <C-z> (suspend -> `:suspend`) and <C-y> (scroll up one line, and
+-- in Insert mode copy the char above). Vim's own u / <C-r> are untouched.
+vim.keymap.set('n', '<C-z>', 'u')
+vim.keymap.set('i', '<C-z>', '<C-o>u')
+vim.keymap.set('x', '<C-z>', '<Esc>u') -- v_u would lowercase the selection
+vim.keymap.set('n', '<C-y>', '<C-r>')
+vim.keymap.set('i', '<C-y>', '<C-o><C-r>')
+vim.keymap.set('x', '<C-y>', '<Esc><C-r>')
+-- Ctrl+Shift+Z as redo, for the VSCode-on-Linux habit. Only terminals speaking
+-- an enhanced keyboard protocol can distinguish this from <C-z>; where they
+-- can't, it simply never fires.
+vim.keymap.set('n', '<C-S-z>', '<C-r>')
+vim.keymap.set('i', '<C-S-z>', '<C-o><C-r>')
+vim.keymap.set('x', '<C-S-z>', '<Esc><C-r>')
+
+-- Copy / cut / paste.
+-- Displaces <C-v> (blockwise Visual -> <C-q>, mapped below, which is Vim's own
+-- documented alias) and Normal/Visual <C-c> (interrupt -> <Esc> or <C-[>).
+-- Insert-mode <C-c> is left alone so it keeps behaving like <Esc>.
+vim.keymap.set('n', '<C-c>', 'yy')
+vim.keymap.set('x', '<C-c>', 'y')
+vim.keymap.set('n', '<C-x>', 'dd')
+vim.keymap.set('x', '<C-x>', 'd') -- a cut: the text lands on the clipboard
+vim.keymap.set('n', '<C-v>', 'p')
+-- <C-r><C-o> inserts the register literally, so a multi-line paste doesn't get
+-- re-indented by 'autoindent'. Insert-mode <C-x> is left alone: it's the prefix
+-- for Vim's built-in completion commands.
+vim.keymap.set('i', '<C-v>', '<C-r><C-o>+')
+-- v_P puts over a selection *without* overwriting the register with the
+-- replaced text, which is exactly a GUI editor's paste-over-selection.
+vim.keymap.set('x', '<C-v>', 'P')
+vim.keymap.set('n', '<C-q>', '<C-v>')
+
+-- Tab / Shift+Tab indent and outdent the selection, keeping it selected.
+-- (The old mapping had <S-Tab> indenting, which was backwards.)
+vim.keymap.set('x', '<Tab>', '>gv')
+vim.keymap.set('x', '<S-Tab>', '<gv')
+
+-- Save. <Cmd> runs the command without changing mode, so unlike the old
+-- `<Esc>:w<CR>i` this doesn't drop out of Insert mode or shift the cursor.
+vim.keymap.set({ 'n', 'i', 'x' }, '<C-s>', '<Cmd>write<CR>')
+vim.keymap.set('c', '<C-s>', '<C-c><Cmd>write<CR>')
+
+-- Cmd equivalents, for GUI front-ends (Neovide, VimR, ...) that can actually
+-- deliver <D-...>. A terminal never sends these, so they're harmless there and
+-- nothing above depends on them.
+vim.keymap.set('n', '<D-z>', 'u')
+vim.keymap.set('i', '<D-z>', '<C-o>u')
+vim.keymap.set('x', '<D-z>', '<Esc>u')
+vim.keymap.set('n', '<D-S-z>', '<C-r>')
+vim.keymap.set('i', '<D-S-z>', '<C-o><C-r>')
+vim.keymap.set('x', '<D-S-z>', '<Esc><C-r>')
+vim.keymap.set('n', '<D-c>', 'yy')
+vim.keymap.set('x', '<D-c>', 'y')
+vim.keymap.set('n', '<D-x>', 'dd')
+vim.keymap.set('x', '<D-x>', 'd')
+vim.keymap.set('n', '<D-v>', 'p')
+vim.keymap.set('i', '<D-v>', '<C-r><C-o>+')
+vim.keymap.set('x', '<D-v>', 'P')
+vim.keymap.set({ 'n', 'i', 'x' }, '<D-s>', '<Cmd>write<CR>')
 
 vim.cmd.colorscheme "catppuccin-mocha"
 vim.cmd [[
@@ -90,37 +179,38 @@ lspconfig.lua_ls.setup {
 }
 
 -- Global mappings.
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions.
+-- Note: `[d` / `]d` are defaults in 0.11+, but are kept here because the defaults
+-- jump to the nearest diagnostic of any severity and these are explicit.
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -1, float = true }) end)
+vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1, float = true }) end)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
 -- Use LspAttach autocommand to only map the following keys
--- after the language server attaches to the current buffer
+-- after the language server attaches to the current buffer.
+-- Neovim 0.11 made `grn` (rename), `gra` (code action), `grr` (references),
+-- `gri` (implementation), `grt` (type definition), `gO` (document symbol),
+-- `K` (hover) and `<C-s>` (signature help, insert mode) default LSP keymaps, and it
+-- sets 'omnifunc' automatically — so only the non-default bindings live here.
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(ev)
-    -- Enable completion triggered by <c-x><c-o>
-    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-
-    -- Buffer local mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
     local opts = { buffer = ev.buf }
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
     vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+
+    -- match the Normal-mode binding above.
+    vim.keymap.set('i', '<C-s>', '<Cmd>write<CR>', opts)
+    vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, opts)
     vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
     vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
     vim.keymap.set('n', '<space>wl', function()
-      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+      vim.print(vim.lsp.buf.list_workspace_folders())
     end, opts)
-    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
     vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
     vim.keymap.set('n', '<space>f', function()
       vim.lsp.buf.format { async = true }
     end, opts)

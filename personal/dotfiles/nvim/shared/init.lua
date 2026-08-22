@@ -289,3 +289,5 @@ require("ssr").setup {
 
 vim.keymap.set({ "n", "x" }, "<leader>sr", function() require("ssr").open() end)
 
+
+vim.opt.virtualedit = "onemore"

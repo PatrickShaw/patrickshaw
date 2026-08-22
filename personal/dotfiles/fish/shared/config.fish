@@ -2,10 +2,8 @@ set fish_greeting
 
 fish_add_path $HOME/.cargo/bin
 
-# starship init fish | source
-
-
 if status is-interactive
+  # Prompt: starship. This runs after conf.d/, so it takes over fish_prompt and
   # fish_right_prompt from tide if the tide plugin is ever re-enabled.
   set -gx STARSHIP_CONFIG "$HOME/.config/starship/starship.toml"
   starship init fish | source

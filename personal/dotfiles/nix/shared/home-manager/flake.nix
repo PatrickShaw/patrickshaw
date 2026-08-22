@@ -173,8 +173,8 @@
                       nvim-treesitter.withAllGrammars
                       nvim-lspconfig
 
-                      # Hex color highlighting
-                      colorizer
+                      # Hex color highlighting. 
+                      nvim-colorizer-lua
 
                       # Auto complete
                       nvim-cmp
@@ -222,10 +222,11 @@
 
                       vim-nix
 
-                      # Gives icons to certain explorers
-                      nvim-web-devicons
+                      # Icons come from mini.icons now (part of mini.nvim, above), which
+                      # ships a nvim-web-devicons compatibility shim
 
-                      nvim-comment
+                      # nvim-comment dropped: Neovim has built-in `gc`/`gcc` commenting
+                      # since 0.10
 
                       # init.lua doco
                       neoconf-nvim

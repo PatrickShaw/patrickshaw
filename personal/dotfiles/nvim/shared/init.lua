@@ -130,6 +130,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
 require'nvim-treesitter.configs'.setup({
   highlight={enable=true},
 })
+-- Icons: mini.icons replaces nvim-web-devicons. `mock_nvim_web_devicons` registers
+-- it under the old module name so plugins that still `require('nvim-web-devicons')`
+-- keep working. See: https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-icons.md
+require('mini.icons').setup()
+MiniIcons.mock_nvim_web_devicons()
+
+require('colorizer').setup()
 
 vim.o.smartcase = false
 

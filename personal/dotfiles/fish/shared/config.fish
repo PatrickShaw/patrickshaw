@@ -6,7 +6,9 @@ fish_add_path $HOME/.cargo/bin
 
 
 if status is-interactive
-  bind \cW backward-kill-word
+  # fish_right_prompt from tide if the tide plugin is ever re-enabled.
+  set -gx STARSHIP_CONFIG "$HOME/.config/starship/starship.toml"
+  starship init fish | source
 
   set -x LS_COLORS (dircolors -c $HOME/.dircolors)
   

@@ -3,8 +3,10 @@ autoload -U compinit
 path+=($HOME/.cargo/bin)
 
 export PATH
-source $(dirname $0)/powerlevel10k/index.sh
-#eval "$(starship init zsh)"
+
+# source $(dirname $0)/powerlevel10k/index.sh
+export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
+eval "$(starship init zsh)"
 
 # See: https://stackoverflow.com/questions/444951/zsh-stop-backward-kill-word-on-directory-delimiter
 # autoload -U select-word-style

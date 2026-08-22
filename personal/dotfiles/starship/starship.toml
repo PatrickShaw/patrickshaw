@@ -1,10 +1,363 @@
+# Starship prompt — a faithful port of the previous powerlevel10k (zsh) and
+# tide (fish) configurations, so both shells share one identical prompt.
+#
+# Style: "classic" powerline — every segment sits on a single uniform dark
+# background (#303030 / xterm 236) with coloured foreground text, joined by
+# powerline separators. Two lines: [dir  git] on top, [❯] below, with a rich
+# right prompt.
+#
+# Where p10k and tide disagreed on a colour, p10k wins. Segments that only
+# tide had (bun, crystal, zig, pulumi, docker) keep tide's colours.
+#
+# Known deviations starship cannot express:
+#  * The right prompt's opening  cap is followed by one extra  divider —
+#    starship has no concept of a "first visible segment".
+#  * Long branch names lose their tail ("feature-…") rather than their middle
+#    ("fea…ame") as p10k did.
+#  * cmd_duration renders "2m5s" rather than p10k's spaced "2m 5s".
+#  * Deleted/renamed files are not folded into the "!" unstaged counter.
+#  * No instant-prompt equivalent (starship is fast enough not to need it).
+
 add_newline = true
+palette = "p10k"
+
+# starship fans every module out concurrently, so a prompt can spawn ~20 version
+# checks at once. On macOS the first exec of a given nix store binary pays for
+# code-signature validation, which regularly blows past the 500ms default and
+# produces "Executing command ... timed out" warnings.
+command_timeout = 2_000
+# Bumped from the 30ms default so file detection still wins in very large repos.
+scan_timeout = 100
+
+# The right-hand segments deliberately live inside `format` rather than
+# `right_format`. `right_format` is handed to the shell's native right prompt
+# (zsh's RPROMPT, fish's fish_right_prompt), which the shell always paints on
+# the *last* line of the prompt — i.e. next to `❯` — whereas p10k and tide drew
+# theirs alongside the directory on line 1. `$fill` reproduces that by padding
+# line 1 out to the terminal width, so the right segments land on the same row
+# as the directory and git status.
+format = """
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+${env_var.segment_end}\
+$fill\
+${env_var.segment_start}\
+$status\
+$cmd_duration\
+$username\
+$hostname\
+$jobs\
+$direnv\
+$bun\
+$nodejs\
+$python\
+$rust\
+$java\
+$php\
+$pulumi\
+$ruby\
+$golang\
+$gcloud\
+$kubernetes\
+$docker_context\
+$terraform\
+$aws\
+$nix_shell\
+$crystal\
+$elixir\
+$zig\
+$line_break\
+$character"""
+
+# Eats the gap between the left and right halves of line 1. No background, so
+# the unfilled middle stays terminal-default rather than the segment grey.
+[fill]
+symbol = " "
+style = ""
+
+# --------------------------------------------------------------------------
+# Palette
+# --------------------------------------------------------------------------
+# Names mirror the p10k xterm-256 indices they were derived from.
+
+[palettes.p10k]
+bg = "#303030"             # 236 — POWERLEVEL9K_BACKGROUND / tide_*_bg_color
+sep_same = "#949494"       # 244 — same-colour subsegment separator
+meta = "#949494"           # 244 — git metadata punctuation
+
+dir = "#0087AF"            # 31  — POWERLEVEL9K_DIR_FOREGROUND
+dir_anchor = "#00AFFF"     # 39  — DIR_ANCHOR_FOREGROUND (repo root)
+dir_truncated = "#8787AF"  # 103 — DIR_SHORTENED_FOREGROUND
+
+git_clean = "#5FD700"      # 76  — clean / branch
+git_modified = "#D7AF00"   # 178 — staged, unstaged, dirty
+git_untracked = "#00AFFF"  # 39  — untracked
+git_conflicted = "#FF0000" # 196 — conflicts, in-progress operations
+
+char_ok = "#5FD700"        # 76  — PROMPT_CHAR_OK
+char_error = "#FF0000"     # 196 — PROMPT_CHAR_ERROR
+
+status_ok = "#5FAF00"      # 70  — STATUS_OK
+status_error = "#D70000"   # 160 — STATUS_ERROR
+duration = "#A8A8A8"       # 248 — COMMAND_EXECUTION_TIME
+context = "#D7AF87"        # 180 — CONTEXT / CONTEXT_REMOTE
+context_root = "#D7AF00"   # 178 — CONTEXT_ROOT
+jobs = "#00AFAF"           # 37  — BACKGROUND_JOBS
+direnv = "#D7AF00"         # 178 — DIRENV
+
+lang_node = "#5FAF00"      # 70  — NODENV / NVM / NODE_VERSION
+lang_python = "#00AFAF"    # 37  — VIRTUALENV / ASDF_PYTHON
+lang_rust = "#00AFAF"      # 37  — ASDF_RUST
+lang_java = "#0087D7"      # 32  — ASDF_JAVA
+lang_php = "#875FFF"       # 99  — ASDF_PHP
+lang_ruby = "#D75F87"      # 168 — RBENV / ASDF_RUBY
+lang_go = "#00AFAF"        # 37  — GOENV / ASDF_GOLANG
+lang_elixir = "#AF00FF"    # 129 — ASDF_ELIXIR
+
+gcloud = "#0087D7"         # 32  — GCLOUD
+kubernetes = "#AF5FD7"     # 134 — KUBECONTEXT_DEFAULT
+terraform = "#00AFD7"      # 38  — TERRAFORM
+aws = "#FF8700"            # 208 — AWS_DEFAULT
+nix_shell = "#5FAFD7"      # 74  — NIX_SHELL
+
+# tide-only segments (no p10k equivalent)
+bun = "#FBF0DF"
+crystal = "#FFFFFF"
+docker = "#2496ED"
+pulumi = "#F7BF2A"
+zig = "#F7A41D"
+
+# --------------------------------------------------------------------------
+# Powerline caps
+# --------------------------------------------------------------------------
+# starship has no notion of "first"/"last" visible segment, so the caps are
+# emitted by two zero-cost env_var modules pinned to $HOME (always set). They
+# ignore $env_value and just render a static string.
+#
+#   segment_end   — trailing pad + solid  closing the left prompt
+#   segment_start — solid  opening the right prompt
+
+[env_var.segment_end]
+variable = "HOME"
+format = "[ ](bg:bg)[](fg:bg)"
+
+[env_var.segment_start]
+variable = "HOME"
+format = "[](fg:bg)"
+
+# --------------------------------------------------------------------------
+# Left prompt — line 1
+# --------------------------------------------------------------------------
+
+# Each segment carries a leading space, and every segment after the first also
+# carries the thin  same-colour separator. The trailing pad lives in
+# segment_end, so segments disappear cleanly along with their separator.
 
 [directory]
+style = "fg:dir bg:bg"
+format = "[ $path]($style)[$read_only]($read_only_style)"
+# p10k used truncate_to_unique with SHORTEN_DIR_LENGTH=1 and DIR_MAX_LENGTH=80:
+# every parent component squashed to its shortest unique prefix, except "anchor"
+# dirs (repo roots, package.json dirs, ...) which stayed full and bold blue.
+# truncation_length=3 + fish_style_pwd_dir_length=1 is the closest starship gets:
+# the last three components stay full, everything above is squashed to one char,
+# and the repo root keeps its anchor highlight whenever it is still visible.
 truncation_length = 3
-truncation_symbol = "…/"
+truncate_to_repo = false
+fish_style_pwd_dir_length = 1
+truncation_symbol = ""
+home_symbol = "~"
+use_os_path_sep = true
+read_only = " "
+read_only_style = "fg:dir bg:bg"
+# The repo root is p10k's "anchor": bold blue, with squashed parents in mauve.
+repo_root_style = "bold fg:dir_anchor bg:bg"
+before_repo_root_style = "fg:dir_truncated bg:bg"
+repo_root_format = "[ $before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style)"
 
-[time]
-disabled = true
+[git_branch]
+style = "fg:git_clean bg:bg"
+format = "[](fg:sep_same bg:bg)[ $branch]($style)"
+# p10k elided the middle of long branch names; starship can only trim the tail.
+truncation_length = 32
+truncation_symbol = "…"
+only_attached = false
 
+[git_commit]
+style = "fg:git_clean bg:bg"
+format = "[ $hash$tag]($style)"
+only_detached = true
+commit_hash_length = 8
+tag_disabled = false
+tag_symbol = "#"
 
+[git_state]
+style = "fg:git_conflicted bg:bg"
+format = "[ $state( $progress_current/$progress_total)]($style)"
+
+[git_status]
+style = "bg:bg"
+format = "([$all_status$ahead_behind]($style))"
+conflicted = "[ ~$count](fg:git_conflicted bg:bg)"
+stashed = "[ *$count](fg:git_clean bg:bg)"
+staged = "[ +$count](fg:git_modified bg:bg)"
+modified = "[ !$count](fg:git_modified bg:bg)"
+untracked = "[ ?$count](fg:git_untracked bg:bg)"
+ahead = "[ ⇡$count](fg:git_clean bg:bg)"
+behind = "[ ⇣$count](fg:git_clean bg:bg)"
+diverged = "[ ⇣$behind_count](fg:git_clean bg:bg)[ ⇡$ahead_count](fg:git_clean bg:bg)"
+# p10k rolled deletes and renames into its unstaged "!" counter; starship breaks
+# them out separately, so they are suppressed here to keep the same silhouette.
+deleted = ""
+renamed = ""
+
+# --------------------------------------------------------------------------
+# Left prompt — line 2
+# --------------------------------------------------------------------------
+
+[character]
+success_symbol = "[❯](fg:char_ok)"
+error_symbol = "[❯](fg:char_error)"
+vicmd_symbol = "[❮](fg:char_ok)"
+
+# --------------------------------------------------------------------------
+# Right prompt
+# --------------------------------------------------------------------------
+# Mirror image of the left: every segment is "<thin ><space>content<space>",
+# so hiding a segment hides its divider too.
+
+[status]
+disabled = false
+style = "fg:status_error bg:bg"
+format = "[](fg:sep_same bg:bg)[ $symbol $status ]($style)"
+symbol = "✘"
+map_symbol = false
+pipestatus = true
+pipestatus_format = "[](fg:sep_same bg:bg)[ $symbol $pipestatus ]($style)"
+
+[cmd_duration]
+style = "fg:duration bg:bg"
+format = "[](fg:sep_same bg:bg)[ $duration ]($style)"
+min_time = 3_000
+show_milliseconds = false
+
+# p10k's "context" segment: only surfaces over SSH or when root.
+[username]
+style_user = "fg:context bg:bg"
+style_root = "fg:context_root bg:bg"
+format = "[](fg:sep_same bg:bg)[ $user ]($style)"
+show_always = false
+
+[hostname]
+style = "fg:context bg:bg"
+format = "[](fg:sep_same bg:bg)[ $hostname ]($style)"
+ssh_only = true
+
+[jobs]
+style = "fg:jobs bg:bg"
+format = "[](fg:sep_same bg:bg)[ $symbol$number ]($style)"
+symbol = ""
+symbol_threshold = 1
+# p10k ran with BACKGROUND_JOBS_VERBOSE=false, so the count stays hidden.
+number_threshold = 1000
+
+[direnv]
+disabled = false
+style = "fg:direnv bg:bg"
+format = "[](fg:sep_same bg:bg)[ $symbol ]($style)"
+symbol = "▼"
+
+[bun]
+style = "fg:bun bg:bg"
+format = "[](fg:sep_same bg:bg)[ $symbol$version ]($style)"
+symbol = "󰳓 "
+
+[nodejs]
+style = "fg:lang_node bg:bg"
+format = "[](fg:sep_same bg:bg)[ $symbol$version ]($style)"
+symbol = " "
+
+[python]
+style = "fg:lang_python bg:bg"
+format = "[](fg:sep_same bg:bg)[ $symbol$pyenv_prefix$version( \\($virtualenv\\)) ]($style)"
+symbol = "󰌠 "
+
+[rust]
+style = "fg:lang_rust bg:bg"
+format = "[](fg:sep_same bg:bg)[ $symbol$version ]($style)"
+symbol = " "
+
+[java]
+style = "fg:lang_java bg:bg"
+format = "[](fg:sep_same bg:bg)[ $symbol$version ]($style)"
+symbol = " "
+
+[php]
+style = "fg:lang_php bg:bg"
+format = "[](fg:sep_same bg:bg)[ $symbol$version ]($style)"
+symbol = " "
+
+[pulumi]
+style = "fg:pulumi bg:bg"
+format = "[](fg:sep_same bg:bg)[ $symbol$stack ]($style)"
+symbol = " "
+
+[ruby]
+style = "fg:lang_ruby bg:bg"
+format = "[](fg:sep_same bg:bg)[ $symbol$version ]($style)"
+symbol = " "
+
+[golang]
+style = "fg:lang_go bg:bg"
+format = "[](fg:sep_same bg:bg)[ $symbol$version ]($style)"
+symbol = " "
+
+[gcloud]
+style = "fg:gcloud bg:bg"
+format = "[](fg:sep_same bg:bg)[ $symbol$project ]($style)"
+symbol = "󰒃 "
+
+[kubernetes]
+disabled = false
+style = "fg:kubernetes bg:bg"
+format = "[](fg:sep_same bg:bg)[ $symbol$context( \\($namespace\\)) ]($style)"
+symbol = "󱃾 "
+
+[docker_context]
+style = "fg:docker bg:bg"
+format = "[](fg:sep_same bg:bg)[ $symbol$context ]($style)"
+symbol = " "
+only_with_files = true
+
+[terraform]
+style = "fg:terraform bg:bg"
+format = "[](fg:sep_same bg:bg)[ $symbol$workspace ]($style)"
+symbol = "󱁢 "
+
+[aws]
+style = "fg:aws bg:bg"
+format = "[](fg:sep_same bg:bg)[ $symbol$profile( \\($region\\)) ]($style)"
+symbol = " "
+
+[nix_shell]
+style = "fg:nix_shell bg:bg"
+format = "[](fg:sep_same bg:bg)[ $symbol$state( \\($name\\)) ]($style)"
+symbol = " "
+
+[crystal]
+style = "fg:crystal bg:bg"
+format = "[](fg:sep_same bg:bg)[ $symbol$version ]($style)"
+symbol = " "
+
+[elixir]
+style = "fg:lang_elixir bg:bg"
+format = "[](fg:sep_same bg:bg)[ $symbol$version ]($style)"
+symbol = " "
+
+[zig]
+style = "fg:zig bg:bg"
+format = "[](fg:sep_same bg:bg)[ $symbol$version ]($style)"
+symbol = " "

@@ -107,6 +107,14 @@ with pkgs; (import ./barebones-apps.nix { inherit pkgs; }) ++ [
   trash-cli
 
   git-open
+  # Fancy AST differ
+  difftastic
+
+  # Fancy Git alternative that's still compatible with Git itself
+  jujutsu
+
+  # It's like you're crappy custom Nix switching scripts but someone did it in a less crap way
+  nh
 
   nickel
 

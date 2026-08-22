@@ -26,6 +26,12 @@
     #   flake = false;
     # };
     utils.url = "github:numtide/flake-utils";
+    # Ships a prebuilt nix-index database, so `nix-locate` / `programs.nix-index`
+    # works immediately instead of needing a slow local index build.
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     
     dracula-dircolors = {
       url = "github:dracula/dircolors";
@@ -125,6 +131,11 @@
                   };
                 };
               } {
+              imports = [
+                # Supplies the prebuilt nix-index database used by programs.nix-index
+                # below, so `nix-locate` works without a local index build
+                inputs.nix-index-database.homeModules.nix-index
+              ];
               home.packages = [
                 pkgs.lua-language-server
                 pkgs.tree-sitter

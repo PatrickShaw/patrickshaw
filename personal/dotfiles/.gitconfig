@@ -15,6 +15,15 @@
   # Last comitted at the bottom of list
   sort = committerdate
 
+[tag]
+  # Sort tags by semver rather than lexically, so v10 comes after v9
+  sort = version:refname
+
+[help]
+  # Wait 1 second (units are deciseconds) before running the corrected command,
+  # so a typo'd command is recoverable with Ctrl-C
+  autocorrect = 10
+
 [push]
 	autoSetupRemote = true
 
@@ -61,6 +70,18 @@
     navigate = true    # use n and N to move between diff sections
     light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
     side-by-side = true
+    line-numbers = true
+    # Makes file paths / line numbers clickable in terminals that support OSC 8
+    hyperlinks = true
+
+# Syntax-aware (tree-sitter based) diffs, as an opt-in alongside delta.
+# Usage: `git dft` / `git dft <commit>` / `git difftool --tool=difftastic`
+[difftool "difftastic"]
+    cmd = difft "$LOCAL" "$REMOTE"
+[difftool]
+    prompt = false
+[pager]
+    difftool = true
    
 [merge]
 		# Giving zdiff3 a go over diff3
@@ -92,6 +113,9 @@ enabled = true
 [alias]
 c = "commit -m"
 f = "!$HOME/personal/code-snippets/git/fetch-important.sh"
+
+# Syntax-aware diff via difftastic
+dft = "-c diff.external=difft diff"
 
 # Fetch all
 fa = "fetch"

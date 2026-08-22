@@ -1,2 +1,9 @@
 #!/usr/bin/env bash
-killall .wofi-wrapped || wofi --prompt 'Search' --matching multi-contains --no-actions --show drun --insensitive --allow-images --allow-markup --style $HOME/.config/wofi/styles.scss
+# Toggle the app launcher: kill it if already running, otherwise show it.
+#
+# Migrated from wofi. Most of the old flags are now defaults or live in the
+# config file, so they're dropped rather than translated:
+#   --show drun / --insensitive / --allow-images  -> fuzzel's default behaviour
+#   --matching multi-contains                     -> match-mode in fuzzel.ini
+#   --style ...styles.scss                        -> fuzzel.ini has no separate stylesheet
+killall fuzzel || fuzzel --prompt 'Search '

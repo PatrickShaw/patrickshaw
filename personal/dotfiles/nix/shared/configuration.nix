@@ -3,7 +3,7 @@
   environment.systemPackages = import ./apps.nix { pkgs = pkgs; };
   environment.variables = {
     VISUAL = "nvim";
-    TERMINAL = "wezterm";
+    TERMINAL = "ghostty";
     BROWSER = "firefox";
 
     # Priority 900: beats nix-darwin's own `mkDefault "nano"`, while still letting the more

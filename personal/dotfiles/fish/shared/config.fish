@@ -17,5 +17,8 @@ if status is-interactive
   pay-respects fish --alias | source
   #fnm env --shell fish --use-on-cd --corepack-enabled | source
   #fnm completions --shell fish | source
-  mcfly init fish | source
+
+  atuin init fish --disable-up-arrow | source
+  # Superceded by atuin:
+  #mcfly init fish | source
 end

@@ -508,6 +508,7 @@
           # Appears to make final pickers work properly (although chooses one I wouldn't expect)
           #QT_QPA_PLATFORMTHEME="xdgdesktopportal";
 
+          # Just note that we're not actually using Mcfly these days. Just leaving here cause why not
           # See https://github.com/cantino/mcfly#fuzzy-searching
           MCFLY_FUZZY="2";
           MCFLY_HISTORY_LIMIT="40000";

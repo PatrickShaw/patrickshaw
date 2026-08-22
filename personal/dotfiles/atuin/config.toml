@@ -1,0 +1,51 @@
+# atuin — shell history search. Replaced mcfly (see nix/shared/apps.nix).
+#
+# mcfly -> atuin setting mapping:
+#   MCFLY_FUZZY=2          -> search_mode = "fuzzy"
+#   MCFLY_RESULTS=15       -> inline_height = 15
+#   MCFLY_HISTORY_LIMIT    -> no equivalent; atuin keeps everything in its sqlite db
+#   MCFLY_PROMPT="❯"       -> no equivalent; atuin draws its own search UI
+#   MCFLY_LIGHT            -> [theme] name (see the bottom of this file)
+#
+# One-off after switching: `atuin import auto` to pull in existing shell history.
+# The shells init atuin with `--disable-up-arrow`, so Ctrl-R opens atuin and Up
+# stays as plain shell history.
+
+## Local only — no account, no server round trips.
+auto_sync = false
+update_check = false
+
+## Fuzzy matching, same as MCFLY_FUZZY=2.
+search_mode = "fuzzy"
+
+## Search all history by default rather than scoping to the current dir/session.
+filter_mode = "global"
+
+## ...but Ctrl-R starts scoped to the current directory, cycle with Ctrl-R again.
+# filter_mode_shell_up_key_binding = "directory"
+
+## Render inline under the prompt instead of taking over the whole screen.
+## 15 rows matches MCFLY_RESULTS=15.
+style = "compact"
+inline_height = 15
+
+## Show the "how long ago / how long it took" columns.
+show_help = true
+show_tabs = false
+
+## Enter runs the selected command immediately; false puts it on the prompt
+## first so it can be edited. Matches mcfly's behaviour.
+enter_accept = false
+
+## Commands never worth recording.
+history_filter = [
+  "^ ",
+]
+
+## Don't record anything typed inside these directories.
+# cwd_filter = []
+
+## Theming. atuin has no MCFLY_LIGHT equivalent — the theme is picked here, so
+## the dark-mode toggle script can't flip it via an env var.
+# [theme]
+# name = "default"

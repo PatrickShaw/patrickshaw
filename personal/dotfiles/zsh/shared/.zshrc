@@ -29,7 +29,10 @@ source "$(dirname $0)/zsh_bindings.zsh"
 
 fnm use --log-level quiet
 eval "$(zoxide init zsh)"
-eval "$(mcfly init zsh)"
+# History search: atuin (Ctrl-R). --disable-up-arrow keeps Up as plain zsh history.
+# mcfly is kept as a rollback path — swap the two lines below to go back.
+eval "$(atuin init zsh --disable-up-arrow)"
+# eval "$(mcfly init zsh)"
 
 alias ls=lsd
 alias cd=z

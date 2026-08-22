@@ -16,7 +16,8 @@ def main [mode: string] {
     gsettings set org.gnome.desktop.interface gtk-theme 'Orchis-Green:dark'
   }
 
-  $env.MCFLY_LIGHT = $isLightMode
+  # Using atuin these days. Uncomment if you ever go back to mcfly
+  # $env.MCFLY_LIGHT = $isLightMode
 }
 
 

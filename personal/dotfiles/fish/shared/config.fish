@@ -8,7 +8,7 @@ if status is-interactive
   set -gx STARSHIP_CONFIG "$HOME/.config/starship/starship.toml"
   starship init fish | source
 
-  set -x LS_COLORS (dircolors -c $HOME/.dircolors)
+  set -gx LS_COLORS (dircolors -c $HOME/.dircolors)
   
   zoxide init fish | source
 

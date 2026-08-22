@@ -75,6 +75,8 @@ with pkgs; (import ./barebones-apps.nix { inherit pkgs; }) ++ [
   duf
 
   broot
+  # Trialling yazi alongside broot as a TUI file manager
+  yazi
 
   choose
 

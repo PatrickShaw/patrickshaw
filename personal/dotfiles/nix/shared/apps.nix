@@ -11,7 +11,9 @@ with pkgs; (import ./barebones-apps.nix { inherit pkgs; }) ++ [
   # lapce
   bc
   alacritty
-  #wezterm
+  # Ghostty is added per-platform: nixpkgs only builds `ghostty` on Linux, so
+  # macOS uses the prebuilt `ghostty-bin` (see ../linux/apps.nix and ../osx/apps.nix)
+  # Dropped wezterm — alacritty + ghostty cover it
 
   nodejs
   fnm

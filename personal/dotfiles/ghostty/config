@@ -1,0 +1,26 @@
+# Ported from alacritty/shared/alacritty.toml + shared/theme.toml.
+# `ghostty +show-config --default --docs` lists every option;
+# `ghostty +validate-config` checks this file.
+
+font-family = JetBrains Mono
+font-size = 11
+
+cursor-style = bar
+
+# alacritty used `scrolling.history = 40000` (lines). Ghostty's limit is in BYTES,
+# so this is ~40MB, comfortably more than 40k lines of scrollback.
+scrollback-limit = 40000000
+mouse-scroll-multiplier = 10
+
+window-padding-x = 12
+window-padding-y = 12
+window-padding-balance = true
+
+# The alacritty theme.toml colours (#303446 base, #8CAAEE blue, #EF9F76 peach)
+# are Catppuccin Frappe, not Mocha. Ghostty ships these themes built in —
+# see `ghostty +list-themes`.
+theme = Catppuccin Frappe
+
+# Ghostty has native tabs/splits, so no multiplexer needed
+macos-option-as-alt = true
+confirm-close-surface = false

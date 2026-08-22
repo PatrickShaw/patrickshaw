@@ -118,7 +118,8 @@ with pkgs; [
 
   gammastep
 
-  wezterm
+  # Replaces wezterm. On Linux nixpkgs builds ghostty from source
+  ghostty
 
   #docker
   #docker-compose

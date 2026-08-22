@@ -255,11 +255,14 @@
                 };
                 programs.fish = {
                   enable = true;
+                  # Prompt is now starship (see fish/shared/config.fish). Uncomment
+                  # the tide plugin below to switch back — its tide_* universal
+                  # variables are still in ~/.config/fish/fish_variables.
                   plugins = [
-                      {
-                          name = "tide";
-                          src = pkgs.fishPlugins.tide.src;
-                      }
+                      # {
+                      #     name = "tide";
+                      #     src = pkgs.fishPlugins.tide.src;
+                      # }
                   ];
                 };
                 programs.zsh = lib.recursiveUpdate {

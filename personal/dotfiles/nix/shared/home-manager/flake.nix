@@ -164,8 +164,31 @@
                       in
                         builtins.elemAt parts (builtins.length parts - 1);
 
+                    # nvim-treesitter's `main` rewrite no longer ships parsers, and on
+                    # this nixpkgs `nvim-treesitter.withAllGrammars` resolves to the exact
+                    # same store path as the bare plugin (i.e. it's a no-op) - so without
+                    # this there are zero parsers and treesitter highlighting is dead.
+                    #
+                    # Each nixpkgs grammar derivation exposes its shared library as
+                    # `$out/parser`, but Neovim wants `parser/<lang>.so` on the
+                    # runtimepath, so re-shape them into one plugin-like directory.
+                    # Queries still come from nvim-treesitter itself, which is what keeps
+                    # query and grammar versions in sync.
+                    treesitter-parsers =
+                      let
+                        grammars = lib.filterAttrs
+                          (_: v: lib.isDerivation v)
+                          pkgs.vimPlugins.nvim-treesitter.builtGrammars;
+                      in
+                        pkgs.runCommand "nvim-treesitter-parsers" { } ''
+                          mkdir -p $out/parser
+                          ${lib.concatStringsSep "\n" (lib.mapAttrsToList
+                            (name: grammar: "ln -s ${grammar}/parser $out/parser/${name}.so")
+                            grammars)}
+                        '';
+
                     # Some of these were taken form: https://github.com/mrcjkb/nvim-config/blob/b2cb412469bd4c2bf155976742cd2349f69a90ca/nix/plugin-overlay.nix#L15
-                    plugins = map (item: "${item}") (with pkgs.vimPlugins; [
+                    plugins = map (item: "${item}") ([ treesitter-parsers ] ++ (with pkgs.vimPlugins; [
                       # Nix direnv integration
                       direnv-vim
 
@@ -242,7 +265,7 @@
 
                       # Auto restore pending changes
                       auto-session
-                    ]);
+                    ]));
                     nvimPackageLinks = (builtins.listToAttrs (
                       map (item: {
                         name = ".config/nvim/pack/all/start/${getLastPartOfPath item}"; 

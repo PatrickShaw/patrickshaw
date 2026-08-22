@@ -159,24 +159,23 @@ vim.cmd [[
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
--- Language servers
-local lspconfig = require('lspconfig')
-lspconfig.pyright.setup {
+-- Language servers.
+-- Neovim 0.11+ ships `vim.lsp.config` / `vim.lsp.enable`, so nvim-lspconfig is now
+-- only providing the per-server default configs (cmd, root markers, filetypes) that
+-- these calls merge on top of. No `require('lspconfig').<server>.setup{}` needed.
+-- See: `:help lsp-config`
+vim.lsp.config('*', {
   capabilities = capabilities,
-}
-lspconfig.ts_ls.setup {
-  capabilities = capabilities,
-}
-lspconfig.rust_analyzer.setup {
+})
+
+vim.lsp.config('rust_analyzer', {
   -- Server-specific settings. See `:help lspconfig-setup`
   settings = {
     ['rust-analyzer'] = {},
   },
-  capabilities = capabilities,
-}
-lspconfig.lua_ls.setup {
-  capabilities = capabilities,
-}
+})
+
+vim.lsp.enable({ 'pyright', 'ts_ls', 'rust_analyzer', 'lua_ls' })
 
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions.
@@ -217,9 +216,28 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-require'nvim-treesitter.configs'.setup({
-  highlight={enable=true},
+-- nvim-treesitter's `main` branch (what nixpkgs now ships) deleted the
+-- `nvim-treesitter.configs` module along with its `highlight = { enable = true }`
+-- option. Highlighting is core Neovim's job now: the plugin supplies queries and
+-- parser management, and you opt buffers in with `vim.treesitter.start()`.
+-- See: https://github.com/nvim-treesitter/nvim-treesitter/blob/main/README.md
+require('nvim-treesitter').setup()
+
+vim.api.nvim_create_autocmd('FileType', {
+  group = vim.api.nvim_create_augroup('UserTreesitter', { clear = true }),
+  callback = function(ev)
+    -- pcall because not every filetype has a parser; vim.treesitter.start()
+    -- raises rather than no-oping, and an uncaught error here would abort
+    -- the whole FileType autocmd chain.
+    if not pcall(vim.treesitter.start, ev.buf) then
+      return
+    end
+
+    -- Treesitter-based indentation and folding are opt-in per buffer too
+    vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  end,
 })
+
 -- Icons: mini.icons replaces nvim-web-devicons. `mock_nvim_web_devicons` registers
 -- it under the old module name so plugins that still `require('nvim-web-devicons')`
 -- keep working. See: https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-icons.md

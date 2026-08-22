@@ -414,7 +414,9 @@
           # Note: Tried nixpkgs-wayland but found it to be more unstable since it uses non-released versions
           pkgs.wl-clipboard
           pkgs.awww
-          pkgs.wofi
+          # Replaces wofi (effectively unmaintained). fuzzel is a drop-in for the
+          # `--dmenu` usage in hypr/hyprland.conf and is considerably faster
+          pkgs.fuzzel
           pkgs.grim
           pkgs.slurp
           pkgs.imv

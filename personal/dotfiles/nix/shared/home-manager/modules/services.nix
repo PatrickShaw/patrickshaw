@@ -8,7 +8,7 @@
   # wrapper around aw-server-rust, aw-qt, and the window/AFK
   # watchers. macOS uses the official app bundle installed by the
   # declarative Homebrew cask in private/nix/darwin/flake.nix.
-  systemd.user.services.activitywatch = lib.mkIf (!pkgs.stdenv.isDarwin) {
+  systemd.user.services.activitywatch = lib.mkIf (!pkgs.stdenv.hostPlatform.isDarwin) {
     Unit = {
       Description = "ActivityWatch local workflow telemetry";
       After = [ "graphical-session.target" ];
@@ -21,7 +21,7 @@
     Install.WantedBy = [ "graphical-session.target" ];
   };
 
-  launchd.agents.activitywatch = lib.mkIf pkgs.stdenv.isDarwin {
+  launchd.agents.activitywatch = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
     enable = true;
     config = {
       # Launch by bundle name rather than relying on the app's
@@ -40,7 +40,7 @@
   };
 
   services.darkman = {
-    enable = !pkgs.stdenv.isDarwin;
+    enable = !pkgs.stdenv.hostPlatform.isDarwin;
     settings = {
       usegeoclue = true;
     };

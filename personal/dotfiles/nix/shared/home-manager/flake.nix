@@ -42,6 +42,14 @@
     };
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    # Only needed for the standalone homeConfigurations below. When these
+    # modules are consumed as part of a NixOS/nix-darwin system, that system's
+    # own home-manager is used instead.
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     
     #vscode-extensions.url = "git+ssh://git@github.com:nix-community/nix-vscode-extensions.git"; #"github:nix-community/nix-vscode-extensions/master";
     vscode-extensions-2 = {
@@ -96,6 +104,52 @@
         # servers) that want the config links without the whole profile.
         dotfiles = ./modules/dotfiles.nix;
       };
+
+      # Standalone entry points, for machines that just have Nix installed
+      # (a work laptop, someone else's box, a container) rather than NixOS or
+      # nix-darwin. Activate with:
+      #   home-manager switch --flake .#pshaw@x86_64-linux
+      #
+      # These instantiate their own nixpkgs, so unlike the module path they
+      # can't inherit nixpkgs.config from a system configuration and have to
+      # set allowUnfree themselves.
+      homeConfigurations =
+        let
+          mkHome = { system, username, modules }:
+            inputs.home-manager.lib.homeManagerConfiguration {
+              pkgs = import inputs.nixpkgs {
+                inherit system;
+                config.allowUnfree = true;
+              };
+              modules = modules ++ [
+                {
+                  home = {
+                    inherit username;
+                    homeDirectory =
+                      if inputs.nixpkgs.lib.hasSuffix "darwin" system
+                      then "/Users/${username}"
+                      else "/home/${username}";
+                    stateVersion = "23.05";
+                  };
+                }
+              ];
+            };
+
+          shared = import ./modules/shared.nix {
+            inherit inputs zsh-config dracula-dircolors git-rainbow-delimiters-nvim;
+          };
+        in {
+          "pshaw@x86_64-linux" = mkHome {
+            system = "x86_64-linux";
+            username = "pshaw";
+            modules = [ shared ./modules/linux-desktop.nix ];
+          };
+          "pshaw@aarch64-darwin" = mkHome {
+            system = "aarch64-darwin";
+            username = "pshaw";
+            modules = [ shared ];
+          };
+        };
     };
   };
 }

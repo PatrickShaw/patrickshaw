@@ -136,7 +136,7 @@
 
     # Fairly generic CoW deduper
     fclones
-  ] ++ lib.optionals pkgs.stdenv.isDarwin [
+  ] ++ lib.optionals pkgs.stdenv.hostPlatform.isDarwin [
     iterm2
 
     # `ghostty` proper is Linux-only in nixpkgs (meta.platforms excludes darwin),

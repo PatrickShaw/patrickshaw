@@ -68,7 +68,7 @@ in {
     ".claude/skills/typescript-preferences".source = link "personal/dotfiles/agents/skills/typescript-preferences";
     ".codex/skills/typescript-preferences".source = link "personal/dotfiles/agents/skills/typescript-preferences";
     ".cursor/skills/typescript-preferences".source = link "personal/dotfiles/agents/skills/typescript-preferences";
-  } // (if pkgs.stdenv.isDarwin then {
+  } // (if pkgs.stdenv.hostPlatform.isDarwin then {
     "Library/Application Support/discord/settings.json".source = link "personal/dotfiles/discord/settings.json";
   } else {
     ".config/discord/settings.json".source = link "personal/dotfiles/discord/settings.json";

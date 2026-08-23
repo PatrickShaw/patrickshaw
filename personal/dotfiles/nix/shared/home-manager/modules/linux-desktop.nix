@@ -3,17 +3,31 @@
 # Previously `environment.systemPackages` in linux/apps.nix. Hardware,
 # firmware and mime-database tooling stays system-wide (see that file); this
 # is the part that is just "the apps I use".
-{ pkgs, ... }: {
+{ lib, pkgs, ... }:
+let
+  isLinux = pkgs.stdenv.hostPlatform.isLinux;
+in {
+  # Importing this on macOS would otherwise fail deep inside some package with
+  # "is not supported on aarch64-darwin" and no hint as to why it was pulled
+  # in. Everything below is behind mkIf so it stays unevaluated on the wrong
+  # platform and this assertion is what actually gets reported.
+  assertions = [
+    {
+      assertion = isLinux;
+      message = "homeModules.linux-desktop is Linux only, but was imported on ${pkgs.stdenv.hostPlatform.system}.";
+    }
+  ];
+
   # Was programs.nm-applet.enable at system level, which starts the applet for
   # every graphical session on the box. As a user service it belongs to me.
-  services.network-manager-applet.enable = true;
+  services.network-manager-applet.enable = lib.mkIf isLinux true;
 
   # Required in order to show authentication prompts (even works with
   # fingerprints). This was already a *user* unit, it was just declared
   # system-wide via systemd.user, which starts it for every account.
   # See: https://nixos.wiki/wiki/Polkit
   # See: https://wiki.hyprland.org/Useful-Utilities/Must-have/#authentication-agent
-  systemd.user.services.polkit-gnome-authentication-agent-1 = {
+  systemd.user.services.polkit-gnome-authentication-agent-1 = lib.mkIf isLinux {
     Unit = {
       Description = "polkit-gnome-authentication-agent-1";
       Wants = [ "graphical-session.target" ];
@@ -29,7 +43,7 @@
     Install.WantedBy = [ "graphical-session.target" ];
   };
 
-  home.packages = with pkgs; [
+  home.packages = lib.mkIf isLinux (with pkgs; [
     # google-chrome
 
     gnome-clocks
@@ -151,9 +165,9 @@
 
     playerctl
 
+    # ddcutil itself stays in the system profile - it needs root for i2c and
+    # is granted NOPASSWD sudo by absolute /run/current-system/sw/bin path.
     # See "External monitors" in https://wiki.archlinux.org/title/backlight
-    ddcutil
-    # UI
     ddcui
 
     newsflash
@@ -218,5 +232,5 @@
 
     # Layer on top of Docker/Podman/OCI to run Linux distros in containers
     distrobox
-  ];
+  ]);
 }

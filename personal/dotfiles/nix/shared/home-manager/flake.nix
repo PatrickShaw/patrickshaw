@@ -90,66 +90,73 @@
     #
     # Hosts wire these up with:
     #   home-manager.users.<name>.imports = [ inputs.home-manager-config.homeModules.default ];
-    flake = {
-      homeModules = {
-        default = import ./modules/shared.nix {
-          inherit inputs zsh-config dracula-dircolors git-rainbow-delimiters-nvim;
-        };
-
-        # Linux desktop applications and session services. Kept separate so
-        # headless Linux hosts and macOS don't pull in a desktop.
-        linux-desktop = ./modules/linux-desktop.nix;
-
-        # Public dotfile symlinks on their own, for users (e.g. root on
-        # servers) that want the config links without the whole profile.
-        dotfiles = ./modules/dotfiles.nix;
-      };
-
-      # Standalone entry points, for machines that just have Nix installed
-      # (a work laptop, someone else's box, a container) rather than NixOS or
-      # nix-darwin. Activate with:
-      #   home-manager switch --flake .#pshaw@x86_64-linux
-      #
-      # These instantiate their own nixpkgs, so unlike the module path they
-      # can't inherit nixpkgs.config from a system configuration and have to
-      # set allowUnfree themselves.
-      homeConfigurations =
-        let
-          mkHome = { system, username, modules }:
-            inputs.home-manager.lib.homeManagerConfiguration {
-              pkgs = import inputs.nixpkgs {
-                inherit system;
-                config.allowUnfree = true;
-              };
-              modules = modules ++ [
-                {
-                  home = {
-                    inherit username;
-                    homeDirectory =
-                      if inputs.nixpkgs.lib.hasSuffix "darwin" system
-                      then "/Users/${username}"
-                      else "/home/${username}";
-                    stateVersion = "23.05";
-                  };
-                }
-              ];
-            };
-
-          shared = import ./modules/shared.nix {
+    flake =
+      let
+        homeModules = {
+          default = import ./modules/shared.nix {
             inherit inputs zsh-config dracula-dircolors git-rainbow-delimiters-nvim;
           };
-        in {
+
+          # Linux desktop applications and session services. Kept separate so
+          # headless Linux hosts and macOS don't pull in a desktop.
+          linux-desktop = ./modules/linux-desktop.nix;
+
+          # Public dotfile symlinks on their own, for users (e.g. root on
+          # servers) that want the config links without the whole profile.
+          dotfiles = ./modules/dotfiles.nix;
+        };
+
+        # Standalone entry points, for machines that just have Nix installed
+        # (a work laptop, someone else's box, a container) rather than NixOS or
+        # nix-darwin. Activate with:
+        #   home-manager switch --flake .#pshaw@x86_64-linux
+        #
+        # These instantiate their own nixpkgs, so unlike the module path they
+        # can't inherit nixpkgs.config from a system configuration and have to
+        # set allowUnfree themselves.
+        mkHome = { system, username, modules }:
+          inputs.home-manager.lib.homeManagerConfiguration {
+            pkgs = import inputs.nixpkgs {
+              inherit system;
+              config.allowUnfree = true;
+            };
+            modules = modules ++ [
+              {
+                home = {
+                  inherit username;
+                  homeDirectory =
+                    if inputs.nixpkgs.lib.hasSuffix "darwin" system
+                    then "/Users/${username}"
+                    else "/home/${username}";
+                  stateVersion = "23.05";
+                };
+              }
+            ];
+          };
+
+        homeConfigurations = {
           "pshaw@x86_64-linux" = mkHome {
             system = "x86_64-linux";
             username = "pshaw";
-            modules = [ shared ./modules/linux-desktop.nix ];
+            modules = [ homeModules.default homeModules.linux-desktop ];
           };
           "pshaw@aarch64-darwin" = mkHome {
             system = "aarch64-darwin";
             username = "pshaw";
-            modules = [ shared ];
+            modules = [ homeModules.default ];
           };
         };
-    };
+      in {
+        inherit homeModules homeConfigurations;
+
+        # Build the standalone profiles as a flake check, so `nix flake check`
+        # catches a broken module rather than leaving it to the next rebuild.
+        checks = {
+          aarch64-darwin.home =
+            homeConfigurations."pshaw@aarch64-darwin".activationPackage;
+          x86_64-linux.home =
+            homeConfigurations."pshaw@x86_64-linux".activationPackage;
+        };
+      };
   };
 }

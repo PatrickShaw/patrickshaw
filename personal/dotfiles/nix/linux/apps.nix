@@ -43,4 +43,9 @@ with pkgs; [
 
   # gpg-agent resolves its pinentry program from the system profile
   pinentry-all
+
+  # Needs root for i2c access, and private/nix/shared/permit-sudo-common-commands.nix
+  # grants it NOPASSWD sudo by absolute /run/current-system/sw/bin path, so it has
+  # to stay in the system profile. The ddcui GUI is a user package.
+  ddcutil
 ]

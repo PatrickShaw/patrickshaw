@@ -12,7 +12,7 @@
 # Dotfiles from someone who might have ADHD?
 # But also uses xorg from what I can see
 # https://github.com/Vaernil/dotfiles
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
   link = path: config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/${path}";
 in {
@@ -50,7 +50,9 @@ in {
     ".config/user-dirs.locale".source = link "personal/dotfiles/.config/user-dirs.locale";
     ".config/mako/config".source = link "personal/dotfiles/mako/config";
 
-    ".gitconfig".source = link "personal/dotfiles/.gitconfig";
+    # mkDefault so a host can point this elsewhere (e.g. the work laptop's
+    # .work-gitconfig) with a plain assignment rather than mkForce.
+    ".gitconfig".source = lib.mkDefault (link "personal/dotfiles/.gitconfig");
 
     # AI agent harnesses.
     # One AGENTS.md is the single source of truth for coding standards. Its YAML

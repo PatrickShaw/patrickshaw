@@ -13,6 +13,7 @@
 
     (import ./shells.nix { inherit zsh-config; })
     (import ./editors.nix { inherit inputs dracula-dircolors git-rainbow-delimiters-nvim; })
+    ./environment.nix
     ./packages.nix
     ./services.nix
     ./dotfiles.nix

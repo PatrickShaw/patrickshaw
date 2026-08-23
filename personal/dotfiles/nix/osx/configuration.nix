@@ -3,6 +3,5 @@
   imports = [
     ../shared/binary-caching.nix
     ../shared/configuration.nix
-    ./base-configuration.nix
   ];
 }

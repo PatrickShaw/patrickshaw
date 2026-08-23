@@ -1,4 +1,4 @@
-{ boot, persist, nixStore }:
+{ boot, persist, nixStore, isServer ? false }:
 let
   persist-directories = directories: builtins.foldl' (fileSystems: directory: (fileSystems // {
     "${directory}" = {
@@ -83,38 +83,26 @@ in
       options = [ "bind" ];
       neededForBoot = true;
     };
-  } // (persist-directories [
+  } // (persist-directories ([
 
     "/root"
 
-    # Where NetworkManager stores WiFi info (and other connection types)
-    "/etc/NetworkManager/system-connections"
-    # Where wpa_supplicant stores WiFi info
-    "/etc/wpa_supplicant"
-
-    # Without this you'd have to keep approving each newly generated SSH on each boot if you enable SSHing into the machine
-    "/etc/ssh"
-
-    "/etc/nixos"
-
-    "/etc/nix"
-
     "/home"
-
-    "/etc/shadow"
-
-    # Makes a bunch of measurements which it seems to read upon reboot. Probably worth it for battery useage purposes?
-    "/var/cache/powertop"
 
     "/var/lib"
 
     # FHS explicitly says tmp files to be preserved for reboot so will do
     "/var/tmp"
 
-    # I think dhcpcd has trouble on restart so keeping this here?
+    # I think dhcpcd has trouble on restart so keeping this here (/var/db/dhcpcd)?
     # Worth storing in case whatever network your on doesn't like you forgetting your IP
-    "/var/db/dhcpcd"
+    "/var/db"
 
-    "/etc/adjtime"
-  ]);
+    "/etc"
+
+    "/opt"
+  ] ++ (if isServer then [] else [
+    # There's enough things in here that matter (E.g. powertop) that I think you're better off just keeping trac of the hole thing
+    "/var/cache"
+  ])));
 }

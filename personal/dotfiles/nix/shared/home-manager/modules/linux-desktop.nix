@@ -18,6 +18,14 @@ in {
     }
   ];
 
+  xdg.userDirs = lib.mkIf isLinux {
+    enable = true;
+    createDirectories = true;
+
+    # Prefer xdg-user-dir over exporting legacy directory variables globally.
+    setSessionVariables = false;
+  };
+
   # Was programs.nm-applet.enable at system level, which starts the applet for
   # every graphical session on the box. As a user service it belongs to me.
   services.network-manager-applet.enable = lib.mkIf isLinux true;

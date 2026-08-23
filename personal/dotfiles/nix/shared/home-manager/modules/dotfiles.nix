@@ -46,7 +46,6 @@ in {
     ".config/electron-flags.conf".source = link "personal/dotfiles/.config/electron-flags.conf";
     ".config/code-flags.conf".source = link "personal/dotfiles/.config/code-flags.conf";
     ".config/codium-flags.conf".source = link "personal/dotfiles/.config/codium-flags.conf";
-    ".config/user-dirs.dirs".source = link "personal/dotfiles/.config/user-dirs.dirs";
     ".config/user-dirs.locale".source = link "personal/dotfiles/.config/user-dirs.locale";
     ".config/mako/config".source = link "personal/dotfiles/mako/config";
 

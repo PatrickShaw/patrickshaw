@@ -41,6 +41,15 @@
           ];
         };
       };
+      darkman-geoclue = { ... }: {
+        # Darkman runs as a Home Manager user service, but GeoClue application
+        # permissions are enforced by the NixOS system service.
+        services.geoclue2.appConfig.darkman = {
+          desktopID = "nl.whynothugo.darkman";
+          isAllowed = true;
+          isSystem = false;
+        };
+      };
       intel-integrated-graphics = { pkgs, ... }: {
         imports = [self.nixosModules.graphics];
         hardware.graphics = {
@@ -265,7 +274,9 @@
         #   ];
         #};
       };
-
+      laptop = { ... }: {
+        hardware.sensor.iio.enable = true;
+      };
       pipewire = { lib, ... }: {
         services.pipewire = {
           enable = true;
@@ -311,6 +322,7 @@
       in {
         imports = [
             self.nixosModules.barebones
+            self.nixosModules.darkman-geoclue
             # inputs.hyprland.nixosModules.default
             self.nixosModules.base
             self.nixosModules.text-to-speech

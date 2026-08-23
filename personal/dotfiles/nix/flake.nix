@@ -565,8 +565,8 @@
           enable = true;
         };
         
-        # Should start a service based on https://github.com/NixOS/nixpkgs/blob/27bd67e55fe09f9d68c77ff151c3e44c4f81f7de/nixos/modules/programs/nm-applet.nix#L26
-        programs.nm-applet.enable = true;
+        # nm-applet is started as a Home Manager user service instead - see
+        # shared/home-manager/modules/linux-desktop.nix
       };
       default = { config, pkgs, lib, options, ... }: {
         imports = [

@@ -88,6 +88,10 @@
           inherit inputs zsh-config dracula-dircolors git-rainbow-delimiters-nvim;
         };
 
+        # Linux desktop applications and session services. Kept separate so
+        # headless Linux hosts and macOS don't pull in a desktop.
+        linux-desktop = ./modules/linux-desktop.nix;
+
         # Public dotfile symlinks on their own, for users (e.g. root on
         # servers) that want the config links without the whole profile.
         dotfiles = ./modules/dotfiles.nix;

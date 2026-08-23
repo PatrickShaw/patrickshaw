@@ -1,232 +1,46 @@
+# System-wide Linux packages.
+#
+# Deliberately small: hardware/firmware tooling, diagnostics that are useful as
+# root, virtualisation helpers, and the XDG/mime databases that system services
+# and every desktop app rely on.
+#
+# Desktop applications live in the user profile instead - see
+# shared/home-manager/modules/linux-desktop.nix.
 { pkgs }:
 with pkgs; [
-  # google-chrome
-
-  pkgs.gnome-clocks
-
-  gcc
-
-  gnome-text-editor
-
-  cliphist
-
-  killall
-
-  autotiling-rs
-
-  # CLI based GTK dialog renderer - Similarish in purpose to Wofi
-  yad
-
-
+  # Boot/disk administration
   efibootmgr
+  gptfdisk
 
-  libreoffice-fresh
-
-  waybar
-  ulauncher
-
-  pamixer
-
-  pavucontrol
-  # Prefer qpwgraph to helvum
-  qpwgraph
-
-  # Camera app
-  cheese
-  # Allows tweaking of camera
-  # v4l-utils
-
-  # If you ever need specific dependencies, you can add them manually. Smaller than resorting to ffmpeg-full
-  ffmpeg
-
-  # This is great for figuring out which apps take up a lot of space
-  nix-tree
-
-  swayidle
-
-  brightnessctl
-
-  # Broken ATM:
-  #frawk
-
-  looking-glass-client
-
-  nautilus
-  sushi
-
-  # gamescope
-  # protontricks
-  # proton-caller
-  winetricks
-
-  # river
-
-  p7zip
-  unzip
-  gzip
-  file-roller
-
-  # jack2
-  #helvum
-
-  # For lspci
+  # Diagnostics that are routinely needed as root
+  # pciutils for lspci, usbutils for lsusb
   pciutils
-  # For lsusb
   usbutils
+  lsof
+  killall
+  mesa-demos
 
-  # steam
-  # Steam was trying to use this
-  xdg-user-dirs
-  #lutris
+  # Fixes ntlm_auth wine errors.
+  # See https://github.com/NixOS/nixpkgs/issues/126801#issuecomment-930431829
+  samba
 
-  baobab
-  cpu-x
-
-  # See: https://nixos.wiki/wiki/Wine
-  #wineWowPackages.stable
-  wineWow64Packages.waylandFull
-  samba # Fixes ntlm_auth wine errors. See https://github.com/NixOS/nixpkgs/issues/126801#issuecomment-930431829
-
-  spotify
-  #(signal-desktop.overrideAttrs (old: {
-    # See https://github.com/NixOS/nixpkgs/issues/222043#issuecomment-1589411268
-  #  preFixup = old.preFixup + ''
-  #    gappsWrapperArgs+=(
-  #      --add-flags "--enable-features=UseOzonePlatform"
-  #      --add-flags "--ozone-platform=wayland"
-  #    )
-  #  '';
-  #}))
-
-  celluloid
-  # Haven't needed anything other than celluloid and mpv
-  # haruna
-
-  # Haven't used this in a while and it's very big so commented out for now
-  # jetbrains.idea-community
-
-  qbittorrent
-
-  virt-manager
+  # libvirt/QEMU need these on the system side
   virtiofsd
   OVMFFull
 
-  # There's a lot of much better alternatives, so removed this classic
-  # vlc
+  # Steam was trying to use this
+  xdg-user-dirs
 
-  kitty
-
-  gammastep
-
-  # Replaces wezterm. On Linux nixpkgs builds ghostty from source
-  ghostty
-
-  #docker
-  #docker-compose
-
-  phinger-cursors
-  papirus-icon-theme
-
-  # I find it doesn't work that well, at least for my setup
-  # caprine-bin
-
-  orchis-theme
-
-  obsidian
-
-  playerctl
-
-  cpu-x
-
-  # See "External monitors" in https://wiki.archlinux.org/title/backlight
-  ddcutil
-  # UI
-  ddcui
-
+  # Icon themes are resolved out of XDG_DATA_DIRS, so they stay system-wide.
   # See: https://nixos.wiki/wiki/GNOME and the "Known Issues" section of "https://nixos.wiki/wiki/Lutris"
   adwaita-icon-theme
   # Added assuming it might cause the same problems as above ^
   hicolor-icon-theme
 
-  newsflash
-  
-  handlr
-  (stdenv.mkDerivation {
-    pname = "handler-xdg-open-shim";
-    version = "1.0";
-
-    # src = ./.; 
-
-    buildInputs = [ handlr ];
-
-    dontUnpack = true;
-
-    installPhase = ''
-      mkdir -p $out/bin
-      touch $out/bin/xdg-open
-      chmod 755 $out/bin/xdg-open
-      echo '#!/bin/sh' >> $out/bin/xdg-open
-      echo 'handlr open "$@"' >> $out/bin/xdg-open
-    '';
-
-    # meta = {
-    #   description = "A simple wrapper for handlr using xdg-open";
-    #   license = stdenv.lib.licenses.mit;
-    # };
-  })
-
-  # Has xdg-open in it. I assume a few apps depend on this globally
-  # BUT have a look at https://wiki.archlinux.org/title/Default_applications#xdg-open - Apparently this is a different xdg-open implementation
-  # Went with handlr instead which provides a way of shimming it
-  # xdg-utils
-
-  gptfdisk
-  
-  # Image viewers
-  eog
-  feh
-
-  # Epic game store
-  # legendary-gl
-  # heroic
-
-  # Font viewer
-  # TODO: Haven't looked at other apps yet
-  gnome-font-viewer
-
-
-  # See: https://nixos.wiki/wiki/LibreOffice
-  # and see: https://wiki.archlinux.org/title/firefox
-  hunspell
-  hunspellDicts.en_AU-large
-  hunspellDicts.en_US
-
-  efibootmgr
-
-  # Zoom was asking for it
-  # glxinfo
-  # Apparently the folowing replaces glxinfo?
-  mesa-demos
-
-  # Required by eww, it seems
-  wmctrl
-
-  wl-clip-persist
-
-
-  # Can be used to configure mice who's software isn't available on Linux
-  libratbag
-  # And this is the UI for it
-  piper
-
   # Don't remember why exactly I added these but I imagine they're for getting XDG-open to work properly
   shared-mime-info
   desktop-file-utils
 
-  # Layer on top of Docker/Podman/OCI to run Linux distros in containers
-  distrobox
-
+  # gpg-agent resolves its pinentry program from the system profile
   pinentry-all
-  # A lot of scripts want this
-  lsof 
 ]

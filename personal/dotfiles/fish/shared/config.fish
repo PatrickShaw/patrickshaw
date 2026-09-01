@@ -2,6 +2,24 @@ set fish_greeting
 
 fish_add_path $HOME/.cargo/bin
 
+# nix-direnv devshells export the stdenv build sandbox's scratch directory as
+# $TMPDIR. Nothing owns that directory once the shell that created it exits, so
+# the OS temp reaper eventually deletes it while we are still pointing at it.
+# Every mktemp-based tool then fails, including fish's `psub` -- which
+# `starship init fish` depends on, taking out the rest of this file with it.
+if set -q TMPDIR; and not test -d "$TMPDIR"
+  # macOS expects its per-user directory under /var/folders. getconf does not
+  # know this variable on Linux, where /tmp is the correct default.
+  set -l platform_tmpdir (getconf DARWIN_USER_TEMP_DIR 2>/dev/null)
+  test -d "$platform_tmpdir"; or set platform_tmpdir /tmp
+
+  set -gx TMPDIR $platform_tmpdir
+  set -gx TMP $platform_tmpdir
+  set -gx TEMP $platform_tmpdir
+  set -gx TEMPDIR $platform_tmpdir
+  set -e NIX_BUILD_TOP
+end
+
 if status is-interactive
   # Prompt: starship. This runs after conf.d/, so it takes over fish_prompt and
   # fish_right_prompt from tide if the tide plugin is ever re-enabled.

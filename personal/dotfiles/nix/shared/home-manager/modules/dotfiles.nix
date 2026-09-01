@@ -57,14 +57,14 @@ in {
     # One AGENTS.md is the single source of truth for coding standards. Its YAML
     # frontmatter is only meaningful to Cursor; every other tool reads it as inert
     # markdown, so the same file can serve all of them.
-    ".rovodev/AGENTS.md".source = link "personal/dotfiles/agents/AGENTS.md";
+    ".rovo/AGENTS.md".source = link "personal/dotfiles/agents/AGENTS.md";
     ".codex/AGENTS.md".source = link "personal/dotfiles/agents/AGENTS.md";
     ".claude/CLAUDE.md".source = link "personal/dotfiles/agents/AGENTS.md";
     ".cursor/rules/000-personal-practices.mdc".source = link "personal/dotfiles/agents/AGENTS.md";
 
     # Add individual personal skills rather than taking ownership of the parent
     # directories, some of which are also used by work-managed skill installers.
-    ".rovodev/skills/typescript-preferences".source = link "personal/dotfiles/agents/skills/typescript-preferences";
+    ".rovo/skills/typescript-preferences".source = link "personal/dotfiles/agents/skills/typescript-preferences";
     ".agents/skills/typescript-preferences".source = link "personal/dotfiles/agents/skills/typescript-preferences";
     ".claude/skills/typescript-preferences".source = link "personal/dotfiles/agents/skills/typescript-preferences";
     ".codex/skills/typescript-preferences".source = link "personal/dotfiles/agents/skills/typescript-preferences";

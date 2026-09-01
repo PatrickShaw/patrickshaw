@@ -270,7 +270,10 @@ style = "fg:direnv bg:bg"
 format = "[](fg:sep_same bg:bg)[ $symbol ]($style)"
 symbol = "▼"
 
+# Note: Language modules were kind of slow on my work machine (runs a bunch of security scanners that don't play well with direnv+nix ATM). I don't really find the language modules useful anyway so just disabled most except Node.
+
 [bun]
+disabled = true
 style = "fg:bun bg:bg"
 format = "[](fg:sep_same bg:bg)[ $symbol$version ]($style)"
 symbol = "󰳓 "
@@ -281,21 +284,25 @@ format = "[](fg:sep_same bg:bg)[ $symbol$version ]($style)"
 symbol = " "
 
 [python]
+disabled = true
 style = "fg:lang_python bg:bg"
 format = "[](fg:sep_same bg:bg)[ $symbol$pyenv_prefix$version( \\($virtualenv\\)) ]($style)"
 symbol = "󰌠 "
 
 [rust]
+disabled = true
 style = "fg:lang_rust bg:bg"
 format = "[](fg:sep_same bg:bg)[ $symbol$version ]($style)"
 symbol = " "
 
 [java]
+disabled = true
 style = "fg:lang_java bg:bg"
 format = "[](fg:sep_same bg:bg)[ $symbol$version ]($style)"
 symbol = " "
 
 [php]
+disabled = true
 style = "fg:lang_php bg:bg"
 format = "[](fg:sep_same bg:bg)[ $symbol$version ]($style)"
 symbol = " "
@@ -306,11 +313,13 @@ format = "[](fg:sep_same bg:bg)[ $symbol$stack ]($style)"
 symbol = " "
 
 [ruby]
+disabled = true
 style = "fg:lang_ruby bg:bg"
 format = "[](fg:sep_same bg:bg)[ $symbol$version ]($style)"
 symbol = " "
 
 [golang]
+disabled = true
 style = "fg:lang_go bg:bg"
 format = "[](fg:sep_same bg:bg)[ $symbol$version ]($style)"
 symbol = " "
@@ -348,16 +357,19 @@ format = "[](fg:sep_same bg:bg)[ $symbol$state( \\($name\\)) ]($style)"
 symbol = " "
 
 [crystal]
+disabled = true
 style = "fg:crystal bg:bg"
 format = "[](fg:sep_same bg:bg)[ $symbol$version ]($style)"
 symbol = " "
 
 [elixir]
+disabled = true
 style = "fg:lang_elixir bg:bg"
 format = "[](fg:sep_same bg:bg)[ $symbol$version ]($style)"
 symbol = " "
 
 [zig]
+disabled = true
 style = "fg:zig bg:bg"
 format = "[](fg:sep_same bg:bg)[ $symbol$version ]($style)"
 symbol = " "

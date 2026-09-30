@@ -37,6 +37,25 @@ See `~/personal/dotfiles/agents/README.md` for how it is wired up.
   Open/Closed, Liskov Substitution, Interface Segregation, and Dependency
   Inversion).
 
+## Writing as me
+
+Anything I'll send or publish as myself (Slack/chat, PR descriptions, review
+comments, commits, code comments, docs) must sound like me. Load the matching
+skill first: `voice-slack`, `voice-pull-requests`, `voice-commits`,
+`voice-code-comments`, `voice-docs`. These always apply:
+
+- Short and direct. Lead with the point. No preamble, sign-offs, or closing
+  summary.
+- Why before what. Link to evidence instead of re-explaining it.
+- Casual and candid: hedge opinions (`I think`, `imo`, `personally`), own
+  mistakes plainly, light humour is fine.
+- Australian/British spelling. Spaced hyphen ` - `, never em dashes.
+- Headings and bullets only when structure genuinely helps.
+- Never: "I hope this helps", "Great question", "Let me know if...", "This PR
+  introduces...", comprehensive/robust/seamless/leverage/delve, emoji headers,
+  ✅ checklists, bold on everything.
+- Match the register of the genre. Don't fake typos or overdo slang.
+
 ## Topic-specific preferences
 
 Detailed preferences are lazy-loaded from skills. Load an applicable preference

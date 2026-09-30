@@ -1,6 +1,6 @@
 set fish_greeting
 
-fish_add_path $HOME/.cargo/bin
+# Note: PATH entries are declared via Nix these days
 
 # nix-direnv devshells export the stdenv build sandbox's scratch directory as
 # $TMPDIR. Nothing owns that directory once the shell that created it exits, so
@@ -23,7 +23,6 @@ end
 if status is-interactive
   # Prompt: starship. This runs after conf.d/, so it takes over fish_prompt and
   # fish_right_prompt from tide if the tide plugin is ever re-enabled.
-  set -gx STARSHIP_CONFIG "$HOME/.config/starship/starship.toml"
   starship init fish | source
 
   # See: https://fishshell.com/docs/current/cmds/bind.html

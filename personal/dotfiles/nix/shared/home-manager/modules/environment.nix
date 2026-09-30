@@ -5,6 +5,11 @@
 # they belong to the user instead.
 { ... }: {
   home.sessionVariables = {
+    # LLM: npm's default global prefix is its own (read-only) Nix store path - 
+    NPM_CONFIG_PREFIX = "$HOME/.npm-global";
+    # Starship's default is ~/.config/starship.toml; dotfiles.nix links the
+    # whole directory instead.
+    STARSHIP_CONFIG = "$HOME/.config/starship/starship.toml";
     VISUAL = "nvim";
     TERMINAL = "ghostty";
     BROWSER = "firefox";
@@ -21,6 +26,15 @@
     MCFLY_PROMPT = "❯";
     MCFLY_RESULTS = "15";
   };
+
+  # Declared here rather than per shell so zsh and fish can't drift apart.
+  # Prepended to PATH in list order, so earlier entries win.
+  home.sessionPath = [
+    # XDG's user executable dir; claude, rovo, pipx and uv install here.
+    "$HOME/.local/bin"
+    "$HOME/.npm-global/bin"
+    "$HOME/.cargo/bin"
+  ];
 
   # Home Manager writes these into both the zsh and fish config it generates,
   # which also removes the need for the nix-darwin /etc/zshrc workaround that

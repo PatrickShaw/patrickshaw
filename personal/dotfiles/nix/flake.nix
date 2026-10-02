@@ -178,6 +178,10 @@
         services.userborn.enable = true;
         boot.initrd.systemd.enable = true;
         system.etc.overlay.enable = true;
+
+
+        # nixpkgs only orders rw-etc after /sysroot, so a persisted /.rw-etc so you end up with a race when using my impermanence.nix settings.
+        boot.initrd.systemd.services.rw-etc.unitConfig.RequiresMountsFor = [ "/sysroot/.rw-etc" ];
       };
       barebones = { lib, pkgs, ... }:  {
         imports = [self.nixosModules.modern-init];

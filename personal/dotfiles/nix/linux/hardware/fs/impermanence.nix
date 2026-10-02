@@ -76,6 +76,15 @@ in
       neededForBoot = true;
     };
 
+    # The new nixos overlay setting doesn't work with /etc bind mounts so we persist .rw-etc which is where
+    # mutated /etc files go these days
+    "/.rw-etc" = {
+      device = "/persist/.rw-etc";
+      fsType = "none";
+      options = [ "bind" ];
+      neededForBoot = true;
+    };
+
 
     "/nix/store" = {
       device = "/persist/nix/store";
@@ -97,8 +106,6 @@ in
     # I think dhcpcd has trouble on restart so keeping this here (/var/db/dhcpcd)?
     # Worth storing in case whatever network your on doesn't like you forgetting your IP
     "/var/db"
-
-    "/etc"
 
     "/opt"
   ] ++ (if isServer then [] else [

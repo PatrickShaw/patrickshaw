@@ -130,6 +130,9 @@
     # The hand-written rebuild scripts still work — this is additive
     nh
 
+    # nixos-rebuild but with rollbacks
+    deploy-rs
+
     nickel
 
     go

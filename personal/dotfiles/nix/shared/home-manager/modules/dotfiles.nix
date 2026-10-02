@@ -15,7 +15,31 @@
 { config, lib, pkgs, ... }:
 let
   link = path: config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/${path}";
+
+  # Each harness discovers skills from its own directory. Skills are linked
+  # individually rather than owning the parent directories, since some of
+  # those are also written to by work-managed skill installers.
+  skillHarnessDirs = [ ".rovo" ".agents" ".claude" ".codex" ".cursor" ];
+
+  # `sourceDir` is read from the flake source so adding a skill directory is
+  # all it takes to get it linked everywhere, while `linkDir` (relative to
+  # $HOME) keeps the links pointing at the live checkout.
+  mkSkillLinks = { sourceDir, linkDir }:
+    let
+      skills = lib.attrNames (lib.filterAttrs (_: type: type == "directory")
+        (builtins.readDir sourceDir));
+    in lib.listToAttrs (lib.concatMap
+      (skill: map
+        (dir: lib.nameValuePair "${dir}/skills/${skill}" {
+          source = link "${linkDir}/${skill}";
+        })
+        skillHarnessDirs)
+      skills);
 in {
+  # Shared with the private config-links module so both halves link skills
+  # into the same set of harnesses.
+  lib.agentSkills.mkLinks = mkSkillLinks;
+
   home.file = {
     "monorepo".source = link "code/me/public/community";
     "community".source = link "code/me/public/community";
@@ -61,14 +85,9 @@ in {
     ".codex/AGENTS.md".source = link "personal/dotfiles/agents/AGENTS.md";
     ".claude/CLAUDE.md".source = link "personal/dotfiles/agents/AGENTS.md";
     ".cursor/rules/000-personal-practices.mdc".source = link "personal/dotfiles/agents/AGENTS.md";
-
-    # Add individual personal skills rather than taking ownership of the parent
-    # directories, some of which are also used by work-managed skill installers.
-    ".rovo/skills/typescript-preferences".source = link "personal/dotfiles/agents/skills/typescript-preferences";
-    ".agents/skills/typescript-preferences".source = link "personal/dotfiles/agents/skills/typescript-preferences";
-    ".claude/skills/typescript-preferences".source = link "personal/dotfiles/agents/skills/typescript-preferences";
-    ".codex/skills/typescript-preferences".source = link "personal/dotfiles/agents/skills/typescript-preferences";
-    ".cursor/skills/typescript-preferences".source = link "personal/dotfiles/agents/skills/typescript-preferences";
+  } // mkSkillLinks {
+    sourceDir = ../../../../agents/skills;
+    linkDir = "personal/dotfiles/agents/skills";
   } // (if pkgs.stdenv.hostPlatform.isDarwin then {
     "Library/Application Support/discord/settings.json".source = link "personal/dotfiles/discord/settings.json";
   } else {

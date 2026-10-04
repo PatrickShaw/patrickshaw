@@ -76,15 +76,6 @@ in {
     # mkDefault so a host can point this elsewhere (e.g. the work laptop's
     # .work-gitconfig) with a plain assignment rather than mkForce.
     ".gitconfig".source = lib.mkDefault (link "personal/dotfiles/.gitconfig");
-
-    # AI agent harnesses.
-    # One AGENTS.md is the single source of truth for coding standards. Its YAML
-    # frontmatter is only meaningful to Cursor; every other tool reads it as inert
-    # markdown, so the same file can serve all of them.
-    ".rovo/AGENTS.md".source = link "personal/dotfiles/agents/AGENTS.md";
-    ".codex/AGENTS.md".source = link "personal/dotfiles/agents/AGENTS.md";
-    ".claude/CLAUDE.md".source = link "personal/dotfiles/agents/AGENTS.md";
-    ".cursor/rules/000-personal-practices.mdc".source = link "personal/dotfiles/agents/AGENTS.md";
   } // mkSkillLinks {
     sourceDir = ../../../../agents/skills;
     linkDir = "personal/dotfiles/agents/skills";

@@ -119,6 +119,10 @@
     trash-cli
 
     git-open
+    gh
+    # Agents launch this via ~/.rovo/mcp.json + ~/.codex/config.toml, borrowing
+    # `gh auth token` so there's no PAT sitting in the dotfiles
+    github-mcp-server
     # Syntax-aware diffs. Wired up as `git dft` / `git difftool -t difftastic`
     # in dotfiles/.gitconfig, so it stays opt-in alongside delta
     difftastic

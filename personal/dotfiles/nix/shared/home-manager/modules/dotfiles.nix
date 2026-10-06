@@ -19,7 +19,7 @@ let
   # Each harness discovers skills from its own directory. Skills are linked
   # individually rather than owning the parent directories, since some of
   # those are also written to by work-managed skill installers.
-  skillHarnessDirs = [ ".rovo" ".agents" ".claude" ".codex" ".cursor" ];
+  skillHarnessDirs = [ ".agents" ".claude" ".codex" ".cursor" ];
 
   # `sourceDir` is read from the flake source so adding a skill directory is
   # all it takes to get it linked everywhere, while `linkDir` (relative to

@@ -198,7 +198,10 @@
         };
       };
       barebones = { lib, pkgs, ... }:  {
-        imports = [self.nixosModules.modern-init];
+        imports = [
+          self.nixosModules.modern-init
+          ./shared/interactive-fish.nix
+        ];
         environment.variables = {
           EDITOR = "nvim";
         };

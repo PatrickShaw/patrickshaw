@@ -3,6 +3,8 @@
 { pkgs, ... }: let
   inherit (pkgs) lib;
 in {
+  imports = [ ./interactive-fish.nix ];
+
   environment.shells = [ pkgs.fish pkgs.zsh ];
 
   # Only the minimal CLI set stays system-wide, so root and machines without a

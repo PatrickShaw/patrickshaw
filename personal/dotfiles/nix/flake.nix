@@ -173,7 +173,7 @@
           ./shared/configuration.nix
         ];
       };
-      modern-init = { ... }: {
+      modern-init = { config, lib, ... }: {
         system.nixos-init.enable = true; 
         services.userborn.enable = true;
         boot.initrd.systemd.enable = true;
@@ -182,6 +182,20 @@
 
         # nixpkgs only orders rw-etc after /sysroot, so a persisted /.rw-etc so you end up with a race when using my impermanence.nix settings.
         boot.initrd.systemd.services.rw-etc.unitConfig.RequiresMountsFor = [ "/sysroot/.rw-etc" ];
+
+        # userborn's StateDirectory pulls in /var/lib, and systemd only treats
+        # a mount as extrinsic if x-initrd.mount shows up in mountinfo - which
+        # it doesn't for the initrd's /var/lib bind mount. So var-lib.mount gets
+        # Conflicts=umount.target and shutdown hits an ordering cycle via
+        # local-fs-pre. systemd drops the job either way, this just stops the
+        # cycle (and the noise) by giving it the deps an extrinsic mount gets.
+        systemd.units."var-lib.mount" = lib.mkIf (config.fileSystems ? "/var/lib") {
+          overrideStrategy = "asDropin";
+          text = ''
+            [Unit]
+            DefaultDependencies=no
+          '';
+        };
       };
       barebones = { lib, pkgs, ... }:  {
         imports = [self.nixosModules.modern-init];

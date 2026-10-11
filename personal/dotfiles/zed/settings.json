@@ -1,0 +1,52 @@
+{
+  "auto_install_extensions": {
+    "biome": true,
+    "cspell": true,
+    "deno": true,
+    "docker-compose": true,
+    "dockerfile": true,
+    "fallow": true,
+    "glsl": true,
+    "nickel": true,
+    "nix": true,
+    "nu": true,
+    "oxc": true,
+    "stylelint": true,
+    "svelte": true,
+    "toml": true,
+    "tsgo": true,
+    "vscode-icons": true,
+    "yuck": true
+  },
+  "icon_theme": "VSCode Icons for Zed (Dark)",
+  "buffer_font_family": "JetBrains Mono",
+  "soft_wrap": "editor_width",
+  "tab_size": 2,
+  "format_on_save": "on",
+  "inlay_hints": {
+    "enabled": true
+  },
+  "indent_guides": {
+    "coloring": "indent_aware"
+  },
+  "languages": {
+    "JavaScript": {
+      "formatter": [{ "code_action": "source.fixAll.eslint" }]
+    },
+    "JSX": {
+      "formatter": [{ "language_server": { "name": "oxfmt" } }]
+    },
+    "TypeScript": {
+      "formatter": [{ "language_server": { "name": "oxfmt" } }]
+    },
+    "TSX": {
+      "formatter": [{ "language_server": { "name": "oxfmt" } }]
+    },
+    "JSON": {
+      "formatter": [{ "language_server": { "name": "oxfmt" } }]
+    },
+    "GraphQL": {
+      "formatter": [{ "language_server": { "name": "oxfmt" } }]
+    }
+  }
+}

@@ -180,14 +180,16 @@ in {
 
     newsflash
 
-    handlr
+    # Original handlr is abandoned and its tests started failing against newer
+    # shared-mime-info. The regex fork is maintained and still ships `handlr`
+    handlr-regex
     (stdenv.mkDerivation {
       pname = "handler-xdg-open-shim";
       version = "1.0";
 
       # src = ./.;
 
-      buildInputs = [ handlr ];
+      buildInputs = [ handlr-regex ];
 
       dontUnpack = true;
 

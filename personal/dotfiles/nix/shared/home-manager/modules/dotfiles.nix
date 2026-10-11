@@ -67,6 +67,7 @@ in {
     ".local/share/icons/default".source = link "personal/dotfiles/.local/share/icons/default"; # For Linux
     ".config/containers".source = link "personal/dotfiles/containers";
     ".config/helix".source = link "personal/dotfiles/helix/";
+    ".config/zed".source = link "personal/dotfiles/zed";
     ".config/electron-flags.conf".source = link "personal/dotfiles/.config/electron-flags.conf";
     ".config/code-flags.conf".source = link "personal/dotfiles/.config/code-flags.conf";
     ".config/codium-flags.conf".source = link "personal/dotfiles/.config/codium-flags.conf";
@@ -81,7 +82,10 @@ in {
     linkDir = "personal/dotfiles/agents/skills";
   } // (if pkgs.stdenv.hostPlatform.isDarwin then {
     "Library/Application Support/discord/settings.json".source = link "personal/dotfiles/discord/settings.json";
+    # Global cspell config, picked up by Zed's cspell extension (cspell-lsp)
+    "Library/Preferences/cspell".source = link "personal/dotfiles/cspell";
   } else {
     ".config/discord/settings.json".source = link "personal/dotfiles/discord/settings.json";
+    ".config/cspell".source = link "personal/dotfiles/cspell";
   });
 }

@@ -138,7 +138,10 @@
           open = false; 
           # See KMS doco in Arch. Meant to enable newer rendering methods, etc
           modesetting.enable = true;
-          package = config.boot.kernelPackages.nvidiaPackages.production;
+          # Newer drivers dropped Pascal so production just logs "No NVIDIA GPU
+          # found" and Hyprland falls over on simpledrm - you get a black screen.
+          # 580 is the legacy branch NVIDIA points the 1060 at
+          package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
         };
         environment.sessionVariables = {
           # Won't render hardware cursors

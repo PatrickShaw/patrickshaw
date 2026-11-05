@@ -11,6 +11,14 @@
   home.packages = with pkgs; [
     lua-language-server
     tree-sitter
+    # Added this mainly for LLMs
+    ast-grep
+
+    # Not sure where to document this ATM so putting it here:
+    # Using Serena ATM.
+    # Tried mcp-language-server too but it opens every file in the workspace
+    # up front (11k+ in maui-service, mostly node_modules) and never answered
+
 
     discord
 

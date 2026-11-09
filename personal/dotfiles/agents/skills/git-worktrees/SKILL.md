@@ -5,7 +5,7 @@ description: How to pick or create a git worktree before starting work in one of
 
 # Git worktrees
 
-I usually have several agents working in the same repo at once, each in its own worktree (e.g. `~/code/berry`, `~/code/2-berry`, `~/code/3-berry`). This is how to grab one without stepping on another agent, without eating disk, and without starting from a stale main.
+Patrick usually has several agents working in the same repo at once, each in its own worktree (e.g. `~/code/berry`, `~/code/2-berry`, `~/code/3-berry`). This is how to grab one without stepping on another agent, without eating disk, and without starting from a stale main.
 
 Claim a worktree _first_ and do the slow stuff (installs, dedupe) after. Another agent may be doing exactly the same thing at the same time.
 
@@ -31,7 +31,7 @@ A worktree is idle if:
 
 - Its branch is the default branch or a suffixed copy of it (`main`, `master`, `main-2`, `master-3`...). Never reuse a worktree that's on a feature branch or detached - someone's probably mid-task in it.
 - It's not marked `locked` or `prunable`.
-- `git -C <path> status --porcelain` is empty. A dirty main is either me or another agent mid-task, so leave it alone. Never stash, reset or clean it to make it usable.
+- `git -C <path> status --porcelain` is empty. A dirty main is either Patrick or another agent mid-task, so leave it alone. Never stash, reset or clean it to make it usable.
 
 If there's one, claim it straight away by switching to your new branch, based on the freshly fetched main:
 
@@ -78,6 +78,6 @@ git fetch "$REMOTE" "$DEFAULT"
 git merge-base --is-ancestor "$REMOTE/$DEFAULT" HEAD && echo up-to-date
 ```
 
-If you were asked to carry on with an existing branch rather than start a new one, rebase it onto `$REMOTE/$DEFAULT` instead. Check with me first if it's already been pushed, since that rewrites history.
+If you were asked to carry on with an existing branch rather than start a new one, rebase it onto `$REMOTE/$DEFAULT` instead. Check with Patrick first if it's already been pushed, since that rewrites history.
 
-Tell me which worktree and branch you ended up on before getting into the actual work.
+Tell Patrick which worktree and branch you ended up on before getting into the actual work.

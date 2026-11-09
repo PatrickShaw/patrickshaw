@@ -49,7 +49,7 @@
     in {
       fonts = {
         packages = fontList;
-      } // (if pkgs.stdenv.isDarwin then {
+      } // (if pkgs.stdenv.hostPlatform.isDarwin then {
       } else {
         fontDir.enable = true;
 

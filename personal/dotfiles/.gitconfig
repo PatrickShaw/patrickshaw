@@ -41,6 +41,7 @@
 
 [core]
     pager = delta
+    attributesFile = ~/personal/dotfiles/.gitattributes_global
 	# See: https://www.git-tower.com/blog/git-performance/
 	# See: https://www.youtube.com/watch?v=aolI_Rz0ZqY
 	# Actually decided to do this based on a GitHub blog post about it

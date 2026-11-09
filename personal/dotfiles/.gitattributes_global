@@ -1,0 +1,3 @@
+# Line-merging a lock graph can leave dangling node references (e.g.
+# "lock file references missing node"), so make conflicts explicit instead
+flake.lock -merge

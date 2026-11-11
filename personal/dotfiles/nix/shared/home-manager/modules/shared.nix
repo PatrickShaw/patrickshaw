@@ -16,6 +16,7 @@
     ./environment.nix
     ./packages.nix
     ./services.nix
+    ./camoufox.nix
     ./dotfiles.nix
   ];
 }

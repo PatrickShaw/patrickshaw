@@ -1,5 +1,8 @@
 # /// script
-# requires-python = ">=3.13"
+# # WARNING: Newer Pythons than PyYAML ships wheels for get a pure Python build
+# # without CLoader, which Camoufox imports. So keep this in step with the
+# # `python` in camoufox.nix
+# requires-python = "==3.13.*"
 # dependencies = [
 #     # WARNING: @playwright/mcp only works against this when it bundles the
 #     # same Playwright minor version. Bump the `camoufox` MCP entry in

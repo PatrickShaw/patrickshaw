@@ -9,6 +9,9 @@ let
   # Outside the Nix store and outside any cache dir since it holds logins
   profileDir = "${config.xdg.dataHome}/camoufox/profile";
   logDir = "${config.home.homeDirectory}/Library/Logs";
+  # launchd's PATH has no Python on it, so without this uv grabs whatever its
+  # newest managed Python is. Keep in step with requires-python in server.py
+  python = pkgs.python313;
 in {
   launchd.agents.camoufox = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
     enable = true;
@@ -18,6 +21,8 @@ in {
       ProgramArguments = [
         "${pkgs.uv}/bin/uv"
         "run"
+        "--python"
+        "${python}/bin/python3"
         "--script"
         serverScript
         profileDir

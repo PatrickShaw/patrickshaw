@@ -83,9 +83,6 @@ in {
     # Allows tweaking of camera
     # v4l-utils
 
-    # If you ever need specific dependencies, you can add them manually. Smaller than resorting to ffmpeg-full
-    ffmpeg
-
     # This is great for figuring out which apps take up a lot of space
     nix-tree
 

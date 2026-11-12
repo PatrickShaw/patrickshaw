@@ -13,6 +13,12 @@
     tree-sitter
     # Added this mainly for LLMs
     ast-grep
+    imagemagick
+    yt-dlp
+    ffmpeg
+    whisper-cpp
+    # Avoid downloading every OCR language for English and Chinese documents.
+    (tesseract.override { enableLanguages = [ "eng" "chi_tra" "chi_sim" "osd" ]; })
 
     # Not sure where to document this ATM so putting it here:
     # Using Serena ATM.

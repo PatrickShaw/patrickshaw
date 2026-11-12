@@ -1,9 +1,32 @@
-# Session variables and shell aliases.
+# Session variables, shell aliases and default applications.
 #
 # These used to be `environment.variables` / `environment.shellAliases`, i.e.
 # imposed on every account on the machine. They're personal preferences, so
 # they belong to the user instead.
-{ ... }: {
+{ lib, pkgs, ... }:
+let
+  macosDefaultApplications = {
+    "com.microsoft.VSCode" = [
+      ".md" ".markdown" ".txt" ".log"
+      ".json" ".jsonc" ".jsonld" ".yaml" ".yml" ".toml" ".xml"
+      ".nix" ".js" ".mjs" ".cjs" ".jsx" ".ts" ".tsx" ".py" ".css"
+      ".canvas" ".tf" ".tfvars" ".tfstate"
+    ];
+    "com.apple.Preview" = [ ".pdf" ".jpg" ".jpeg" ".png" ".gif" ".webp" ];
+  };
+in {
+  # macOS ignores mimeapps.list. Reapply these after installing apps, without
+  # changing Linux's existing dotfile or how executable scripts are launched.
+  home.activation.macosDefaultApplications = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin (
+    lib.hm.dag.entryAfter [ "linkGeneration" "copyApps" ] (
+      lib.concatStringsSep "\n" (lib.mapAttrsToList
+        (bundleId: extensions: lib.concatMapStringsSep "\n"
+          (extension: "run ${pkgs.duti}/bin/duti -s ${lib.escapeShellArg bundleId} ${lib.escapeShellArg extension} all")
+          extensions)
+        macosDefaultApplications)
+    )
+  );
+
   home.sessionVariables = {
     # LLM: npm's default global prefix is its own (read-only) Nix store path - 
     NPM_CONFIG_PREFIX = "$HOME/.npm-global";

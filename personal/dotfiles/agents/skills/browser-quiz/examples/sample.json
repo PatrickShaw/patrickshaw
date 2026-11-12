@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 2,
+  "topic": "planet-basics",
+  "survey": {
+    "title": "A quick space quiz",
+    "description": "Check each answer to learn why. Skip anything you don't know.",
+    "elements": [
+      {
+        "type": "radiogroup",
+        "name": "red_planet",
+        "title": "Which planet is commonly called the Red Planet?",
+        "choices": [
+          {"value": "mars", "text": "Mars"},
+          {"value": "venus", "text": "Venus"},
+          {"value": "jupiter", "text": "Jupiter"}
+        ],
+        "correctAnswer": "mars"
+      },
+      {
+        "type": "checkbox",
+        "name": "terrestrial",
+        "title": "Which of these are terrestrial planets? Select all that apply.",
+        "choices": [
+          {"value": "earth", "text": "Earth"},
+          {"value": "mars", "text": "Mars"},
+          {"value": "jupiter", "text": "Jupiter"}
+        ],
+        "correctAnswer": ["earth", "mars"]
+      }
+    ]
+  },
+  "learning": {
+    "red_planet": {
+      "concept": "mars-colour", "skill": "recognition", "difficulty": "introductory",
+      "explanation": "Mars is called the Red Planet because iron oxides in its surface dust give it a reddish appearance.",
+      "choiceExplanations": {
+        "mars": "Mars has reddish iron-oxide-rich dust, which is the origin of this nickname.",
+        "venus": "Venus is covered by bright clouds and is not known as the Red Planet. The nickname refers to Mars's reddish surface dust.",
+        "jupiter": "Jupiter has coloured cloud bands, but the nickname Red Planet refers to Mars, not to Jupiter's Great Red Spot."
+      }
+    },
+    "terrestrial": {
+      "concept": "planet-types", "skill": "classification", "difficulty": "introductory",
+      "explanation": "Earth and Mars are rocky terrestrial planets with solid surfaces. Jupiter is a gas giant, so it does not belong in this group.",
+      "choiceExplanations": {
+        "earth": "Earth has a rocky composition and a solid surface, making it a terrestrial planet.",
+        "mars": "Mars also has a rocky composition and solid surface, so both Earth and Mars must be selected.",
+        "jupiter": "Jupiter is a gas giant dominated by hydrogen and helium, not a rocky terrestrial planet."
+      }
+    }
+  }
+}

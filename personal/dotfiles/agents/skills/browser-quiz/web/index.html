@@ -9,6 +9,7 @@
   <script defer src="survey.core.min.js"></script>
   <script defer src="survey-js-ui.min.js"></script>
   <script defer src="choice-feedback.js"></script>
+  <script defer src="audio.js"></script>
   <script defer src="app.js"></script>
 </head>
 <body>
@@ -16,6 +17,7 @@
   <main>
     <p class="intro">This is practice, not an exam. Check each answer for an explanation, or skip and learn something new.</p>
     <p id="status" role="status">Loading your quiz…</p>
+    <section id="question-audio" class="question-audio" hidden aria-label="Question audio"></section>
     <div id="survey"></div>
     <section id="answer-feedback" hidden aria-label="Answer explanation" tabindex="-1"></section>
     <div id="controls" hidden>

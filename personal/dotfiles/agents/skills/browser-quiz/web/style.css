@@ -35,5 +35,13 @@ button.secondary { background: #e7eaf8; color: #303a71; }
 .review-choice__label { display: flex; gap: 12px; align-items: flex-start; }
 .review-choice__label input { margin-top: 6px; flex-shrink: 0; }
 .review-choice .choice-explanation { margin-left: 28px; }
+.question-audio { background: white; border: 1px solid #e0e4ee; border-radius: 12px; padding: 16px 20px; margin: 16px 0; }
+.audio-transcript { font-size: 24px; line-height: 1.6; white-space: pre-wrap; margin-top: 0; }
+.question-audio audio { display: block; width: 100%; max-width: 480px; margin: 12px 0; }
+.audio-pronunciation { margin: 16px 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.audio-pronunciation summary { cursor: pointer; font-weight: 650; }
+.audio-pronunciation summary:focus-visible { outline: 3px solid #909afa; outline-offset: 4px; }
+.audio-attribution { font-size: 12px; color: #626a80; white-space: pre-wrap; overflow-wrap: anywhere; }
+.audio-error { color: #853b24; }
 [hidden] { display: none !important; }
 @media (max-width: 560px) { header { align-items: flex-start; flex-direction: column; } header, main, footer { padding-left: 16px; padding-right: 16px; } .review { padding: 16px; } }

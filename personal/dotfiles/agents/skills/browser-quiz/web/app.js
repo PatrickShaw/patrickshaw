@@ -39,6 +39,11 @@ function reviewCard(question, response) {
   const card = node("article", "", `review ${response.outcome}`);
   card.append(node("h2", labels[response.outcome]));
   card.append(node("p", question.title, "question-title"));
+  if (question.audio !== undefined) {
+    const audio = node("section", "", "question-audio");
+    QuizAudio.render(audio, question.audio, question.name);
+    card.append(audio);
+  }
   question.choices.forEach((choice, index) => {
     const item = node("div", "", "review-choice");
     const label = node("label", "", "review-choice__label");
@@ -62,6 +67,7 @@ function reviewCard(question, response) {
 function renderResults(report) {
   document.title = report.quiz.survey.title;
   document.getElementById("survey").hidden = true;
+  QuizAudio.clear(document.getElementById("question-audio"));
   controlsElement.hidden = true;
   feedbackElement.hidden = true;
   retryButton.hidden = true;
@@ -112,6 +118,11 @@ class Practice {
     return Object.fromEntries([...this.responses].map(([name, response]) => [name, response.answer]));
   }
 
+  showAudio() {
+    const question = this.question();
+    QuizAudio.render(document.getElementById("question-audio"), this.definition.questionAudio?.[question.name], question.name);
+  }
+
   showFeedback(response) {
     this.survey.readOnly = true;
     checkButton.hidden = true;
@@ -137,6 +148,7 @@ class Practice {
     skipButton.disabled = false;
     this.survey.readOnly = false;
     statusElement.textContent = `Question ${this.survey.currentPageNo + 1} of ${this.definition.pages.length}. Check your answer to learn why.`;
+    this.showAudio();
     this.survey.focusFirstQuestion();
   }
 
@@ -213,6 +225,7 @@ class Practice {
     }
     // A reload returns to the last explanation, not to an opportunity to change the first answer.
     this.survey.currentPageNo = this.responses.size - 1;
+    this.showAudio();
     this.showFeedback(this.responses.get(this.question().name));
     if (this.survey.isLastPage) await this.save();
   }

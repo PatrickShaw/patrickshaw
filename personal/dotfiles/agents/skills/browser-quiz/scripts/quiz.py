@@ -8,9 +8,12 @@ import errno
 import hashlib
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
-from pathlib import Path
+import os
+from pathlib import Path, PurePosixPath
+import re
 import secrets
 import socket
+import struct
 import threading
 import time
 import urllib.request
@@ -20,8 +23,8 @@ SCHEMA_VERSION = 2
 SUPPORTED_VERSIONS = {1, 2}
 SURVEY_VERSION = "3.2.5"
 MAX_BODY_BYTES = 1_048_576
-IDLE_TIMEOUT_SECONDS = 7200
-COMPLETED_GRACE_SECONDS = 300
+QUIZ_LIFETIME_SECONDS = int(timedelta(hours=6).total_seconds())
+LIFECYCLE_POLL_SECONDS = 1
 CORRECT_ATTEMPTS = 3
 MIN_REVIEW_DATES = 2
 ASSETS = {
@@ -46,6 +49,74 @@ def require(condition, message):
 
 def text(value):
     return isinstance(value, str) and bool(value.strip())
+
+
+MAX_AUDIO_BYTES = 20 * 1024 * 1024
+MIN_AUDIO_RATE = 8000
+MAX_AUDIO_RATE = 192000
+RIFF_HEADER_BYTES = 12
+CHUNK_HEADER_BYTES = 8
+PCM_FORMAT_BYTES = 16
+BITS_PER_BYTE = 8
+
+
+def valid_audio_filename(value):
+    return (text(value) and not PurePosixPath(value).is_absolute()
+            and not any(character in value for character in "\\:%?#\x00")
+            and all(part not in {"", ".", ".."} for part in value.split("/"))
+            and PurePosixPath(value).suffix.lower() == ".wav")
+
+
+def safe_audio_path(file_str, quiz_dir):
+    if not valid_audio_filename(file_str):
+        return None
+    root = quiz_dir.resolve()
+    path = (root / file_str).resolve()
+    return path if path.is_relative_to(root) else None
+
+
+def read_audio_file(file_path, max_bytes=MAX_AUDIO_BYTES):
+    require(file_path.is_file(), f"Audio file not found: {file_path}")
+    with file_path.open("rb") as stream:
+        data = stream.read(max_bytes + 1)
+    require(len(data) <= max_bytes, f"Audio file exceeds {max_bytes} bytes")
+    return data
+
+
+def validate_wav_bytes(data):
+    require(len(data) >= RIFF_HEADER_BYTES, "WAV file too short")
+    require(data[:4] == b"RIFF", "Not a WAV file: missing RIFF header")
+    require(data[8:12] == b"WAVE", "Not a WAV file: missing WAVE format")
+    riff_end = struct.unpack_from("<I", data, 4)[0] + CHUNK_HEADER_BYTES
+    require(riff_end == len(data), "Truncated or inconsistent WAV size")
+    position = RIFF_HEADER_BYTES
+    audio_format = None
+    data_size = None
+    while position + CHUNK_HEADER_BYTES <= riff_end:
+        chunk_id, size = struct.unpack_from("<4sI", data, position)
+        start = position + CHUNK_HEADER_BYTES
+        end = start + size
+        require(end <= riff_end, "Truncated WAV chunk")
+        if chunk_id == b"fmt ":
+            require(size >= PCM_FORMAT_BYTES, "fmt chunk too short")
+            encoding, channels, rate, byte_rate, alignment, bits = struct.unpack_from("<HHIIHH", data, start)
+            require(encoding == 1, "Unsupported audio format: expected PCM")
+            require(channels in {1, 2}, "Unsupported channel count")
+            require(MIN_AUDIO_RATE <= rate <= MAX_AUDIO_RATE, "Unsupported sample rate")
+            require(bits in {8, 16, 24, 32}, "Unsupported bit depth")
+            require(alignment == channels * bits // BITS_PER_BYTE and byte_rate == rate * alignment, "Invalid PCM frame alignment")
+            audio_format = (rate, channels, bits, alignment)
+        elif chunk_id == b"data":
+            data_size = size
+        position = end + (size % 2)
+    require(audio_format is not None, "No fmt chunk found in WAV file")
+    require(data_size is not None, "No data chunk found in WAV file")
+    require(data_size > 0 and data_size % audio_format[3] == 0, "Empty or partial PCM frames")
+    return audio_format[:3]
+
+
+def validate_wav_file(file_path, max_bytes=MAX_AUDIO_BYTES):
+    return validate_wav_bytes(read_audio_file(file_path, max_bytes))
 
 
 def validate_quiz(quiz):
@@ -90,18 +161,49 @@ def validate_quiz(quiz):
             require(isinstance(explanations, dict) and set(explanations) == set(values), f"{name}: choiceExplanations must cover every choice exactly")
             require(all(text(reason) for reason in explanations.values()), f"{name}: choice explanations must be non-empty text")
         require(isinstance(meta.get("sources", []), list) and all(text(s) for s in meta.get("sources", [])), f"{name}: sources must be strings")
+        if "audio" in question:
+            audio = question["audio"]
+            require(isinstance(audio, dict), f"{name}: audio must be an object")
+            required_keys = {"file", "sha256", "transcript", "pronunciation", "attribution"}
+            require(set(audio) <= required_keys | {"pronunciationLabel"}, f"{name}: audio has unknown fields")
+            require(required_keys <= set(audio), f"{name}: audio is missing required fields")
+            for key in required_keys - {"sha256"}:
+                require(text(audio[key]), f"{name}: audio.{key} must be non-empty string")
+            require(valid_audio_filename(audio["file"]), f"{name}: invalid audio file path")
+            require(isinstance(audio["sha256"], str) and re.fullmatch(r"[0-9a-f]{64}", audio["sha256"]), f"{name}: audio.sha256 must be 64 hex chars")
+            require(text(audio.get("pronunciationLabel", "Show pronunciation")), f"{name}: audio.pronunciationLabel must be non-empty string")
     require(set(learning) == names, "learning keys must exactly match question names")
     return quiz
 
 
-def public_survey(quiz):
+def load_audio(quiz, quiz_dir):
+    audio_map = {}
+    for question in quiz["survey"]["elements"]:
+        audio = question.get("audio")
+        if audio is None:
+            continue
+        file_path = safe_audio_path(audio["file"], quiz_dir)
+        require(file_path is not None, f"{question['name']}: invalid audio file path")
+        file_bytes = read_audio_file(file_path)
+        validate_wav_bytes(file_bytes)
+        computed_hash = hashlib.sha256(file_bytes).hexdigest()
+        require(computed_hash == audio["sha256"], f"{question['name']}: audio file hash mismatch")
+        audio_map[question["name"]] = file_bytes
+    return audio_map
+
+
+def public_survey(quiz, question_audio=None):
+    """Build public survey payload with optional audio metadata projection."""
+    if question_audio is None:
+        question_audio = {}
     pages = []
     for q in quiz["survey"]["elements"]:
         # Only these fields reach SurveyJS: generated HTML, expressions and answer keys stay off the page.
         question = {key: q[key] for key in ("type", "name", "title", "choices")}
         question.update({"description": q.get("description", ""), "choicesOrder": "random", "isRequired": False})
         pages.append({"name": q["name"], "elements": [question]})
-    return {
+
+    result = {
         "title": quiz["survey"]["title"],
         "description": quiz["survey"].get("description", ""),
         "pages": pages, "showProgressBar": True, "progressBarLocation": "top",
@@ -109,6 +211,27 @@ def public_survey(quiz):
         "showCompletePage": False, "autoAdvanceEnabled": False,
         "widthMode": "responsive",
     }
+
+    # Keep filesystem paths and answer keys out of the media presentation.
+    if question_audio:
+        audio_payload = {}
+        for q in quiz["survey"]["elements"]:
+            audio = q.get("audio")
+            if audio is not None and q["name"] in question_audio:
+                safe_audio = {}
+                if "transcript" in audio:
+                    safe_audio["transcript"] = audio["transcript"]
+                if "pronunciation" in audio:
+                    safe_audio["pronunciation"] = audio["pronunciation"]
+                safe_audio["pronunciationLabel"] = audio.get("pronunciationLabel", "Show pronunciation")
+                if "attribution" in audio:
+                    safe_audio["attribution"] = audio["attribution"]
+                safe_audio["url"] = f"audio/{q['name']}"
+                audio_payload[q["name"]] = safe_audio
+        if audio_payload:
+            result["questionAudio"] = audio_payload
+
+    return result
 
 
 def grade(quiz, data):
@@ -246,9 +369,10 @@ def prepare_assets(cache_dir):
 
 
 class QuizSession:
-    def __init__(self, quiz, results_dir):
+    def __init__(self, quiz, results_dir, audio_map=None):
         self.quiz = copy.deepcopy(quiz)
         self.results_dir = results_dir
+        self.audio_map = audio_map or {}
         self.attempt_id = secrets.token_hex(16)
         self.started_at = datetime.now(timezone.utc).isoformat()
         self.token = secrets.token_urlsafe(24)
@@ -256,7 +380,6 @@ class QuizSession:
         self.saved = None
         self.checked = {}
         self.browser_loaded = False
-        self.completed_monotonic = None
 
     def progress(self):
         with self.lock:
@@ -304,9 +427,24 @@ class QuizSession:
             }
             path = save_attempt(self.results_dir, report)
             self.saved = report
-            self.completed_monotonic = time.monotonic()
             print(json.dumps({"event": "saved", "path": str(path), "score": report["score"]}), flush=True)
             return report
+
+
+def audio_range(header, size):
+    if not header:
+        return 0, size - 1
+    match = re.fullmatch(r"bytes=([0-9]*)-([0-9]*)", header)
+    require(match is not None and any(match.groups()), "Invalid byte range")
+    first, last = match.groups()
+    if not first:
+        suffix = int(last)
+        require(suffix > 0, "Empty byte range")
+        return max(0, size - suffix), size - 1
+    start = int(first)
+    end = min(int(last), size - 1) if last else size - 1
+    require(start < size and end >= start, "Unsatisfiable byte range")
+    return start, end
 
 
 def handler_for(session, cache_dir):
@@ -322,7 +460,7 @@ def handler_for(session, cache_dir):
             self.send_header("Cache-Control", "no-store")
             self.send_header("X-Content-Type-Options", "nosniff")
             self.send_header("Referrer-Policy", "no-referrer")
-            self.send_header("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'")
+            self.send_header("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'; media-src 'self'")
             self.end_headers()
             self.wfile.write(payload)
 
@@ -335,26 +473,71 @@ def handler_for(session, cache_dir):
                 return None
             return self.path[len(prefix):]
 
+        def serve_audio(self, question_name, is_head=False):
+            if question_name not in session.audio_map:
+                self.send_response(404)
+                self.send_header("Content-Length", "0")
+                self.end_headers()
+                return
+            data = session.audio_map[question_name]
+            total_size = len(data)
+            range_header = self.headers.get("Range")
+            try:
+                start, end = audio_range(range_header, total_size)
+            except ValueError:
+                self.send_response(416)
+                self.send_header("Content-Range", f"bytes */{total_size}")
+                self.send_header("Content-Length", "0")
+                self.end_headers()
+                return
+            self.send_response(206 if range_header else 200)
+            self.send_header("Content-Type", "audio/wav")
+            self.send_header("Content-Length", str(end - start + 1))
+            self.send_header("Accept-Ranges", "bytes")
+            if range_header:
+                self.send_header("Content-Range", f"bytes {start}-{end}/{total_size}")
+            self.send_header("Cache-Control", "no-store")
+            self.send_header("X-Content-Type-Options", "nosniff")
+            self.send_header("Referrer-Policy", "no-referrer")
+            self.end_headers()
+            if not is_head:
+                self.wfile.write(data[start:end + 1])
+
         def do_GET(self):
             route = self.route()
             if route is None:
                 self.respond(404, {"error": "Not found"})
             elif route == "quiz":
-                self.respond(200, public_survey(session.quiz))
+                self.respond(200, public_survey(session.quiz, session.audio_map))
             elif route == "progress":
                 self.respond(200, session.progress())
             elif route == "result":
                 with session.lock:
                     self.respond(200, session.saved)
-            elif route in {"", "app.js", "choice-feedback.js", "style.css"}:
+            elif route.startswith("audio/"):
+                question_name = route[6:]
+                self.serve_audio(question_name, is_head=False)
+            elif route in {"", "app.js", "audio.js", "choice-feedback.js", "style.css"}:
                 name = "index.html" if route == "" else route
-                content_type = {"index.html": "text/html", "app.js": "text/javascript", "choice-feedback.js": "text/javascript", "style.css": "text/css"}[name]
+                content_type = {"index.html": "text/html", "app.js": "text/javascript", "audio.js": "text/javascript", "choice-feedback.js": "text/javascript", "style.css": "text/css"}[name]
                 self.respond(200, (WEB_DIR / name).read_bytes(), content_type + "; charset=utf-8")
             elif route in ASSETS:
                 content_type = "text/css" if route.endswith(".css") else "text/javascript"
                 self.respond(200, (cache_dir / route).read_bytes(), content_type + "; charset=utf-8")
             else:
                 self.respond(404, {"error": "Not found"})
+
+        def do_HEAD(self):
+            route = self.route()
+            if route is None:
+                self.send_response(404)
+                self.end_headers()
+            elif route.startswith("audio/"):
+                question_name = route[6:]
+                self.serve_audio(question_name, is_head=True)
+            else:
+                self.send_response(404)
+                self.end_headers()
 
         def do_POST(self):
             route = self.route()
@@ -393,9 +576,12 @@ class IPv6Server(ThreadingHTTPServer):
         super().server_bind()
 
 
-def serve(quiz, results_dir, cache_dir, open_browser, port):
+def serve(quiz, results_dir, cache_dir, open_browser, port, quiz_dir=None):
     prepare_assets(cache_dir)
-    session = QuizSession(quiz, results_dir)
+    audio_map = {}
+    if quiz_dir is not None:
+        audio_map = load_audio(quiz, quiz_dir)
+    session = QuizSession(quiz, results_dir, audio_map)
     handler = handler_for(session, cache_dir)
     servers = []
     running_servers = []
@@ -412,14 +598,17 @@ def serve(quiz, results_dir, cache_dir, open_browser, port):
             running_servers.append(server)
         host = "[::1]" if len(servers) == 2 else "127.0.0.1"
         url = f"http://{host}:{servers[0].server_port}/{session.token}/"
-        print(json.dumps({"event": "ready", "url": url, "resultsDir": str(results_dir), "attemptId": session.attempt_id}), flush=True)
+        deadline = time.monotonic() + QUIZ_LIFETIME_SECONDS
+        expires_at = datetime.now(timezone.utc) + timedelta(seconds=QUIZ_LIFETIME_SECONDS)
+        print(json.dumps({
+            "event": "ready", "url": url, "resultsDir": str(results_dir),
+            "attemptId": session.attempt_id, "pid": os.getpid(), "expiresAt": expires_at.isoformat(),
+        }), flush=True)
         if open_browser:
             print(json.dumps(launch_browser(url)), flush=True)
-        deadline = time.monotonic() + IDLE_TIMEOUT_SECONDS
         while time.monotonic() < deadline:
-            if session.completed_monotonic is not None and time.monotonic() - session.completed_monotonic >= COMPLETED_GRACE_SECONDS:
-                break
-            time.sleep(1)
+            time.sleep(LIFECYCLE_POLL_SECONDS)
+        print(json.dumps({"event": "expired", "attemptId": session.attempt_id}), flush=True)
     finally:
         for server in running_servers:
             server.shutdown()
@@ -450,12 +639,14 @@ def main():
     elif args.command == "history":
         print(json.dumps(history_summary(args.results_dir.expanduser()), ensure_ascii=False, indent=2))
     else:
-        quiz = validate_quiz(json.loads(args.quiz.expanduser().read_text(encoding="utf-8")))
+        quiz_path = args.quiz.expanduser()
+        quiz = validate_quiz(json.loads(quiz_path.read_text(encoding="utf-8")))
         if args.command == "validate":
             require(quiz["schemaVersion"] == SCHEMA_VERSION, "Use schemaVersion 2 with choiceExplanations for new quizzes; version 1 remains readable as history")
+            load_audio(quiz, args.quiz.expanduser().resolve().parent)
             print(f"Valid: {len(quiz['survey']['elements'])} questions")
         else:
-            serve(quiz, args.results_dir.expanduser(), args.cache_dir.expanduser(), args.open, args.port)
+            serve(quiz, args.results_dir.expanduser(), args.cache_dir.expanduser(), args.open, args.port, quiz_path.parent)
 
 
 if __name__ == "__main__":

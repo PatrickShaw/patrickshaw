@@ -45,7 +45,30 @@ Each learning entry needs `concept`, `skill`, `difficulty`, `explanation` and `c
 
 The runner uses one page per question and shuffles choices. A learner presses **Check answer** and sees explanations directly beneath the relevant radio button or checkbox: the selected wrong choice and every correct choice, including missed checkbox choices. Unselected incorrect choices stay uncluttered. For single-choice questions the general explanation sits under the correct answer alongside its choice-specific reason. The summary keeps the same per-choice placement rather than combining explanations in one box. **Skip and explain** works without an answer. **Next question** is separate, so the explanation stays visible until the learner moves on. There is no optional helpfulness/confidence field.
 
-The server keeps the first checked answer immutable and returns the same response on retries. Refresh restores checked answers from the active server, not editable browser data. This avoids recording a correction made after seeing the explanation as a successful first attempt. Checks are kept in server memory; the full attempt is written automatically when the last question is checked. The final explanation stays visible, then **See summary** opens the overall review. If final saving fails, the explanation remains visible with retry and backup options. Partial quizzes are not completed learning history and do not survive restarting the runner.
+The server keeps the first checked answer immutable and returns the same response on retries. Refresh restores checked answers from the active server, not editable browser data. This avoids recording a correction made after seeing the explanation as a successful first attempt. Checks are kept in server memory; the full attempt is written automatically when the last question is checked. The final explanation stays visible, then **See summary** opens the overall review. If final saving fails, the explanation remains visible with retry and backup options. Partial quizzes are not completed learning history and do not survive restarting the runner. The server expires six hours after startup, even after submission; neither requests nor answers extend that lifetime. Its `ready` event includes `attemptId`, `pid` and `expiresAt` for the agent's inline file-check wait loop. Only a saved attempt with that exact ID signals completion.
+
+## Optional local audio
+
+A question can include an `audio` object. All fields below are required except `pronunciationLabel`, whose default is `Show pronunciation`:
+
+```json
+"audio": {
+  "file": "audio/example.wav",
+  "sha256": "<actual 64-character lowercase SHA-256 of the final WAV>",
+  "transcript": "Text shown beside the player",
+  "pronunciation": "Pronunciation help, initially collapsed",
+  "pronunciationLabel": "Show pronunciation",
+  "attribution": "Source, credit, licence or private-use restriction and processing applied"
+}
+```
+
+This is plain text plus a local file reference, not arbitrary HTML or a remote audio URL. Paths are relative to the definition's directory and must stay beneath it, including after resolving symlinks. No absolute paths, `..`, URLs or encoded path escapes. Use uncompressed PCM WAV, mono/stereo, 8-192 kHz, 8/16/24/32-bit, up to 20 MiB per file. `validate` and `serve` check the file, frames and SHA-256 before use. `history` checks saved metadata without requiring the old media to remain present.
+
+The UI shows the transcript outside a native audio player and a collapsed, keyboard-accessible disclosure for pronunciation. A domain skill can use Chinese characters as the transcript and `Show Jyutping` as the label. Keep that pronunciation out of the visible title, description and choices if the learner asked to hide it. Checking an answer preserves the current disclosure; a new question, refresh or saved review starts it collapsed. Players do not autoplay, and playback is normal 1×: any agreed tempo processing belongs in the prepared file, not a second browser speed-up.
+
+All media is served through the existing token-protected loopback server. Only declared, verified files are served; there is no general file server or third-party browser request. Each completed attempt retains its original audio metadata. Keep the audio/provenance files if old quizzes should remain replayable; don't modify earlier definitions or attempts.
+
+If suitable audio is unavailable while preparing a quiz, omit `audio` and write a normal text item. Do not create an empty audio object, guessed URL or broken placeholder. A browser playback failure leaves the text and pronunciation disclosure available and reports that audio is unavailable. Visible transcripts and optional pronunciation cues make this audio-assisted practice, not an unaided listening test; label the learning skill accordingly.
 
 ## Older definitions and history
 

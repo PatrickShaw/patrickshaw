@@ -1,0 +1,10 @@
+{
+  "Cpus": 12,
+  "MemoryMiB": 8092,
+  "UseVirtualizationFramework": true,
+  "UseVirtualizationFrameworkRosetta": true,
+  "UseVirtualizationFrameworkVirtioFS": true,
+  "FilesharingDirectories": ["/Users", "/Volumes", "/nix", "/private", "/tmp"],
+  "KubernetesEnabled": false,
+  "AutoStart": false
+}

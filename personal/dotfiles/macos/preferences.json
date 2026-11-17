@@ -1,0 +1,77 @@
+{
+  "NSGlobalDomain": {
+    "AppleShowAllExtensions": true,
+    "AppleInterfaceStyleSwitchesAutomatically": true,
+    "AppleLanguages": ["en-AU"],
+    "AppleLocale": "en_AU",
+    "NSDocumentSaveNewDocumentsToCloud": false,
+    "NSUserKeyEquivalents": {
+      "\u001bWindow\u001bMove & Resize\u001bLeft": "@←",
+      "\u001bWindow\u001bMove & Resize\u001bRight": "@→",
+      "\u001bWindow\u001bMove & Resize\u001bTop": "@↑",
+      "\u001bWindow\u001bMove & Resize\u001bBottom": "@↓"
+    }
+  },
+  "com.apple.dock": {
+    "autohide": true,
+    "orientation": "left",
+    "tilesize": 42
+  },
+  "com.apple.finder": {
+    "AppleShowAllFiles": true,
+    "ShowPathbar": true,
+    "ShowStatusBar": true,
+    "_FXSortFoldersFirst": true,
+    "FXDefaultSearchScope": "SCcf",
+    "NewWindowTarget": "PfHm"
+  },
+  "com.apple.HIToolbox": {
+    "AppleCurrentKeyboardLayoutInputSourceID": "com.apple.keylayout.Australian",
+    "AppleEnabledInputSources": [
+      {
+        "InputSourceKind": "Keyboard Layout",
+        "KeyboardLayout Name": "Australian",
+        "KeyboardLayout ID": 15
+      },
+      {
+        "InputSourceKind": "Non Keyboard Input Method",
+        "Bundle ID": "com.apple.CharacterPaletteIM"
+      },
+      {
+        "InputSourceKind": "Non Keyboard Input Method",
+        "Bundle ID": "com.apple.PressAndHold"
+      }
+    ],
+    "AppleSelectedInputSources": [
+      {
+        "InputSourceKind": "Non Keyboard Input Method",
+        "Bundle ID": "com.apple.PressAndHold"
+      },
+      {
+        "InputSourceKind": "Keyboard Layout",
+        "KeyboardLayout Name": "Australian",
+        "KeyboardLayout ID": 15
+      }
+    ]
+  },
+  "com.knollsoft.Rectangle": {
+    "leftHalf": {"keyCode": 123, "modifierFlags": 1048576},
+    "rightHalf": {"keyCode": 124, "modifierFlags": 1048576},
+    "topHalf": {"keyCode": 126, "modifierFlags": 1048576},
+    "bottomHalf": {"keyCode": 125, "modifierFlags": 1048576},
+    "previousDisplay": {"keyCode": 123, "modifierFlags": 1179648},
+    "nextDisplay": {"keyCode": 124, "modifierFlags": 1179648},
+    "toggleTodo": {"keyCode": 11, "modifierFlags": 786432},
+    "reflowTodo": {"keyCode": 45, "modifierFlags": 786432},
+    "bottomLeft": {},
+    "bottomRight": {},
+    "center": {},
+    "larger": {},
+    "maximize": {},
+    "maximizeHeight": {},
+    "restore": {},
+    "smaller": {},
+    "topLeft": {},
+    "topRight": {}
+  }
+}

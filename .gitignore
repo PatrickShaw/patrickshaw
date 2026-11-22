@@ -61,6 +61,8 @@ downloads/
 eggs/
 .eggs/
 lib/
+# These are reusable CAD source helpers, not Python build output.
+!/personal/dotfiles/agents/skills/build123d/lib/
 lib64/
 parts/
 sdist/

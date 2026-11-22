@@ -37,7 +37,7 @@
 [commit]
 	# Signing is SSH-based now (see [gpg] below) rather than GPG, which removes the
 	# agent/pinentry/expiry hassle that got this turned off in the first place.
-	gpgsign = true
+#gpgsign = true
 
 [core]
     pager = delta

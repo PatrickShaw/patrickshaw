@@ -60,6 +60,8 @@ in {
     profiles.default.extensions = my-vscode-extensions;
   };
 
+  programs.zed-editor.enable = true;
+
   home.file = let
     getLastPartOfPath = path:
       let

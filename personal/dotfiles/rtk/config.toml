@@ -1,0 +1,28 @@
+[tracking]
+enabled = true
+history_days = 30
+
+[display]
+colors = false
+emoji = false
+max_width = 120
+
+# Keep raw output locally so a summary never becomes the only evidence.
+[retriever]
+mode = "sqlite"
+max_entry_bytes = 10485760
+max_entries = 200
+retention_days = 7
+compression = true
+
+[telemetry]
+enabled = false
+consent_given = false
+
+[hooks]
+# API payloads and downloaded bodies often feed another program unchanged.
+exclude_commands = ["curl", "wget", "gh api"]
+suppress_hook_warning = true
+
+[awareness]
+level = "full"

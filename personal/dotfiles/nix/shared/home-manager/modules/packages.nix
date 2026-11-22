@@ -157,6 +157,8 @@
     fclones
   ] ++ lib.optionals pkgs.stdenv.hostPlatform.isDarwin [
     iterm2
+    keycastr
+    scroll-reverser
 
     # `ghostty` proper is Linux-only in nixpkgs (meta.platforms excludes darwin),
     # so macOS gets the prebuilt universal binary instead

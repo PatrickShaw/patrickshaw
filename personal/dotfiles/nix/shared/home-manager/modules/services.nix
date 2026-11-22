@@ -6,8 +6,8 @@
 { config, lib, pkgs, ... }: {
   # ActivityWatch stays entirely local. The Linux package is a
   # wrapper around aw-server-rust, aw-qt, and the window/AFK
-  # watchers. macOS uses the official app bundle installed by the
-  # declarative Homebrew cask in private/nix/darwin/flake.nix.
+  # watchers. The nixpkgs package is Linux-only, so macOS still needs
+  # the official app bundle installed separately.
   systemd.user.services.activitywatch = lib.mkIf (!pkgs.stdenv.hostPlatform.isDarwin) {
     Unit = {
       Description = "ActivityWatch local workflow telemetry";

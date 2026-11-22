@@ -13,8 +13,11 @@
 # ]
 # ///
 """Keeps a headed Camoufox running with a persistent profile so agents can drive it through @playwright/mcp."""
-import sys
+import argparse
+import json
+from pathlib import Path
 
+from camoufox.pkgman import get_path
 from camoufox.sync_api import Camoufox
 
 # @playwright/mcp finds the browser by this title (`--endpoint camoufox`), so
@@ -28,7 +31,31 @@ HOST_OS = "macos"
 WAIT_FOREVER = 0
 
 
-def main(profile_dir: str) -> None:
+def configure_search(policy_path: Path) -> None:
+    policies = json.loads(policy_path.read_text(encoding="utf-8"))
+    search = policies["policies"].setdefault("SearchEngines", {})
+    search.update(
+        Default="Google",
+        DefaultPrivate="Google",
+        Add=[
+            engine
+            for engine in search.get("Add", [])
+            if engine["Name"] not in {"Google", "None"}
+        ] + [{
+            "Name": "Google",
+            "URLTemplate": "https://www.google.com/search?q={searchTerms}",
+            "Method": "GET",
+        }],
+        Remove=[name for name in search.get("Remove", []) if name not in {"Google", "None"}]
+        + ["None"],
+    )
+    policy_path.write_text(json.dumps(policies, indent=2) + "\n", encoding="utf-8")
+
+
+def main(profile_dir: str, addons: list[str]) -> None:
+    # Camoufox ships a localhost search engine. Patch only search policy before
+    # each launch so browser updates don't restore it or lose other safeguards.
+    configure_search(Path(get_path("distribution/policies.json")))
     # Persistent context rather than `camoufox server` because the latter
     # refuses user_data_dir, which is the only way logins survive a restart
     with Camoufox(
@@ -36,6 +63,7 @@ def main(profile_dir: str) -> None:
         os=HOST_OS,
         persistent_context=True,
         user_data_dir=profile_dir,
+        addons=addons,
     ) as context:
         # No host/port on purpose - a websocket bind gets pruned from
         # Playwright's server registry by newer clients, a pipe doesn't
@@ -46,4 +74,8 @@ def main(profile_dir: str) -> None:
 
 
 if __name__ == "__main__":
-    main(profile_dir=sys.argv[1])
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("profile_dir")
+    parser.add_argument("--addon", action="append", default=[], dest="addons")
+    args = parser.parse_args()
+    main(profile_dir=args.profile_dir, addons=args.addons)

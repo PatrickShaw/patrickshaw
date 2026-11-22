@@ -49,10 +49,30 @@ let
     # Contains OLED ayu
     binary-ink.dark-modern-oled-theme-set
   ];
+  # Keep the extra VS Code tools out of the older Cursor profile.
+  extra-vscode-extensions = with vscode-extensions.vscode-marketplace; [
+    appliedengdesign.vscode-gcode-syntax
+    ckolkman.vscode-postgres
+    continue.continue
+    docker.docker
+    mindaro-dev.file-downloader
+    ms-azuretools.vscode-containers
+    mvllow.rose-pine
+    oderwat.indent-rainbow
+    stkb.rewrap
+    teabyii.ayu
+    unifiedjs.vscode-mdx
+    typescriptteam.native-preview
+  ] ++ [
+    # Use the host's existing unfree policy for Microsoft's remote extensions.
+    pkgs.vscode-extensions.ms-vscode-remote.remote-ssh
+    pkgs.vscode-extensions.ms-vscode-remote.remote-ssh-edit
+    pkgs.vscode-extensions.ms-vscode.remote-explorer
+  ];
 in {
   programs.vscode = {
     enable = true;
-    profiles.default.extensions = my-vscode-extensions;
+    profiles.default.extensions = my-vscode-extensions ++ extra-vscode-extensions;
   };
 
   programs.cursor = {

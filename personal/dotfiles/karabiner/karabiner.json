@@ -1,0 +1,33 @@
+{
+  "profiles": [
+    {
+      "name": "Default",
+      "selected": true,
+      "complex_modifications": {
+        "rules": [
+          {
+            "description": "Fn + Space toggles the built-in keyboard backlight",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "spacebar",
+                  "modifiers": {
+                    "mandatory": ["fn"],
+                    "optional": ["caps_lock"]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/usr/bin/osascript -l JavaScript \"$HOME/.config/karabiner/keyboard-backlight.js\"",
+                    "repeat": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

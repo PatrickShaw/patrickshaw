@@ -9,6 +9,9 @@ in {
     xdg.configFile."macos-setup".source = config.lib.file.mkOutOfStoreSymlink
       "${config.home.homeDirectory}/personal/dotfiles/macos";
 
+    home.file."Library/Services/Copy Path.workflow".source = config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/personal/dotfiles/macos/Copy Path.workflow";
+
     # Check before the write boundary rather than failing halfway through activation.
     home.activation.checkDockerSettings = lib.hm.dag.entryBefore [ "writeBoundary" ] ''
       ${dockerSettings} --check

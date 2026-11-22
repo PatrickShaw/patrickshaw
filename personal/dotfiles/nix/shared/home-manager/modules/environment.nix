@@ -5,6 +5,25 @@
 # they belong to the user instead.
 { lib, pkgs, ... }:
 let
+  macosDefaultApplication = pkgs.stdenv.mkDerivation {
+    pname = "macos-default-application";
+    version = "1";
+    src = ../../../../macos/default-application.m;
+    dontUnpack = true;
+    buildPhase = ''
+      runHook preBuild
+      $CC -Wall -Wextra -Werror -fobjc-arc -framework AppKit \
+        -framework UniformTypeIdentifiers "$src" -o default-application
+      runHook postBuild
+    '';
+    installPhase = ''
+      runHook preInstall
+      mkdir -p "$out/bin"
+      install -m755 default-application "$out/bin/default-application"
+      runHook postInstall
+    '';
+    meta.platforms = lib.platforms.darwin;
+  };
   macosDefaultApplications = {
     "com.microsoft.VSCode" = [
       ".md" ".markdown" ".txt" ".log"
@@ -21,7 +40,7 @@ in {
     lib.hm.dag.entryAfter [ "linkGeneration" "copyApps" ] (
       lib.concatStringsSep "\n" (lib.mapAttrsToList
         (bundleId: extensions: lib.concatMapStringsSep "\n"
-          (extension: "run ${pkgs.duti}/bin/duti -s ${lib.escapeShellArg bundleId} ${lib.escapeShellArg extension} all")
+          (extension: "run ${macosDefaultApplication}/bin/default-application ${lib.escapeShellArg bundleId} ${lib.escapeShellArg extension}")
           extensions)
         macosDefaultApplications)
     )

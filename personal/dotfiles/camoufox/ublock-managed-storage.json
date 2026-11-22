@@ -1,0 +1,16 @@
+{
+  "name": "uBlock0@raymondhill.net",
+  "description": "Keep Alibaba marketplace browsing unfiltered without changing other trusted sites.",
+  "type": "storage",
+  "data": {
+    "toAdd": {
+      "trustedSiteDirectives": [
+        "1688.com",
+        "alibaba.com",
+        "taobao.com",
+        "tmall.com",
+        "tmall.hk"
+      ]
+    }
+  }
+}

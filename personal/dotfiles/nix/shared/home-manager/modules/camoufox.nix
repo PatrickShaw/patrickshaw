@@ -13,6 +13,14 @@ let
   # newest managed Python is. Keep in step with requires-python in server.py
   python = pkgs.python313;
 in {
+  # uBlock blocks Alibaba's browser checks as well as ads. Keep these exceptions
+  # additive so we don't replace sites trusted through the browser UI.
+  home.file."Library/Application Support/Mozilla/ManagedStorage/uBlock0@raymondhill.net.json" =
+    lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
+      source = config.lib.file.mkOutOfStoreSymlink
+        "${config.home.homeDirectory}/personal/dotfiles/camoufox/ublock-managed-storage.json";
+    };
+
   launchd.agents.camoufox = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
     enable = true;
     config = {

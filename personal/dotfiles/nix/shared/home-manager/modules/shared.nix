@@ -15,8 +15,10 @@
     (import ./editors.nix { inherit inputs dracula-dircolors git-rainbow-delimiters-nvim; })
     ./environment.nix
     ./packages.nix
+    ./rtk.nix
     ./services.nix
     ./camoufox.nix
     ./dotfiles.nix
+    ./macos.nix
   ];
 }
